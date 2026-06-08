@@ -1,0 +1,80 @@
+{% extends "base_mobile.html" %}
+{% block title %}Escolha seus Filmes{% endblock %}
+
+{% block content %}
+<div class="round-screen" id="round1-screen">
+  <div class="round-header">
+    <div class="round-welcome">
+      <img src="{{ player.avatar_path }}" alt="{{ player.name }}" class="round-avatar">
+      <div>
+        <p class="round-hi">BEM VINDO(A), <strong>{{ player.name | upper }}!</strong></p>
+        <p class="round-instruction" id="round-instruction-text">ESCOLHA AS CATEGORIAS QUE MAIS TE AGRADAM</p>
+      </div>
+    </div>
+    <div class="selected-counter" id="selected-counter" style="display:none">
+      <span>SELECIONADOS <strong id="selected-count">0</strong>/{{ picks_required }}</span>
+    </div>
+  </div>
+
+  {% if error %}
+  <div class="form-error" style="margin:0 1rem 0.5rem">{{ error }}</div>
+  {% endif %}
+
+  {# ── Phase 1: Category selection ── #}
+  <div id="phase-cat">
+    <div class="cat-tiles-grid">
+      {% for cat_key, cat in movies.items() %}
+      <div class="cat-tile" data-cat="{{ cat_key }}" style="--cat-color: {{ cat.color }}"
+           onclick="toggleCategory('{{ cat_key }}', this)">
+        <span class="cat-tile-name">{{ cat.label }}</span>
+        <div class="cat-tile-check">✓</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="phase-cat-footer">
+      <button type="button" class="btn-primary" id="btn-see-movies" disabled
+              onclick="showMoviePhase()">VER FILMES</button>
+    </div>
+  </div>
+
+  {# ── Phase 2: Movie grid ── #}
+  <form method="POST" action="/round/1/submit" id="round1-form">
+    <div id="phase-movies" style="display:none">
+      <div class="movies-phase-header">
+        <button type="button" class="back-to-cats-btn" onclick="showCatPhase()">← CATEGORIAS</button>
+        <div class="active-cats-bar" id="active-cats-bar"></div>
+      </div>
+      <div class="movie-card-grid" id="movie-card-grid">
+        {% for cat_key, cat in movies.items() %}
+          {% for movie in cat.movies %}
+          <label class="movie-card" data-cat="{{ cat_key }}" data-movie-id="{{ movie.id }}"
+                 style="display:none; --cat-color: {{ cat.color }}">
+            <input type="checkbox" name="movie_ids" value="{{ movie.id }}" class="movie-checkbox">
+            <div class="movie-card-poster"
+                 style="background: linear-gradient(135deg, {{ cat.color }}55, #111)">
+              <span class="movie-card-initial">{{ movie.title[0] }}</span>
+            </div>
+            <div class="movie-card-info">
+              <p class="movie-card-title">{{ movie.title }}</p>
+              <p class="movie-card-cat">{{ cat.label }}</p>
+            </div>
+            <div class="movie-card-check">✓</div>
+          </label>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="round-footer" id="round-footer" style="display:none">
+      <button type="submit" class="btn-primary btn-full btn-submit" id="submit-btn" disabled>
+        CONFIRMAR ESCOLHAS (0/{{ picks_required }})
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>const PICKS_REQUIRED = {{ picks_required }};</script>
+<script src="/static/js/round1.js"></script>
+{% endblock %}

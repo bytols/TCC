@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 /tmp/get-pip.py --user --break-system-packages -q)",
+      "Bash(~/.local/bin/pip --version)"
+    ]
+  }
+}

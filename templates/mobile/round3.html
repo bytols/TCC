@@ -1,0 +1,66 @@
+{% extends "base_mobile.html" %}
+{% block title %}Rodada Final{% endblock %}
+
+{% block content %}
+<div class="round-screen">
+  <div class="round-header">
+    <div class="round-welcome">
+      <img src="{{ player.avatar_path }}" alt="{{ player.name }}" class="round-avatar">
+      <div>
+        <p class="round-hi">BEM VINDO(A), <strong>{{ player.name | upper }}!</strong></p>
+        <p class="round-instruction">ESCOLHA FINAL — SELECIONE {{ picks_required }} FILMES</p>
+      </div>
+    </div>
+    <div class="selected-counter">
+      <span>SELECIONADOS <strong id="selected-count">0</strong>/{{ picks_required }}</span>
+    </div>
+  </div>
+
+  {% if error %}
+  <div class="form-error">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST" action="/round/3/submit" id="round-form">
+    <div class="pool-grid">
+      {% for item in pool %}
+      <label class="pool-movie-card" data-id="{{ item.movie_id }}">
+        <input type="checkbox" name="movie_ids" value="{{ item.movie_id }}"
+               onchange="onPoolToggle(this, {{ picks_required }})" class="pool-checkbox">
+        <div class="pool-poster" style="background: linear-gradient(160deg, #2d1b69 0%, #11998e 100%)">
+          <span class="pool-initial">{{ item.movie_title[0] }}</span>
+        </div>
+        <div class="pool-info">
+          <p class="pool-title">{{ item.movie_title }}</p>
+          <p class="pool-cat">{{ item.category | upper }}</p>
+        </div>
+        <div class="pool-check">✓</div>
+      </label>
+      {% endfor %}
+    </div>
+
+    <div class="round-footer">
+      <button type="submit" class="btn-primary btn-full btn-submit" id="submit-btn" disabled>
+        CONFIRMAR ESCOLHAS FINAIS (0/{{ picks_required }})
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function onPoolToggle(checkbox, max) {
+  const checked = document.querySelectorAll(".pool-checkbox:checked");
+  const count = checked.length;
+  if (count > max) { checkbox.checked = false; return; }
+
+  document.querySelectorAll(".pool-movie-card").forEach(c => c.classList.remove("selected"));
+  checked.forEach(c => c.closest(".pool-movie-card").classList.add("selected"));
+
+  document.getElementById("selected-count").textContent = count;
+  const btn = document.getElementById("submit-btn");
+  btn.disabled = count !== max;
+  btn.textContent = `CONFIRMAR ESCOLHAS FINAIS (${count}/${max})`;
+}
+</script>
+{% endblock %}

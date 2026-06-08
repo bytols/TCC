@@ -1,0 +1,229 @@
+{% extends "base_desktop.html" %}
+{% block title %}Projeto TV{% endblock %}
+
+{% block content %}
+<div id="desktop-app" data-state="{{ session.state }}">
+
+  {# ── LOBBY ── #}
+  {% if session.state == "LOBBY" %}
+  <div class="desktop-lobby">
+    <div class="lobby-left">
+      <p class="lobby-tagline">UMA EXPERIÊNCIA DE ESCOLHA COLETIVA<br>NA ERA DA PERSONALIZAÇÃO</p>
+      <div class="lobby-participants">
+        <div class="participants-count">
+          <svg width="22" height="18" viewBox="0 0 22 18" fill="none">
+            <path d="M15 8C16.66 8 17.99 6.66 17.99 5C17.99 3.34 16.66 2 15 2C13.34 2 12 3.34 12 5C12 6.66 13.34 8 15 8ZM7 8C8.66 8 9.99 6.66 9.99 5C9.99 3.34 8.66 2 7 2C5.34 2 4 3.34 4 5C4 6.66 5.34 8 7 8ZM7 10C4.67 10 0 11.17 0 13.5V16H14V13.5C14 11.17 9.33 10 7 10ZM15 10C14.71 10 14.38 10.02 14.03 10.05C15.19 10.89 16 12.02 16 13.5V16H22V13.5C22 11.17 17.33 10 15 10Z" fill="#9CA3AF"/>
+          </svg>
+          <span>PARTICIPANTES CONECTADOS</span>
+        </div>
+        <div class="participants-num" id="participant-count">{{ player_count }}/10</div>
+      </div>
+      <div class="lobby-instructions">
+        <p class="instructions-title">COMO FUNCIONA:</p>
+        <ul>
+          <li>• DEFINA SEUS INTERESSES</li>
+          <li>• ESCOLHA 5 FILMES</li>
+          <li>• SUAS ESCOLHAS SERÃO COMPARTILHADAS</li>
+        </ul>
+      </div>
+      {% if player_count >= 2 %}
+      <button class="btn-primary btn-start" onclick="startSession()">INICIAR</button>
+      {% else %}
+      <button class="btn-primary btn-start btn-disabled" disabled>AGUARDANDO JOGADORES...</button>
+      {% endif %}
+    </div>
+
+    <div class="lobby-center">
+      <p class="qr-label">ESCANEIE PARA ENTRAR<br>NA EXPERIÊNCIA</p>
+      <div class="qr-wrapper">
+        <img src="/qr.png" alt="QR Code" class="qr-image">
+      </div>
+      <p class="qr-url">{{ join_url }}</p>
+      <p class="qr-network">CONECTE-SE À REDE PROJETO TV</p>
+    </div>
+
+    <div class="lobby-right">
+      <p class="players-label">JOGADORES</p>
+      <div class="players-grid" id="players-grid">
+        {% for p in players %}
+        <div class="player-card" id="player-{{ p.id }}">
+          {% if p.avatar_path %}
+          <img src="{{ p.avatar_path }}" alt="{{ p.name }}" class="player-avatar">
+          {% else %}
+          <div class="player-avatar-placeholder">{{ p.name[0].upper() }}</div>
+          {% endif %}
+          <span class="player-name">{{ p.name }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {# ── ROUND 1 aguardando ── #}
+  {% elif session.state == "ROUND_1" %}
+  <div class="desktop-waiting">
+    <div class="waiting-glow"></div>
+    <div class="waiting-content">
+      <p class="waiting-title">USUÁRIOS ESCOLHENDO</p>
+      <p class="waiting-subtitle">AGUARDE A FINALIZAÇÃO PARA CALCULARMOS<br>O RESULTADO DAS ESCOLHAS</p>
+      <div class="waiting-players" id="waiting-players">
+        {% for p in players %}
+        <div class="waiting-player-chip">
+          {% if p.avatar_path %}
+          <img src="{{ p.avatar_path }}" alt="{{ p.name }}" class="chip-avatar">
+          {% endif %}
+          <span>{{ p.name }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {# ── SHOW 1 / SHOW 2 / FINAL ── #}
+  {% elif session.state in ["SHOW_1", "SHOW_2", "FINAL"] %}
+  <div class="desktop-results">
+    <div class="results-header">
+      <div class="results-header-left">
+        <p class="results-round-label">
+          {% if session.state == "SHOW_1" %}RESULTADO – RODADA 1
+          {% elif session.state == "SHOW_2" %}RESULTADO – RODADA 2
+          {% else %}RESULTADO FINAL
+          {% endif %}
+        </p>
+        <div class="match-badge">
+          <span class="match-pct">{{ match_data.match_pct }}%</span>
+          <span class="match-label">DE MATCH</span>
+        </div>
+        <p class="match-detail">{{ match_data.matched_count }} de {{ match_data.total_unique }} filmes em comum</p>
+      </div>
+      {% if session.state != "FINAL" %}
+      <button class="btn-primary btn-advance" onclick="advanceSession()">PRÓXIMA RODADA</button>
+      {% else %}
+      <button class="btn-primary btn-end" onclick="endSession()">ENCERRAR SESSÃO</button>
+      {% endif %}
+    </div>
+
+    <div class="results-movies-grid">
+      {% for movie in match_data.movies %}
+      <div class="result-movie-card {% if movie.is_match %}is-match{% endif %}">
+        <div class="result-movie-poster" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+          <span class="result-movie-initial">{{ movie.movie_title[0] }}</span>
+        </div>
+        <div class="result-movie-info">
+          <p class="result-movie-title">{{ movie.movie_title }}</p>
+          <p class="result-movie-category">{{ movie.category | upper }}</p>
+          <div class="result-movie-players">
+            {% for pl in movie.players %}
+            <span class="result-player-chip">{{ pl.name }}</span>
+            {% endfor %}
+          </div>
+          {% if movie.is_match %}
+          <div class="match-indicator">❤ MATCH</div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# ── ROUND 2 / ROUND 3 aguardando ── #}
+  {% elif session.state in ["ROUND_2", "ROUND_3"] %}
+  <div class="desktop-waiting">
+    <div class="waiting-glow"></div>
+    <div class="waiting-content">
+      <p class="waiting-title">USUÁRIOS ESCOLHENDO</p>
+      <p class="waiting-subtitle">
+        {% if session.state == "ROUND_2" %}RODADA 2 – ESCOLHENDO 3 FILMES{% else %}RODADA FINAL – ÚLTIMA ESCOLHA{% endif %}
+      </p>
+      <div class="waiting-players" id="waiting-players">
+        {% for p in players %}
+        <div class="waiting-player-chip">
+          {% if p.avatar_path %}
+          <img src="{{ p.avatar_path }}" alt="{{ p.name }}" class="chip-avatar">
+          {% endif %}
+          <span>{{ p.name }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+<script>
+  const STATE = "{{ session.state }}";
+  const socket = io();
+
+  socket.on("connect", function() {
+    socket.emit("desktop_connect");
+  });
+
+  socket.on("state_change", function(data) {
+    if (data.state !== STATE) {
+      window.location.reload();
+    }
+  });
+
+  socket.on("player_joined", function(data) {
+    updatePlayerGrid(data.players, data.player_count);
+  });
+
+  function updatePlayerGrid(players, count) {
+    const countEl = document.getElementById("participant-count");
+    if (countEl) countEl.textContent = count + "/10";
+
+    const grid = document.getElementById("players-grid");
+    if (grid) {
+      players.forEach(function(pl) {
+        if (!document.getElementById("player-" + pl.id)) {
+          const div = document.createElement("div");
+          div.className = "player-card";
+          div.id = "player-" + pl.id;
+          div.innerHTML = pl.avatar_path
+            ? `<img src="${pl.avatar_path}" class="player-avatar" alt="${pl.name}">`
+            : `<div class="player-avatar-placeholder">${pl.name[0].toUpperCase()}</div>`;
+          div.innerHTML += `<span class="player-name">${pl.name}</span>`;
+          grid.appendChild(div);
+        }
+      });
+    }
+
+    const startBtn = document.querySelector(".btn-start");
+    if (startBtn && count >= 2) {
+      startBtn.disabled = false;
+      startBtn.classList.remove("btn-disabled");
+      startBtn.textContent = "INICIAR";
+      startBtn.setAttribute("onclick", "startSession()");
+    }
+  }
+
+  {% if session.state == "LOBBY" %}
+  let lastPlayerCount = {{ player_count }};
+  setInterval(function() {
+    fetch("/api/lobby_state")
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.state !== STATE) { window.location.reload(); return; }
+        if (data.player_count !== lastPlayerCount) {
+          lastPlayerCount = data.player_count;
+          updatePlayerGrid(data.players, data.player_count);
+        }
+      })
+      .catch(function() {});
+  }, 3000);
+  {% endif %}
+
+  function startSession() {
+    fetch("/admin/start", {method: "POST"}).then(r => r.json()).then(() => location.reload());
+  }
+  function advanceSession() {
+    fetch("/admin/advance", {method: "POST"}).then(r => r.json()).then(() => location.reload());
+  }
+  function endSession() {
+    if (confirm("Encerrar a sessão e limpar todos os dados?")) {
+      fetch("/admin/end", {method: "POST"}).then(() => location.reload());
+    }
+  }
+</script>
+{% endblock %}

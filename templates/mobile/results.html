@@ -1,0 +1,75 @@
+{% extends "base_mobile.html" %}
+{% block title %}Resultado{% endblock %}
+
+{% block content %}
+<div class="results-mobile-screen">
+  <div class="results-mobile-header">
+    <img src="{{ player.avatar_path }}" alt="{{ player.name }}" class="round-avatar">
+    <div>
+      <p class="round-hi">{{ player.name | upper }}</p>
+      <p class="round-instruction">
+        {% if is_final %}RESULTADO FINAL{% else %}RESULTADO – RODADA {{ round_num }}{% endif %}
+      </p>
+    </div>
+  </div>
+
+  <div class="match-card">
+    <div class="match-pct-big">{{ match_data.match_pct }}%</div>
+    <p class="match-label-big">DE MATCH COM O GRUPO</p>
+    <p class="match-detail-small">
+      {{ match_data.matched_count }} de {{ match_data.total_unique }} filmes em comum
+    </p>
+  </div>
+
+  <div class="your-picks-section">
+    <p class="section-label">SEUS FILMES ESCOLHIDOS</p>
+    {% for v in player_votes %}
+    <div class="your-pick-item {% if match_data.per_movie_players[v.movie_id]|length >= 2 %}is-match{% endif %}">
+      <div class="your-pick-poster">{{ v.movie_title[0] }}</div>
+      <div class="your-pick-info">
+        <p class="your-pick-title">{{ v.movie_title }}</p>
+        <p class="your-pick-cat">{{ v.category | upper }}</p>
+      </div>
+      {% if match_data.per_movie_players.get(v.movie_id, [])|length >= 2 %}
+      <span class="match-tag">❤ MATCH</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if not is_final %}
+  <div class="waiting-next">
+    <p class="waiting-next-text">AGUARDANDO A PRÓXIMA RODADA...</p>
+    <div class="waiting-dots"><span></span><span></span><span></span></div>
+  </div>
+  {% else %}
+  <div class="final-msg">
+    <p>🎬 OBRIGADO POR PARTICIPAR!</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const socket = io();
+  socket.emit("join_room");
+
+  const REDIRECT = {
+    "ROUND_2": "/round/2",
+    "ROUND_3": "/round/3",
+    "SHOW_2":  "/results",
+    "FINAL":   "/results",
+    "LOBBY":   "/join",
+  };
+
+  socket.on("state_change", function(data) {
+    const dest = REDIRECT[data.state];
+    if (dest) window.location.href = dest;
+  });
+
+  socket.on("session_ended", function() {
+    window.location.href = "/join";
+  });
+</script>
+{% endblock %}

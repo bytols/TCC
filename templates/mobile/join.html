@@ -1,0 +1,134 @@
+{% extends "base_mobile.html" %}
+{% block title %}Entrar{% endblock %}
+
+{% block content %}
+<div class="join-screen">
+  <div class="join-header">
+    <h1 class="join-title">PROJETO TV</h1>
+    <p class="join-sub">UMA EXPERIÊNCIA DE ESCOLHA COLETIVA<br>NA ERA DA PERSONALIZAÇÃO</p>
+  </div>
+
+  <form method="POST" action="/join" class="join-form" id="join-form">
+
+    {% if error %}
+    <div class="form-error">{{ error }}</div>
+    {% endif %}
+
+    <div class="form-group">
+      <input type="text" name="name" id="player-name" class="form-input"
+             placeholder="SEU NOME" maxlength="50" required autocomplete="off"
+             value="{{ request.form.get('name', '') }}">
+    </div>
+
+    <div class="character-builder">
+      <div class="char-preview-wrap">
+        <img id="avatar-preview" src="/static/img/avatar_placeholder.png" alt="Avatar" class="avatar-preview" onerror="this.style.display='none'">
+        <div id="avatar-placeholder" class="avatar-preview-placeholder">
+          <div class="avatar-svg" id="avatar-svg">
+            <div class="av-bg" id="av-bg"></div>
+            <div class="av-body" id="av-body"></div>
+            <div class="av-head" id="av-head">
+              <div class="av-hair" id="av-hair"></div>
+              <div class="av-face" id="av-face"></div>
+              <div class="av-eyes">
+                <div class="av-eye"></div>
+                <div class="av-eye"></div>
+              </div>
+              <div class="av-mouth"></div>
+              <div class="av-acc" id="av-acc"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="char-tabs">
+        {% set tab_labels = [("rosto","Rosto"),("cabelo","Cabelo"),("roupa","Roupa"),("acessorio","Acessórios"),("fundo","Fundo")] %}
+        {% for key, label in tab_labels %}
+        <button type="button" class="char-tab {% if loop.first %}active{% endif %}"
+                data-tab="{{ key }}">{{ label }}</button>
+        {% endfor %}
+      </div>
+
+      {% for key, label in [("rosto","Rosto"),("cabelo","Cabelo"),("roupa","Roupa"),("acessorio","Acessórios"),("fundo","Fundo")] %}
+      <div class="char-options {% if loop.first %}active{% endif %}" id="tab-{{ key }}">
+        <div class="options-grid">
+          {% for opt in char_options[key] %}
+          <label class="option-item {% if loop.first %}selected{% endif %}">
+            <input type="radio" name="{{ key }}" value="{{ opt.id }}"
+                   {% if loop.first %}checked{% endif %}
+                   onchange="updateAvatar()">
+            <div class="option-swatch"
+                 {% if opt.color is defined %}style="background:{{ opt.color }}"{% endif %}>
+              {% if opt.get('has_item') %}<span class="option-emoji">✦</span>{% endif %}
+            </div>
+            <span class="option-label">{{ opt.label }}</span>
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="btn-primary btn-full">ENTRAR</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const COLORS = {
+    rosto:     {{ char_options.rosto | map(attribute='color') | list | tojson }},
+    cabelo:    {{ char_options.cabelo | map(attribute='color') | list | tojson }},
+    roupa:     {{ char_options.roupa | map(attribute='color') | list | tojson }},
+    fundo:     {{ char_options.fundo | map(attribute='color') | list | tojson }},
+  };
+
+  document.querySelectorAll(".char-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".char-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".char-options").forEach(o => o.classList.remove("active"));
+      tab.classList.add("active");
+      document.getElementById("tab-" + tab.dataset.tab).classList.add("active");
+    });
+  });
+
+  document.querySelectorAll(".option-item input").forEach(radio => {
+    radio.addEventListener("change", () => {
+      const group = radio.name;
+      document.querySelectorAll(`.option-item input[name="${group}"]`).forEach(r => {
+        r.closest(".option-item").classList.remove("selected");
+      });
+      radio.closest(".option-item").classList.add("selected");
+    });
+  });
+
+  function getSelected(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : null;
+  }
+
+  function getIndexOf(key, id) {
+    const opts = {{ char_options | tojson }};
+    return opts[key].findIndex(o => o.id === id);
+  }
+
+  function updateAvatar() {
+    const rostoCi  = getIndexOf("rosto",  getSelected("rosto")  || "rosto_1");
+    const cabeloCi = getIndexOf("cabelo", getSelected("cabelo") || "cabelo_1");
+    const roupaCi  = getIndexOf("roupa",  getSelected("roupa")  || "roupa_1");
+    const fundoCi  = getIndexOf("fundo",  getSelected("fundo")  || "fundo_roxo");
+
+    const rostoC  = COLORS.rosto[rostoCi]   || "#FDBCB4";
+    const cabeloC = COLORS.cabelo[cabeloCi] || "#1A1A1A";
+    const roupaC  = COLORS.roupa[roupaCi]   || "#2980B9";
+    const fundoC  = COLORS.fundo[fundoCi]   || "#6C3483";
+
+    document.getElementById("av-bg").style.background = fundoC;
+    document.getElementById("av-body").style.background = roupaC;
+    document.getElementById("av-face").style.background = rostoC;
+    document.getElementById("av-hair").style.background = cabeloC;
+  }
+
+  updateAvatar();
+</script>
+{% endblock %}
