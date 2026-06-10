@@ -61,12 +61,18 @@ def advance_state() -> str | None:
     if cur == "LOBBY":
         session.started_at = datetime.utcnow()
 
+    def _seconds_since_start() -> int:
+        if session.started_at is None:
+            return 0
+        return max(0, int((datetime.utcnow() - session.started_at).total_seconds()))
+
     # A round just finished — if there's a match, end immediately (consensus).
     if cur in ("ROUND_1", "ROUND_2", "ROUND_3"):
         from_round = int(cur[-1])
         if has_match(from_round):
             session.state = "FINAL"
             session.result_round = from_round
+            session.result_seconds = _seconds_since_start()
             db.session.commit()
             _emit_state("FINAL")
             return "FINAL"
@@ -76,6 +82,7 @@ def advance_state() -> str | None:
 
     if next_state == "FINAL":
         session.result_round = 3
+        session.result_seconds = _seconds_since_start()
 
     session.state = next_state
     db.session.commit()
@@ -172,14 +179,13 @@ def clear_session() -> None:
     import os
     import glob
 
-    avatar_pattern = os.path.join(
-        os.path.dirname(__file__), "static", "img", "avatars", "*.png"
-    )
-    for f in glob.glob(avatar_pattern):
-        try:
-            os.remove(f)
-        except OSError:
-            pass
+    avatar_dir = os.path.join(os.path.dirname(__file__), "static", "img", "avatars")
+    for pattern in ("*.png", "*.svg"):
+        for f in glob.glob(os.path.join(avatar_dir, pattern)):
+            try:
+                os.remove(f)
+            except OSError:
+                pass
 
     db.drop_all()
     db.create_all()

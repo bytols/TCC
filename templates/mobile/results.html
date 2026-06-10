@@ -9,6 +9,9 @@
   <img src="/static/img/logo.png" alt="RUÍDO" class="waiting-logo" style="margin-bottom:1.5rem;">
   <p class="registered-title">RESULTADO COLETIVO</p>
   <p class="registered-sub">Depois de diferentes escolhas, o grupo chegou a um consenso.</p>
+  {% if result_seconds is not none %}
+  <p class="consensus-time">Consenso alcançado em {{ result_seconds // 60 }} min {{ result_seconds % 60 }} s</p>
+  {% endif %}
 </div>
 {% endif %}
 
@@ -64,13 +67,15 @@
 <script>
   const socket = io();
   socket.emit("join_room");
+  // SHOW_2/FINAL apontam para /results (a própria página): a guarda de path
+  // evita o reload infinito. Só navega quando o destino é OUTRA tela.
   const REDIRECT = {
     "ROUND_2": "/round/2", "ROUND_3": "/round/3",
     "SHOW_2": "/results", "FINAL": "/results", "LOBBY": "/join",
   };
   socket.on("state_change", function(data) {
     const dest = REDIRECT[data.state];
-    if (dest) window.location.href = dest;
+    if (dest && dest !== location.pathname) window.location.href = dest;  // sem self-reload
   });
   socket.on("session_ended", function() { window.location.href = "/join"; });
 </script>

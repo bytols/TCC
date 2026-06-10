@@ -73,12 +73,11 @@
       });
     }
 
-    // enable start button at >= 2
-    const startBtn = document.querySelector(".btn-start");
-    if (startBtn && count >= 2) {
-      startBtn.disabled = false;
-      startBtn.classList.remove("btn-disabled");
-      startBtn.textContent = "INICIAR";
+    // botão Iniciar reativo (onclick já está no HTML; aqui só alterna estado)
+    const startBtn = document.getElementById("start-btn");
+    if (startBtn) {
+      startBtn.disabled = count < 2;
+      startBtn.textContent = count >= 2 ? "INICIAR" : "AGUARDANDO JOGADORES...";
     }
   }
 

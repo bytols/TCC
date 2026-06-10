@@ -57,15 +57,18 @@
   <div class="movie-modal-bg" id="modal-bg"></div>
   <div class="movie-modal-overlay"></div>
   <div class="movie-modal-card">
-    <button class="movie-modal-close" onclick="closeModal()">✕</button>
-    <div class="movie-modal-poster" id="modal-poster"></div>
-    <h2 class="movie-modal-title" id="modal-title"></h2>
-    <div class="movie-modal-meta">
-      <span class="movie-modal-chip" id="modal-year"></span>
-      <span class="movie-modal-chip" id="modal-genre"></span>
-      <span class="movie-modal-chip movie-modal-rating" id="modal-rating"></span>
+    <div class="movie-modal-handle"></div>
+    <button class="movie-modal-close" onclick="closeModal()" aria-label="Fechar">✕</button>
+    <div class="movie-modal-scroll">
+      <div class="movie-modal-poster" id="modal-poster"></div>
+      <h2 class="movie-modal-title" id="modal-title"></h2>
+      <div class="movie-modal-meta">
+        <span class="movie-modal-chip" id="modal-year"></span>
+        <span class="movie-modal-chip" id="modal-genre"></span>
+        <span class="movie-modal-chip movie-modal-rating" id="modal-rating"></span>
+      </div>
+      <p class="movie-modal-synopsis" id="modal-synopsis"></p>
     </div>
-    <p class="movie-modal-synopsis" id="modal-synopsis"></p>
   </div>
 </div>
 

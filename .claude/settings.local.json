@@ -37,7 +37,8 @@
       "Bash('/mnt/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --hide-scrollbars --window-size=390,844 --virtual-time-budget=3000 '--screenshot=C:\\\\Users\\\\Public\\\\r2_deck.png' file:///C:/Users/Public/r2_deck.html)",
       "Bash(rm -f /mnt/c/Users/Public/*.html /mnt/c/Users/Public/*.png)",
       "Bash(curl -s http://localhost:5000/api/lobby_state)",
-      "Bash(echo \"estado: $\\(curl -s http://localhost:5000/api/lobby_state)"
+      "Bash(echo \"estado: $\\(curl -s http://localhost:5000/api/lobby_state)",
+      "Bash(cd *)"
     ]
   }
 }

@@ -26,11 +26,11 @@
           <li>• Suas escolhas serão compartilhadas</li>
         </ul>
       </div>
-      {% if player_count >= 2 %}
-      <button class="btn-primary btn-start" onclick="startSession()">INICIAR</button>
-      {% else %}
-      <button class="btn-primary btn-start btn-disabled" disabled>AGUARDANDO JOGADORES...</button>
-      {% endif %}
+      {# onclick sempre presente; JS só alterna disabled/texto conforme jogadores entram #}
+      <button class="btn-primary btn-start" id="start-btn" onclick="startSession()"
+              {% if player_count < 2 %}disabled{% endif %}>
+        {% if player_count >= 2 %}INICIAR{% else %}AGUARDANDO JOGADORES...{% endif %}
+      </button>
     </div>
 
     <div class="lobby-center">
@@ -109,6 +109,9 @@
         <p class="match-detail">{{ match_data.matched_count }} de {{ match_data.total_unique }} filmes em comum</p>
         {% if session.state == "FINAL" %}
         <p class="results-consensus">Depois de diferentes escolhas, o grupo chegou a um consenso.</p>
+        {% if result_seconds is not none %}
+        <p class="consensus-time">Consenso alcançado em {{ result_seconds // 60 }} min {{ result_seconds % 60 }} s</p>
+        {% endif %}
         {% endif %}
       </div>
       {% if session.state != "FINAL" %}

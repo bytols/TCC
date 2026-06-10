@@ -25,6 +25,7 @@ def desktop():
     if state in ("SHOW_1", "SHOW_2", "FINAL"):
         round_num = {"SHOW_1": 1, "SHOW_2": 2}.get(state, session.result_round or 3)
         context["consensus"] = (state == "FINAL")
+        context["result_seconds"] = session.result_seconds
         votes = session_state.get_round_votes(round_num)
         match_data = calculate_match(votes)
         context["match_data"] = match_data

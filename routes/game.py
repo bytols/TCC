@@ -5,6 +5,7 @@ from models import Player, Vote, RoundPool
 import session_state
 from data.movies import MOVIES, MOVIE_LOOKUP
 from match import calculate_match
+import posters
 import config
 
 game_bp = Blueprint("game", __name__)
@@ -29,6 +30,16 @@ def require_player(f):
 
 def already_voted(player_id: int, round_number: int) -> bool:
     return Vote.query.filter_by(player_id=player_id, round_number=round_number).first() is not None
+
+
+@game_bp.route("/api/poster/<movie_id>")
+def api_poster(movie_id):
+    """Poster real do filme via TMDB (lazy, cacheado). Placeholder se não houver."""
+    meta = MOVIE_LOOKUP.get(movie_id)
+    if not meta:
+        return jsonify({"poster": None, "configured": posters.is_configured()})
+    url = posters.get_poster_url(movie_id, meta["title"], meta.get("year"))
+    return jsonify({"poster": url, "configured": posters.is_configured()})
 
 
 def pool_grouped(round_number: int) -> dict:
@@ -273,4 +284,5 @@ def results():
                            player_votes=player_votes,
                            round_num=round_num,
                            is_final=(state == "FINAL"),
+                           result_seconds=session.result_seconds,
                            state=state)

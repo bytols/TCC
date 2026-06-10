@@ -41,17 +41,21 @@ tcc_mary/
 ├── templates/
 │   ├── base_mobile.html    # Layout base mobile (glow-layer, CSS, socket.io CDN)
 │   ├── base_desktop.html   # Layout base desktop (desktop.js)
-│   ├── mobile/             # join, waiting, round1-3, results, session_*
+│   ├── mobile/
+│   │   ├── join.html, waiting.html, results.html, session_*.html
+│   │   ├── round1.html, round2.html, round3.html  # wrappers finos
+│   │   ├── _round_body.html     # markup compartilhado (grid + deck + modal)
+│   │   └── _round_scripts.html  # scripts compartilhados (round.js + redirect WS)
 │   └── desktop/
 │       └── lobby.html      # Tela única do host (renderiza todos os estados)
 │
 └── static/
     ├── img/
-    │   ├── logo.png        # Wordmark "RUÍDO" (asset oficial do Figma)
+    │   ├── logo.png        # Wordmark "RUÍDO" (asset do Figma, upscale 3× p/ alta densidade)
     │   └── avatars/        # PNGs de avatar gerados por jogador
     ├── css/main.css        # Design system V3 (glassmorphism + estados de cor)
-    ├── js/desktop.js       # Controlador da TV (socket + polling, progresso, admin)
-    └── js/round1.js        # Carrossel de filmes, chips de gênero e modal de detalhes
+    ├── js/desktop.js       # Controlador da TV (socket + polling, progresso, cores por tempo, admin)
+    └── js/round.js         # Grid de gêneros + deck Tinder cíclico + modal (rounds 1/2/3)
 ```
 
 ---
@@ -77,7 +81,7 @@ O banco de dados é **SQLite in-memory** — todos os dados são perdidos ao rei
 ## Modelos de Dados (`models.py`)
 
 ### `Session`
-Uma única sessão de jogo por instância do servidor. Campos: `id`, `state` (máquina de estados), `started_at`.
+Uma única sessão de jogo por instância do servidor. Campos: `id`, `state` (máquina de estados), `started_at` (redefinido no início do jogo — base do timer de cores), `result_round` (rodada cujos votos a tela FINAL exibe: a rodada onde houve match/consenso, ou 3 ao fim normal).
 
 ### `Player`
 Cada participante. Campos: `id`, `name`, `character_json` (JSON com as escolhas de avatar), `avatar_path` (caminho para o PNG gerado), `session_id`.
@@ -108,16 +112,21 @@ LOBBY → ROUND_1 → SHOW_1 → ROUND_2 → SHOW_2 → ROUND_3 → FINAL
 | `ROUND_3` | 🟧 laranja | Escolha final, 3 filmes (negociação) |
 | `FINAL` | consenso | Desktop exibe resultado final coletivo |
 
-**Comportamento das cores:** cada rodada tem uma cor que representa o estágio da decisão coletiva (azul = exploração → rosa = aproximação → laranja = negociação → consenso). Implementado via classes `glow-blue` / `glow-pink` / `glow-orange` / `glow-final` no CSS.
+**Comportamento das cores:** o **mobile** colore cada rodada via classe de estado (`glow-blue` ROUND_1/SHOW_1, `glow-pink` ROUND_2/SHOW_2, `glow-orange` ROUND_3, `glow-final`/`glow-green` no resultado). O **desktop** usa cores **por tempo decorrido** (ver "Cores por tempo" abaixo).
 
-**Transições automáticas:** quando todos os jogadores de uma rodada submetem (`check_round_complete`), o estado avança via `advance_state()`. O host também avança manualmente nos estados SHOW.
+**Encerramento imediato no match (item-chave):** ao final de qualquer rodada, `advance_state()` chama `has_match(round)` — se algum filme foi escolhido por ≥2 jogadores, o jogo **pula direto para `FINAL`** (consenso), gravando `result_round`, sem disputar as rodadas seguintes. Só quando não há match a rodada segue para `SHOW_x` → próxima rodada.
 
-**Ao avançar para SHOW/FINAL:** `build_round_pool` monta a lista de filmes da próxima rodada (união dos votos da rodada atual, deduplicada por `movie_id`).
+**Transições automáticas:** quando todos os jogadores de uma rodada submetem (`check_round_complete`), o estado avança via `advance_state()`. O host também avança manualmente nos estados SHOW (sem match).
 
-**Funções de progresso (real-time):**
-- `count_submitted(round_number)` — quantos jogadores já submeteram naquela rodada.
-- `submitted_player_ids(round_number)` — IDs dos jogadores que já concluíram.
-- `notify_progress(round_number)` — emite o evento `progress` para a TV atualizar sem mudança de estado.
+**Timer da experiência:** ao iniciar o jogo (`LOBBY → ROUND_1`), `advance_state()` redefine `started_at`. `elapsed_seconds()` devolve o tempo decorrido — base das cores dinâmicas do desktop.
+
+**Ao avançar para SHOW (sem match):** `build_round_pool` monta a lista de filmes da próxima rodada (união dos votos, deduplicada por `movie_id`).
+
+**Funções de progresso / consenso:**
+- `count_submitted(round_number)` / `submitted_player_ids(round_number)` — progresso da rodada.
+- `notify_progress(round_number)` — emite o evento `progress` (TV atualiza sem mudança de estado).
+- `has_match(round_number)` — há match (≥2 no mesmo filme)?
+- `elapsed_seconds()` — segundos desde o início do jogo.
 
 **Emissão WebSocket:** toda mudança de estado emite `state_change` para o room `game_room`, fazendo todos os clientes redirecionarem.
 
@@ -140,7 +149,9 @@ id → { id, title, year, category, category_label, category_color }
 
 Categorias: Ação, Animação, Comédia, Documentário, Drama, Fantasia, Ficção, Heróis, Romance, Sitcom, Suspense, Terror.
 
-> **Nota:** os dados de origem têm `title`, `year` e `category`. O **rating** (★) e a **sinopse** exibidos no modal de detalhes (round 1) são **gerados de forma determinística** em `round1.js` a partir de um hash do `id` do filme — não existem nos dados. Para dados reais, integrar uma fonte externa (ex.: TMDB).
+> **Nota:** os dados de origem têm `title`, `year` e `category`. O **rating** (★) e a **sinopse** exibidos no modal de detalhes são **gerados de forma determinística** em `round.js` a partir de um hash do `id` do filme — não existem nos dados. Para dados reais, integrar uma fonte externa (ex.: TMDB).
+
+`pool_grouped(round_number)` (em `routes/game.py`) reconstrói um dicionário no formato de `MOVIES` a partir do `RoundPool`, enriquecido com `year`/cor via `MOVIE_LOOKUP` — assim as rodadas 2/3 reutilizam o mesmo deck do round 1.
 
 ---
 
@@ -170,7 +181,7 @@ Salvo em `static/img/avatars/{player_id}.png`. No formulário de join há també
 | `/admin/start` | POST | Inicia o jogo (LOBBY → ROUND_1); requer ≥2 jogadores |
 | `/admin/advance` | POST | Avança o estado manualmente |
 | `/admin/end` | POST | Encerra e limpa toda a sessão |
-| `/api/lobby_state` | GET | JSON: `state`, `player_count`, `players` e, em rodada, `progress` (`submitted`, `total`, `submitted_ids`) — usado pelo polling de fallback |
+| `/api/lobby_state` | GET | JSON: `state`, `player_count`, `players`, `elapsed_seconds`, `consensus` e, em rodada, `progress` (`submitted`, `total`, `submitted_ids`) — usado pelo polling de fallback e pelas cores por tempo |
 
 ### Blueprint `join` (`/join`)
 
@@ -186,14 +197,14 @@ Guarda o player via cookie `player_id` (httponly). Redireciona para `/waiting` a
 
 | Rota | Método | Descrição |
 |---|---|---|
-| `/waiting` | GET | Tela de espera; redireciona conforme o estado |
-| `/round/1` | GET | Seleção da rodada 1 (chips de gênero → carrossel) |
-| `/round/1/submit` | POST | Submete 5 votos; chama `notify_progress(1)` se a rodada não fechou |
-| `/round/2` | GET | Rodada 2 (lista do pool afunilado) |
+| `/waiting` | GET | Tela de espera (ícone de TV "olhe para a televisão") |
+| `/round/1` | GET | Rodada 1: grid de gêneros → deck de filmes |
+| `/round/1/submit` | POST | Submete 5 votos; `notify_progress(1)` se a rodada não fechou |
+| `/round/2` | GET | Rodada 2: deck direto sobre o pool (`pool_grouped(2)`) |
 | `/round/2/submit` | POST | Submete 3 votos; `notify_progress(2)` |
-| `/round/3` | GET | Escolha final |
+| `/round/3` | GET | Escolha final: deck sobre `pool_grouped(3)` |
 | `/round/3/submit` | POST | Submete 3 votos finais; `notify_progress(3)` |
-| `/results` | GET | Resultado/match do round atual (SHOW_1, SHOW_2, FINAL) |
+| `/results` | GET | Resultado/match do round atual; em FINAL usa `session.result_round` |
 
 Todas as rotas de game usam `@require_player` (redireciona para `/join` sem cookie).
 
@@ -235,19 +246,25 @@ Room único: `game_room`.
 3 frases de apresentação que passam automaticamente a cada 2,4s (ou ao toque), com dots de navegação. Cada frase usa quebra manual `<br>` para ocupar **exatamente 2 linhas centradas** (sem palavras viúvas). Botão "INICIAR" revela o formulário.
 
 ### Formulário de identidade
-Nome + construtor de avatar. O botão **"ENTRAR" fica desabilitado até o nome ter ≥ 3 caracteres** (transição suave). Preview de avatar ao vivo em CSS.
+Nome + construtor de avatar (container glass). O botão **"ENTRAR" fica desabilitado até o nome ter ≥ 3 caracteres** (transição suave). Preview de avatar ao vivo em CSS.
 
-### Chips de gênero (round 1, fase 1 — `round1.js`)
-Chips com efeito glass e um dot colorido por categoria. Estado selecionado: borda branca + glow. Habilita "VER FILMES".
+### Seleção de gêneros (round 1, fase 1 — `round.js`)
+**Grid de 2 colunas** de retângulos glass uniformes, nome da categoria centralizado em CAIXA ALTA. Selecionado: borda branca + glow. Habilita "VER FILMES". (Rounds 2/3 pulam esta fase — vão direto ao deck do pool.)
 
-### Carrossel de filmes (round 1, fase 2 — `round1.js`)
-Carrossel horizontal com **posters inclinados**. O filme central fica em foco (`scale: 1`, sem rotação, `box-shadow` branco); os laterais ficam reduzidos (`scale: .85`, `opacity: .7`) e inclinados, parcialmente visíveis para incentivar a navegação. Abaixo: título, ano, gênero e ★rating do filme central, botão **"+ Adicionar à minha lista" / "✓ Adicionado"**, contador e botão **"Próximo"** travado até a quantidade exata de filmes.
+### Deck de filmes — estilo Tinder cíclico (`round.js`)
+Deck **cíclico/infinito** (último → primeiro): o card central é grande e proeminente; os vizinhos aparecem reduzidos, inclinados e parcialmente visíveis para sugerir navegação. **Swipe** (arraste) ou **toque** num card lateral avança; toque no central abre o modal. Posições calculadas por distância cíclica e aplicadas via CSS variables (`--tx/--sc/--rot/--op`). Abaixo: título, ano, gênero e ★rating do central; botão externo **"+ Adicionar à minha lista" / "✓ Adicionado"**; contador e **"Próximo"** travado até a quantidade exata. Usado por rounds 1, 2 e 3 (mesmo componente).
 
-### Modal de detalhes (round 1 — `round1.js`)
-Ao tocar num poster, abre em tela cheia: o poster vira o **background desfocado** (`backdrop-filter: blur(30px)` + overlay escuro). Exibe poster, nome, ano, gênero, ★avaliação e sinopse, com ação de adicionar/remover da lista.
+### Modal de detalhes — somente visualização (`round.js`)
+Ao tocar no card central, abre em tela cheia: o poster vira o **background desfocado** (`backdrop-filter: blur(30px)` + overlay escuro). Exibe poster, nome, ano, gênero, ★avaliação e sinopse. **Sem botão de adicionar** — a ação de seleção existe apenas no deck externo.
+
+### Tela de espera (`mobile/waiting.html`)
+Card glass centralizado com **ícone de TV** ("olhe para a televisão") + "AGUARDE OS JOGADORES" + dots animados.
 
 ### Telas de loading da TV (`desktop/lobby.html`)
-Durante cada rodada, a TV mostra: fundo na **cor da rodada** (azul/rosa/laranja), ícone de telefone em destaque, "AGUARDANDO PARTICIPANTES...", subtítulo contextual, **progresso "X de Y concluíram"**, chips de avatar (com glow nos que já votaram), o **QR code sempre disponível** (para quem entrar no meio) e o logo RUÍDO.
+Durante cada rodada, a TV mostra: fundo na cor dinâmica (ver "Cores por tempo"), ícone de telefone em destaque, "AGUARDANDO PARTICIPANTES...", subtítulo contextual, **progresso "X de Y concluíram"**, chips de avatar (com glow nos que já votaram), o **QR code sempre disponível** (para quem entrar no meio) e o logo RUÍDO.
+
+### Cores por tempo no desktop (`desktop.js` — item 10)
+O fundo da TV transiciona por **tempo decorrido** (não por estado): 🔵 azul `0–3min` → 🩷 rosa `3–6min` → 🟧 laranja `6min+` → 🟢 verde no **consenso** (FINAL). `desktop.js` aplica a classe `glow-*` em `#desktop-app` a partir de `elapsed_seconds`; o CSS faz a transição suave (`background-color 2s ease`). Um match antecipado leva direto ao verde.
 
 ---
 
@@ -263,7 +280,7 @@ border: 1px solid rgba(255,255,255,0.20);
 ```
 Tokens: `--glass-bg`, `--glass-bg-soft`, `--glass-border`, `--glass-blur`.
 
-**Sistema de glow / estados de cor:** elementos `.glow-layer` (mobile) e `.desktop-glow` (TV) renderizam blobs desfocados usando as variáveis `--glow-1` / `--glow-2`. As classes `glow-blue`, `glow-pink`, `glow-orange`, `glow-final` sobrescrevem essas variáveis por rodada.
+**Sistema de glow / estados de cor:** elementos `.glow-layer` (mobile) e `.desktop-glow` (TV) renderizam blobs desfocados usando as variáveis `--glow-1` / `--glow-2`. As classes `glow-blue`, `glow-pink`, `glow-orange`, `glow-final` e `glow-green` (consenso) sobrescrevem essas variáveis. No desktop, `.desktop-glow::before/::after` usam `transition: background-color 2s` para a transição suave entre cores.
 
 **Paleta de acento:** `--red` #FF3300 · `--magenta` #B6006F · `--blue` #0004FF · `--match-color` #FF3300.
 
@@ -282,13 +299,13 @@ Detecta WSL2 e usa `ipconfig.exe` para obter o IP real da rede Windows (para QR 
 1. **Host** abre `/desktop` na TV — vê o lobby RUÍDO com QR code
 2. **Jogadores** escaneiam o QR → splash carousel → criam identidade (nome ≥3 + avatar) → `/waiting`
 3. Desktop atualiza o grid de jogadores em tempo real (WebSocket + polling)
-4. **Host** clica INICIAR (≥2 jogadores) → `ROUND_1` (UI fica azul)
-5. Celulares vão para `/round/1`: selecionam gêneros → carrossel → escolhem 5 filmes (com modal de detalhes) → submetem
-6. A TV mostra o progresso "X de Y concluíram" em tempo real; quando o último submete → `SHOW_1`
-7. Desktop exibe match% e filmes; host clica PRÓXIMA RODADA
-8. `ROUND_2` (rosa, pool afunilado, 3 escolhas) → `SHOW_2`
-9. `ROUND_3` (laranja, escolha final) → `FINAL`
-10. `FINAL`: "RESULTADO COLETIVO" — o grupo chegou a um consenso; host clica ENCERRAR
+4. **Host** clica INICIAR (≥2 jogadores) → `ROUND_1`. O timer de cores começa; o fundo da TV evolui por tempo (azul → rosa → laranja)
+5. Celulares vão para `/round/1`: grid de gêneros → deck Tinder → escolhem 5 filmes (modal de detalhes) → submetem
+6. A TV mostra "X de Y concluíram" em tempo real; quando o último submete, avalia-se o match
+7. **Se houver match** (≥2 no mesmo filme) → vai **direto para `FINAL`** (consenso, TV verde). **Senão** → `SHOW_1`; host clica PRÓXIMA RODADA
+8. `ROUND_2` (deck sobre o pool, 3 escolhas) → match? FINAL : `SHOW_2`
+9. `ROUND_3` (escolha final) → `FINAL`
+10. `FINAL`: "RESULTADO COLETIVO" exibe a rodada do consenso (`result_round`); host clica ENCERRAR
 
 ---
 

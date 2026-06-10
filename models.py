@@ -11,6 +11,8 @@ class Session(db.Model):
     # Round whose votes are shown on the FINAL screen. Set to the round where a
     # match (consensus) was reached, or 3 when the game runs its full course.
     result_round = Column(Integer, nullable=True)
+    # Seconds from game start until consensus was reached (frozen at FINAL).
+    result_seconds = Column(Integer, nullable=True)
 
     players = db.relationship("Player", backref="session", lazy=True)
 

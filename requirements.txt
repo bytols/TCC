@@ -5,3 +5,4 @@ sqlalchemy==2.0.41
 qrcode[pil]==8.0
 Pillow==11.2.1
 eventlet==0.39.1
+python-dotenv==1.0.1

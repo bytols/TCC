@@ -58,11 +58,12 @@ def join_submit():
                                error="Este nome já está em uso"), 400
 
     character = {
-        "rosto":     request.form.get("rosto",     CHAR_DEFAULTS["rosto"]),
-        "cabelo":    request.form.get("cabelo",    CHAR_DEFAULTS["cabelo"]),
-        "roupa":     request.form.get("roupa",     CHAR_DEFAULTS["roupa"]),
-        "acessorio": request.form.get("acessorio", CHAR_DEFAULTS["acessorio"]),
-        "fundo":     request.form.get("fundo",     CHAR_DEFAULTS["fundo"]),
+        "rosto":      request.form.get("rosto",      CHAR_DEFAULTS["rosto"]),
+        "cabelo":     request.form.get("cabelo",     CHAR_DEFAULTS["cabelo"]),
+        "pele":       request.form.get("pele",       CHAR_DEFAULTS["pele"]),
+        "cor_cabelo": request.form.get("cor_cabelo", CHAR_DEFAULTS["cor_cabelo"]),
+        "acessorio":  request.form.get("acessorio",  CHAR_DEFAULTS["acessorio"]),
+        "fundo":      request.form.get("fundo",      CHAR_DEFAULTS["fundo"]),
     }
 
     player = Player(

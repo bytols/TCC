@@ -4,3 +4,8 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+# Iteração 3
+.env
+poster_cache.json
+static/img/avatars/*.svg
+static/img/avatars/*.png

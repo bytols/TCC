@@ -19,13 +19,15 @@
 <script>
   const socket = io();
   socket.emit("join_room");
+  // LOBBY ausente de propósito: aguardando no lobby o jogador PERMANECE aqui
+  // (evita o loop /waiting → /join → /waiting). Reset é tratado por session_ended.
   const REDIRECT = {
     "ROUND_1": "/round/1", "ROUND_2": "/round/2", "ROUND_3": "/round/3",
-    "SHOW_1": "/results", "SHOW_2": "/results", "FINAL": "/results", "LOBBY": "/join",
+    "SHOW_1": "/results", "SHOW_2": "/results", "FINAL": "/results",
   };
   socket.on("state_change", function (data) {
     const dest = REDIRECT[data.state];
-    if (dest) window.location.href = dest;
+    if (dest && dest !== location.pathname) window.location.href = dest;  // sem self-reload
   });
   socket.on("session_ended", function () { window.location.href = "/join"; });
 </script>

@@ -1,47 +1,67 @@
+# Opções do construtor de personagem (avatar composto em SVG).
+# Categorias: rosto (forma), cabelo (estilo), pele (cor), cor_cabelo (cor),
+# acessorio e fundo (cor). Veja avatar.py / static/js/avatar.js.
+
 CHAR_OPTIONS = {
-    "rosto": [
-        {"id": "rosto_1", "label": "Claro",   "color": "#FDBCB4"},
-        {"id": "rosto_2", "label": "Médio",   "color": "#D4956A"},
-        {"id": "rosto_3", "label": "Escuro",  "color": "#8D5524"},
-        {"id": "rosto_4", "label": "Rosa",    "color": "#FFB6C1"},
-        {"id": "rosto_5", "label": "Moreno",  "color": "#C68642"},
+    "rosto": [   # forma do rosto
+        {"id": "redondo",    "label": "Redondo"},
+        {"id": "oval",       "label": "Oval"},
+        {"id": "quadrado",   "label": "Quadrado"},
+        {"id": "triangular", "label": "Triangular"},
     ],
-    "cabelo": [
-        {"id": "cabelo_1", "label": "Preto",     "color": "#1A1A1A"},
-        {"id": "cabelo_2", "label": "Loiro",     "color": "#F4D03F"},
-        {"id": "cabelo_3", "label": "Castanho",  "color": "#8B4513"},
-        {"id": "cabelo_4", "label": "Ruivo",     "color": "#CC5500"},
-        {"id": "cabelo_5", "label": "Azul",      "color": "#3498DB"},
+    "cabelo": [  # estilo de cabelo
+        {"id": "liso_curto", "label": "Liso curto"},
+        {"id": "liso_longo", "label": "Liso longo"},
+        {"id": "cacheado",   "label": "Cacheado"},
+        {"id": "careca",     "label": "Careca"},
+        {"id": "coque",      "label": "Coque"},
+        {"id": "moicano",    "label": "Moicano"},
     ],
-    "roupa": [
-        {"id": "roupa_1", "label": "Azul",      "color": "#2980B9"},
-        {"id": "roupa_2", "label": "Vermelho",  "color": "#C0392B"},
-        {"id": "roupa_3", "label": "Verde",     "color": "#27AE60"},
-        {"id": "roupa_4", "label": "Roxo",      "color": "#8E44AD"},
-        {"id": "roupa_5", "label": "Laranja",   "color": "#D35400"},
+    "pele": [    # tom de pele (8)
+        {"id": "pele_1", "label": "Tom 1", "color": "#FFE0BD"},
+        {"id": "pele_2", "label": "Tom 2", "color": "#F1C27D"},
+        {"id": "pele_3", "label": "Tom 3", "color": "#E0AC69"},
+        {"id": "pele_4", "label": "Tom 4", "color": "#C68642"},
+        {"id": "pele_5", "label": "Tom 5", "color": "#A56A3A"},
+        {"id": "pele_6", "label": "Tom 6", "color": "#8D5524"},
+        {"id": "pele_7", "label": "Tom 7", "color": "#5C3A1E"},
+        {"id": "pele_8", "label": "Tom 8", "color": "#FFB6C1"},
+    ],
+    "cor_cabelo": [  # cor do cabelo (8)
+        {"id": "cab_1", "label": "Preto",    "color": "#1A1A1A"},
+        {"id": "cab_2", "label": "Castanho", "color": "#5B3A1E"},
+        {"id": "cab_3", "label": "Loiro",    "color": "#E6BE63"},
+        {"id": "cab_4", "label": "Ruivo",    "color": "#B5532A"},
+        {"id": "cab_5", "label": "Grisalho", "color": "#B8B8C0"},
+        {"id": "cab_6", "label": "Azul",     "color": "#3498DB"},
+        {"id": "cab_7", "label": "Rosa",     "color": "#E84393"},
+        {"id": "cab_8", "label": "Verde",    "color": "#27AE60"},
     ],
     "acessorio": [
-        {"id": "acc_none",    "label": "Nenhum",  "has_item": False},
-        {"id": "acc_oculos",  "label": "Óculos",  "has_item": True,  "draw": "glasses"},
-        {"id": "acc_chapeu",  "label": "Chapéu",  "has_item": True,  "draw": "hat"},
-        {"id": "acc_boina",   "label": "Boné",    "has_item": True,  "draw": "cap"},
-        {"id": "acc_tiara",   "label": "Coroa",   "has_item": True,  "draw": "crown"},
+        {"id": "nenhum",    "label": "Nenhum"},
+        {"id": "oculos",    "label": "Óculos"},
+        {"id": "bone",      "label": "Boné"},
+        {"id": "chapeu",    "label": "Chapéu"},
+        {"id": "brinco",    "label": "Brinco"},
+        {"id": "headphone", "label": "Headphone"},
     ],
-    "fundo": [
+    "fundo": [   # cor de fundo do avatar
         {"id": "fundo_roxo",    "label": "Roxo",    "color": "#6C3483"},
         {"id": "fundo_azul",    "label": "Azul",    "color": "#1A5276"},
         {"id": "fundo_verde",   "label": "Verde",   "color": "#1E8449"},
-        {"id": "fundo_laranja", "label": "Laranja", "color": "#784212"},
+        {"id": "fundo_laranja", "label": "Laranja", "color": "#B9770E"},
         {"id": "fundo_rosa",    "label": "Rosa",    "color": "#922B75"},
+        {"id": "fundo_grafite", "label": "Grafite", "color": "#34344A"},
     ],
 }
 
 CHAR_DEFAULTS = {
-    "rosto": "rosto_1",
-    "cabelo": "cabelo_1",
-    "roupa": "roupa_1",
-    "acessorio": "acc_none",
-    "fundo": "fundo_roxo",
+    "rosto":      "oval",
+    "cabelo":     "liso_curto",
+    "pele":       "pele_2",
+    "cor_cabelo": "cab_1",
+    "acessorio":  "nenhum",
+    "fundo":      "fundo_roxo",
 }
 
 
