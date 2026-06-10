@@ -18,20 +18,25 @@ def desktop():
         "players": players,
         "join_url": join_url,
         "player_count": len(players),
+        "elapsed": session_state.elapsed_seconds(),
     }
 
     state = session.state
     if state in ("SHOW_1", "SHOW_2", "FINAL"):
-        round_num = {"SHOW_1": 1, "SHOW_2": 2, "FINAL": 3}[state]
+        round_num = {"SHOW_1": 1, "SHOW_2": 2}.get(state, session.result_round or 3)
+        context["consensus"] = (state == "FINAL")
         votes = session_state.get_round_votes(round_num)
         match_data = calculate_match(votes)
         context["match_data"] = match_data
         context["round_num"] = round_num
 
-    elif state in ("ROUND_2", "ROUND_3"):
-        round_num = {"ROUND_2": 2, "ROUND_3": 3}[state]
-        pool = RoundPool.query.filter_by(round_number=round_num).all()
-        context["pool"] = pool
+    elif state in ("ROUND_1", "ROUND_2", "ROUND_3"):
+        round_num = {"ROUND_1": 1, "ROUND_2": 2, "ROUND_3": 3}[state]
+        context["round_num"] = round_num
+        context["submitted_count"] = session_state.count_submitted(round_num)
+        context["submitted_ids"] = session_state.submitted_player_ids(round_num)
+        if state in ("ROUND_2", "ROUND_3"):
+            context["pool"] = RoundPool.query.filter_by(round_number=round_num).all()
 
     return render_template("desktop/lobby.html", **context)
 
@@ -67,14 +72,25 @@ def admin_advance():
 def api_lobby_state():
     session = session_state.get_or_create_session()
     players = Player.query.all()
-    return jsonify({
+    data = {
         "state": session.state,
         "player_count": len(players),
+        "elapsed_seconds": session_state.elapsed_seconds(),
+        "consensus": session.state == "FINAL",
         "players": [
             {"id": p.id, "name": p.name, "avatar_path": p.avatar_path}
             for p in players
         ]
-    })
+    }
+    if session.state in ("ROUND_1", "ROUND_2", "ROUND_3"):
+        rn = int(session.state[-1])
+        data["progress"] = {
+            "round": rn,
+            "submitted": session_state.count_submitted(rn),
+            "total": len(players),
+            "submitted_ids": session_state.submitted_player_ids(rn),
+        }
+    return jsonify(data)
 
 
 @desktop_bp.route("/admin/end", methods=["POST"])

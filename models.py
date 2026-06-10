@@ -8,6 +8,9 @@ class Session(db.Model):
     id = Column(Integer, primary_key=True)
     state = Column(String(20), nullable=False, default="LOBBY")
     started_at = Column(DateTime, default=datetime.utcnow)
+    # Round whose votes are shown on the FINAL screen. Set to the round where a
+    # match (consensus) was reached, or 3 when the game runs its full course.
+    result_round = Column(Integer, nullable=True)
 
     players = db.relationship("Player", backref="session", lazy=True)
 

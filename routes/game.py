@@ -31,6 +31,26 @@ def already_voted(player_id: int, round_number: int) -> bool:
     return Vote.query.filter_by(player_id=player_id, round_number=round_number).first() is not None
 
 
+def pool_grouped(round_number: int) -> dict:
+    """Build a MOVIES-shaped dict from a round's pool so rounds 2/3 can reuse the
+    same genre-grouped carousel component as round 1 (enriched with year/color)."""
+    pool = RoundPool.query.filter_by(round_number=round_number).all()
+    groups: dict = {}
+    for item in pool:
+        meta = MOVIE_LOOKUP.get(item.movie_id, {})
+        g = groups.setdefault(item.category, {
+            "label": meta.get("category_label", item.category.upper()),
+            "color": meta.get("category_color", "#888888"),
+            "movies": [],
+        })
+        g["movies"].append({
+            "id": item.movie_id,
+            "title": item.movie_title,
+            "year": meta.get("year", ""),
+        })
+    return groups
+
+
 @game_bp.route("/waiting")
 @require_player
 def waiting():
@@ -105,6 +125,8 @@ def round1_submit():
 
     if session_state.check_round_complete(1):
         session_state.advance_state()
+    else:
+        session_state.notify_progress(1)
 
     return redirect(url_for("game.waiting"))
 
@@ -120,9 +142,8 @@ def round2():
     if already_voted(player.id, 2):
         return redirect(url_for("game.waiting"))
 
-    pool = RoundPool.query.filter_by(round_number=2).all()
-    return render_template("mobile/round2.html", player=player, pool=pool,
-                           picks_required=config.ROUND2_PICKS)
+    return render_template("mobile/round2.html", player=player,
+                           movies=pool_grouped(2), picks_required=config.ROUND2_PICKS)
 
 
 @game_bp.route("/round/2/submit", methods=["POST"])
@@ -160,6 +181,8 @@ def round2_submit():
 
     if session_state.check_round_complete(2):
         session_state.advance_state()
+    else:
+        session_state.notify_progress(2)
 
     return redirect(url_for("game.waiting"))
 
@@ -175,9 +198,8 @@ def round3():
     if already_voted(player.id, 3):
         return redirect(url_for("game.waiting"))
 
-    pool = RoundPool.query.filter_by(round_number=3).all()
-    return render_template("mobile/round3.html", player=player, pool=pool,
-                           picks_required=config.ROUND3_PICKS)
+    return render_template("mobile/round3.html", player=player,
+                           movies=pool_grouped(3), picks_required=config.ROUND3_PICKS)
 
 
 @game_bp.route("/round/3/submit", methods=["POST"])
@@ -215,6 +237,8 @@ def round3_submit():
 
     if session_state.check_round_complete(3):
         session_state.advance_state()
+    else:
+        session_state.notify_progress(3)
 
     return redirect(url_for("game.waiting"))
 
@@ -234,7 +258,7 @@ def results():
     elif state == "SHOW_2":
         round_num = 2
     elif state == "FINAL":
-        round_num = 3
+        round_num = session.result_round or 3
     else:
         return redirect(url_for("game.waiting"))
 

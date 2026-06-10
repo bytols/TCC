@@ -2,7 +2,42 @@
   "permissions": {
     "allow": [
       "Bash(python3 /tmp/get-pip.py --user --break-system-packages -q)",
-      "Bash(~/.local/bin/pip --version)"
+      "Bash(~/.local/bin/pip --version)",
+      "mcp__figma__get_screenshot",
+      "mcp__figma__get_metadata",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o figma_v3_full.png \"https://www.figma.com/api/mcp/asset/019cdb48-daf2-4993-b9f5-e9b86de55c96\")",
+      "Bash(curl -s -o figma_screen1.png \"https://www.figma.com/api/mcp/asset/94d572f2-d102-4f67-8ef5-a36f2ef7957b\")",
+      "Bash(curl -s -o figma_screen2.png \"https://www.figma.com/api/mcp/asset/ba243abc-f00c-41d7-a447-a92fc848d135\")",
+      "Bash(/home/erick_leo/tcc_mary/venv/bin/python -c \"from app import create_app; app = create_app\\(\\); print\\('OK'\\)\")",
+      "Bash(/home/erick_leo/tcc_mary/venv/bin/python run.py)",
+      "Bash(curl -s http://localhost:5000/join)",
+      "Bash(curl -s http://localhost:5000/desktop)",
+      "Bash(echo \"Server status: $?\")",
+      "Bash(pkill -f \"python run.py\")",
+      "Bash(venv/bin/pip list *)",
+      "Bash(python3.12 -m venv venv --clear)",
+      "Bash(python3 -m venv venv --clear)",
+      "Bash(python -m ensurepip --version)",
+      "Bash(python -m venv venv --clear)",
+      "Bash(venv/bin/pip install *)",
+      "Bash(venv/bin/python run.py)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5000/join)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5000/desktop)",
+      "Bash(pkill -f \"venv/bin/python run.py\")",
+      "Bash(venv/bin/python -c ' *)",
+      "Bash(pkill -9 -f \"run.py\")",
+      "Bash(curl -s -i http://localhost:5000/join)",
+      "Bash(curl -s -o /dev/null -w \"join:%{http_code} \" http://localhost:5000/join)",
+      "Bash(curl -s -o /dev/null -w \"desktop:%{http_code}\\\\n\" http://localhost:5000/desktop)",
+      "Bash(venv/bin/python /tmp/smoke.py)",
+      "Bash(curl -s -X POST http://localhost:5000/admin/end -o /dev/null)",
+      "Bash(curl -s -o /dev/null -w \"lobby ready: HTTP %{http_code}\\\\n\" http://localhost:5000/desktop)",
+      "Bash(/home/erick_leo/tcc_mary/venv/bin/python -c \"from PIL import Image; i=Image.open\\('static/img/logo.png'\\); print\\(i.size, i.mode\\)\")",
+      "Bash('/mnt/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --hide-scrollbars --window-size=390,844 --virtual-time-budget=3000 '--screenshot=C:\\\\Users\\\\Public\\\\r2_deck.png' file:///C:/Users/Public/r2_deck.html)",
+      "Bash(rm -f /mnt/c/Users/Public/*.html /mnt/c/Users/Public/*.png)",
+      "Bash(curl -s http://localhost:5000/api/lobby_state)",
+      "Bash(echo \"estado: $\\(curl -s http://localhost:5000/api/lobby_state)"
     ]
   }
 }

@@ -12,6 +12,7 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:?check_same_thread=False"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["PORT"] = config.PORT
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
 
     db.init_app(app)
     socketio.init_app(app, async_mode="eventlet", cors_allowed_origins="*")

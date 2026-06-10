@@ -1,21 +1,16 @@
 {% extends "base_mobile.html" %}
-{% block title %}Aguardando{% endblock %}
+{% block title %}RUÍDO — Aguardando{% endblock %}
 
 {% block content %}
 <div class="waiting-screen">
-  <div class="waiting-mobile-content">
-    <div class="heart-icon">
-      <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-      </svg>
+  <div class="waiting-card">
+    <div class="tv-icon tv-icon--lg">
+      <div class="tv-screen"></div>
+      <div class="tv-stand"></div>
     </div>
-    <h2 class="waiting-title-mobile">OBRIGADO POR ESCOLHER</h2>
-    <p class="waiting-sub-mobile">
-      AGUARDE A FINALIZAÇÃO PARA<br>CALCULARMOS O RESULTADO DAS ESCOLHAS
-    </p>
-    <div class="waiting-dots">
-      <span></span><span></span><span></span>
-    </div>
+    <p class="waiting-title-mobile">AGUARDE OS JOGADORES</p>
+    <p class="waiting-sub-mobile">Acompanhe a televisão para continuar a experiência.</p>
+    <div class="waiting-dots"><span></span><span></span><span></span></div>
   </div>
 </div>
 {% endblock %}
@@ -24,24 +19,14 @@
 <script>
   const socket = io();
   socket.emit("join_room");
-
   const REDIRECT = {
-    "ROUND_1": "/round/1",
-    "ROUND_2": "/round/2",
-    "ROUND_3": "/round/3",
-    "SHOW_1":  "/results",
-    "SHOW_2":  "/results",
-    "FINAL":   "/results",
-    "LOBBY":   "/join",
+    "ROUND_1": "/round/1", "ROUND_2": "/round/2", "ROUND_3": "/round/3",
+    "SHOW_1": "/results", "SHOW_2": "/results", "FINAL": "/results", "LOBBY": "/join",
   };
-
-  socket.on("state_change", function(data) {
+  socket.on("state_change", function (data) {
     const dest = REDIRECT[data.state];
     if (dest) window.location.href = dest;
   });
-
-  socket.on("session_ended", function() {
-    window.location.href = "/join";
-  });
+  socket.on("session_ended", function () { window.location.href = "/join"; });
 </script>
 {% endblock %}

@@ -1,7 +1,7 @@
-flask==3.0.3
-flask-socketio==5.3.6
+flask==3.1.1
+flask-socketio==5.4.1
 flask-sqlalchemy==3.1.1
-sqlalchemy==2.0.30
-qrcode[pil]==7.4.2
-Pillow==10.3.0
-eventlet==0.36.1
+sqlalchemy==2.0.41
+qrcode[pil]==8.0
+Pillow==11.2.1
+eventlet==0.39.1

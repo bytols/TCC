@@ -1,0 +1,78 @@
+{# Shared body for rounds 1/2/3. Caller sets: glow, action, picks_required,
+   show_genres, submit_label, instruction. Context also has player, movies. #}
+<div class="round-screen {{ glow }}">
+  <div class="round-header">
+    <div class="round-welcome">
+      <img src="{{ player.avatar_path }}" alt="{{ player.name }}" class="round-avatar">
+      <div>
+        <p class="round-hi">BEM VINDO(A), <strong>{{ player.name | upper }}</strong></p>
+        <p class="round-instruction" id="round-instruction-text">{{ instruction }}</p>
+      </div>
+    </div>
+    <div class="selected-counter" id="selected-counter" {% if show_genres %}style="display:none"{% endif %}>
+      <span>SELECIONADOS <strong id="selected-count">0</strong>/{{ picks_required }}</span>
+    </div>
+  </div>
+
+  {% if show_genres %}
+  {# ── Fase 1: grid de categorias 2 colunas (item 3) ── #}
+  <div id="phase-cat" class="phase-cat">
+    <div class="genre-grid">
+      {% for cat_key, cat in movies.items() %}
+      <div class="genre-tile" data-cat="{{ cat_key }}" style="--cat-color: {{ cat.color }}"
+           onclick="toggleGenre('{{ cat_key }}', this)">{{ cat.label }}</div>
+      {% endfor %}
+    </div>
+    <div class="genre-phase-footer">
+      <button type="button" class="btn-primary" id="btn-see-movies" disabled
+              onclick="showMoviePhase()">VER FILMES</button>
+    </div>
+  </div>
+  {% endif %}
+
+  {# ── Fase 2: deck cíclico estilo Tinder (itens 4/5) ── #}
+  <div id="phase-movies" class="phase-movies" {% if show_genres %}style="display:none"{% endif %}>
+    <div class="deck" id="deck"></div>
+    <div class="deck-meta">
+      <p class="deck-title" id="meta-title">—</p>
+      <p class="deck-sub" id="meta-sub"></p>
+      <p class="deck-hint">Toque no pôster para detalhes · arraste para navegar</p>
+    </div>
+    <div class="deck-footer">
+      <button type="button" class="btn-add" id="btn-add" onclick="toggleCurrent()">
+        + ADICIONAR À MINHA LISTA
+      </button>
+      <button type="button" class="btn-primary btn-full btn-submit" id="submit-btn" disabled
+              onclick="submitChoices()">{{ submit_label }} (0/{{ picks_required }})</button>
+    </div>
+  </div>
+
+  <form method="POST" action="{{ action }}" id="round-form" style="display:none">
+    <div id="hidden-inputs"></div>
+  </form>
+</div>
+
+{# ── Modal de detalhes — apenas visualização (item 4) ── #}
+<div class="movie-modal" id="movie-modal">
+  <div class="movie-modal-bg" id="modal-bg"></div>
+  <div class="movie-modal-overlay"></div>
+  <div class="movie-modal-card">
+    <button class="movie-modal-close" onclick="closeModal()">✕</button>
+    <div class="movie-modal-poster" id="modal-poster"></div>
+    <h2 class="movie-modal-title" id="modal-title"></h2>
+    <div class="movie-modal-meta">
+      <span class="movie-modal-chip" id="modal-year"></span>
+      <span class="movie-modal-chip" id="modal-genre"></span>
+      <span class="movie-modal-chip movie-modal-rating" id="modal-rating"></span>
+    </div>
+    <p class="movie-modal-synopsis" id="modal-synopsis"></p>
+  </div>
+</div>
+
+<script id="movies-data" type="application/json">{{ movies | tojson }}</script>
+<script>
+  const PICKS_REQUIRED = {{ picks_required }};
+  const SUBMIT_ACTION = "{{ action }}";
+  const SHOW_GENRES = {{ 'true' if show_genres else 'false' }};
+  const MOVIE_INSTRUCTION = "Escolha " + PICKS_REQUIRED + " filmes que você assistiria";
+</script>

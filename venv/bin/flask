@@ -1,4 +1,4 @@
-#!/home/erick/project_hail_mary/venv/bin/python3
+#!/home/erick_leo/tcc_mary/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

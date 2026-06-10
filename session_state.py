@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import func, distinct
 from extensions import db, socketio
 from models import Session, Player, Vote, RoundPool
@@ -33,41 +34,95 @@ def _players_payload() -> list[dict]:
     ]
 
 
-def advance_state() -> str | None:
-    session = get_session()
-    if session is None:
-        return None
-    next_state = VALID_TRANSITIONS.get(session.state)
-    if next_state is None:
-        return session.state
-
-    if next_state in ("SHOW_1", "SHOW_2", "FINAL"):
-        from_round = {"SHOW_1": 1, "SHOW_2": 2, "FINAL": 3}[next_state]
-        build_round_pool(from_round)
-
-    session.state = next_state
-    db.session.commit()
-
+def _emit_state(state: str) -> None:
     players = _players_payload()
     socketio.emit("state_change", {
-        "state": next_state,
+        "state": state,
         "player_count": len(players),
         "players": players,
     }, room="game_room")
 
+
+def has_match(round_number: int) -> bool:
+    """True if any movie in the round was chosen by >= 2 players."""
+    return calculate_match(get_round_votes(round_number))["matched_count"] > 0
+
+
+def advance_state() -> str | None:
+    session = get_session()
+    if session is None:
+        return None
+    cur = session.state
+    next_state = VALID_TRANSITIONS.get(cur)
+    if next_state is None:
+        return cur
+
+    # Start the experience timer when the game begins (drives time-based colors).
+    if cur == "LOBBY":
+        session.started_at = datetime.utcnow()
+
+    # A round just finished — if there's a match, end immediately (consensus).
+    if cur in ("ROUND_1", "ROUND_2", "ROUND_3"):
+        from_round = int(cur[-1])
+        if has_match(from_round):
+            session.state = "FINAL"
+            session.result_round = from_round
+            db.session.commit()
+            _emit_state("FINAL")
+            return "FINAL"
+        # No match yet → prepare the next round's pool (if any).
+        if from_round < 3:
+            build_round_pool(from_round)
+
+    if next_state == "FINAL":
+        session.result_round = 3
+
+    session.state = next_state
+    db.session.commit()
+    _emit_state(next_state)
     return next_state
+
+
+def elapsed_seconds() -> int:
+    """Seconds since the game started (used for time-based desktop colors)."""
+    session = get_session()
+    if session is None or session.started_at is None:
+        return 0
+    return max(0, int((datetime.utcnow() - session.started_at).total_seconds()))
+
+
+def count_submitted(round_number: int) -> int:
+    return (
+        db.session.query(func.count(distinct(Vote.player_id)))
+        .filter(Vote.round_number == round_number)
+        .scalar()
+    ) or 0
 
 
 def check_round_complete(round_number: int) -> bool:
     player_count = Player.query.count()
     if player_count == 0:
         return False
-    submitted = (
-        db.session.query(func.count(distinct(Vote.player_id)))
+    return count_submitted(round_number) >= player_count
+
+
+def submitted_player_ids(round_number: int) -> list[int]:
+    rows = (
+        db.session.query(distinct(Vote.player_id))
         .filter(Vote.round_number == round_number)
-        .scalar()
+        .all()
     )
-    return submitted >= player_count
+    return [r[0] for r in rows]
+
+
+def notify_progress(round_number: int) -> None:
+    """Emit collective progress so the TV updates without a state change."""
+    socketio.emit("progress", {
+        "round": round_number,
+        "submitted": count_submitted(round_number),
+        "total": Player.query.count(),
+        "submitted_ids": submitted_player_ids(round_number),
+    }, room="game_room")
 
 
 def build_round_pool(from_round: int) -> None:
