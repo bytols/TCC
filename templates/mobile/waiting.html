@@ -8,8 +8,13 @@
       <div class="tv-screen"></div>
       <div class="tv-stand"></div>
     </div>
-    <p class="waiting-title-mobile">AGUARDE OS JOGADORES</p>
+    <p class="waiting-title-mobile" id="waiting-title">AGUARDE OS JOGADORES</p>
     <p class="waiting-sub-mobile">Acompanhe a televisão para continuar a experiência.</p>
+    <div id="mobile-countdown" style="display:none;" class="waiting-countdown">
+      <p class="countdown-label">JOGO COMEÇA EM</p>
+      <p class="countdown-number" id="countdown-number">{{ auto_start_seconds }}</p>
+      <p class="countdown-unit">SEGUNDOS</p>
+    </div>
     <div class="waiting-dots"><span></span><span></span><span></span></div>
   </div>
 </div>
@@ -17,18 +22,64 @@
 
 {% block extra_js %}
 <script>
+  const AUTO_START_SECONDS = {{ auto_start_seconds }};
+  const MIN_PLAYERS = 2;
+
   const socket = io();
   socket.emit("join_room");
-  // LOBBY ausente de propósito: aguardando no lobby o jogador PERMANECE aqui
-  // (evita o loop /waiting → /join → /waiting). Reset é tratado por session_ended.
+
   const REDIRECT = {
     "ROUND_1": "/round/1", "ROUND_2": "/round/2", "ROUND_3": "/round/3",
     "SHOW_1": "/results", "SHOW_2": "/results", "FINAL": "/results",
   };
+
   socket.on("state_change", function (data) {
     const dest = REDIRECT[data.state];
-    if (dest && dest !== location.pathname) window.location.href = dest;  // sem self-reload
+    if (dest && dest !== location.pathname) window.location.href = dest;
   });
   socket.on("session_ended", function () { window.location.href = "/join"; });
+
+  let countdownInterval = null;
+  let countdownRunning = false;
+
+  function startCountdown() {
+    if (countdownRunning) return;
+    countdownRunning = true;
+    let remaining = AUTO_START_SECONDS;
+    const numEl = document.getElementById("countdown-number");
+    const displayEl = document.getElementById("mobile-countdown");
+    if (numEl) numEl.textContent = remaining;
+    if (displayEl) displayEl.style.display = "";
+
+    countdownInterval = setInterval(function () {
+      remaining -= 1;
+      if (numEl) numEl.textContent = remaining;
+      if (remaining <= 0) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+      }
+    }, 1000);
+  }
+
+  function cancelCountdown() {
+    if (countdownInterval !== null) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
+    countdownRunning = false;
+    const displayEl = document.getElementById("mobile-countdown");
+    if (displayEl) displayEl.style.display = "none";
+    const numEl = document.getElementById("countdown-number");
+    if (numEl) numEl.textContent = AUTO_START_SECONDS;
+  }
+
+  socket.on("player_joined", function (data) {
+    const player_count = data.player_count || 0;
+    if (player_count >= MIN_PLAYERS) {
+      startCountdown();
+    } else {
+      cancelCountdown();
+    }
+  });
 </script>
 {% endblock %}

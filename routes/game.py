@@ -86,7 +86,8 @@ def waiting():
         elif state.startswith("SHOW_") or state == "FINAL":
             return redirect(url_for(redirect_map[state]))
 
-    return render_template("mobile/waiting.html", player=player, state=state)
+    return render_template("mobile/waiting.html", player=player, state=state,
+                           auto_start_seconds=config.AUTO_START_SECONDS)
 
 
 @game_bp.route("/round/1")
