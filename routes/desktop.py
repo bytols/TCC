@@ -4,6 +4,7 @@ from models import Player, Vote, RoundPool
 import session_state
 import qr as qr_module
 from match import calculate_match
+import config
 
 desktop_bp = Blueprint("desktop", __name__)
 
@@ -19,6 +20,7 @@ def desktop():
         "join_url": join_url,
         "player_count": len(players),
         "elapsed": session_state.elapsed_seconds(),
+        "auto_start_seconds": config.AUTO_START_SECONDS,
     }
 
     state = session.state

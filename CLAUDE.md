@@ -66,7 +66,7 @@ tcc_mary/
 |---|---|---|
 | `PORT` | 5000 | Porta HTTP do servidor |
 | `MIN_PLAYERS` | 2 | Mínimo para iniciar a sessão |
-| `MAX_PLAYERS` | 10 | Limite de participantes |
+| `MAX_PLAYERS` | 4 | Limite de participantes |
 | `SECRET_KEY` | string | Chave Flask para sessões |
 | `ROUND1_PICKS` | 5 | Filmes a escolher na rodada 1 |
 | `ROUND2_PICKS` | 3 | Filmes a escolher na rodada 2 |

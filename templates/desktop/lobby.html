@@ -7,6 +7,10 @@
   "ROUND_3": "glow-orange", "FINAL": "glow-final"
 } %}
 
+{% block head_js %}
+<script>window.AUTO_START_SECONDS = {{ auto_start_seconds }};</script>
+{% endblock %}
+
 {% block content %}
 <div id="desktop-app" class="{{ glow_class.get(session.state, 'glow-final') }}"
      data-state="{{ session.state }}" data-elapsed="{{ elapsed }}">
@@ -31,6 +35,7 @@
               {% if player_count < 2 %}disabled{% endif %}>
         {% if player_count >= 2 %}INICIAR{% else %}AGUARDANDO JOGADORES...{% endif %}
       </button>
+      <p id="countdown-display" class="countdown-display" style="display:none"></p>
     </div>
 
     <div class="lobby-center">

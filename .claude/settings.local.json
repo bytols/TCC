@@ -38,7 +38,8 @@
       "Bash(rm -f /mnt/c/Users/Public/*.html /mnt/c/Users/Public/*.png)",
       "Bash(curl -s http://localhost:5000/api/lobby_state)",
       "Bash(echo \"estado: $\\(curl -s http://localhost:5000/api/lobby_state)",
-      "Bash(cd *)"
+      "Bash(cd *)",
+      "Bash(git -C /home/erick_leo/tcc_mary remote -v)"
     ]
   }
 }

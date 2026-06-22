@@ -79,6 +79,51 @@
       startBtn.disabled = count < 2;
       startBtn.textContent = count >= 2 ? "INICIAR" : "AGUARDANDO JOGADORES...";
     }
+
+    // Countdown auto-start: inicia quando há ≥2 jogadores, cancela se cair abaixo de 2
+    if (STATE === "LOBBY") {
+      if (count >= 2) {
+        startCountdown();
+      } else {
+        cancelCountdown();
+      }
+    }
+  }
+
+  /* ── Countdown auto-start (30s por padrão, configurável via AUTO_START_SECONDS) ── */
+  var _countdownTimer = null;
+  var _countdownRunning = false;
+
+  function startCountdown() {
+    if (_countdownRunning) return; // não reinicia se já está rodando
+    _countdownRunning = true;
+    var seconds = (typeof window.AUTO_START_SECONDS === "number") ? window.AUTO_START_SECONDS : 30;
+    var display = document.getElementById("countdown-display");
+    if (display) {
+      display.style.display = "";
+      display.textContent = "Começando em " + seconds + "s";
+    }
+    _countdownTimer = setInterval(function () {
+      seconds -= 1;
+      if (display) display.textContent = "Começando em " + seconds + "s";
+      if (seconds <= 0) {
+        cancelCountdown();
+        fetch("/admin/start", { method: "POST" })
+          .then(function (r) { return r.json(); })
+          .then(function () { window.location.reload(); })
+          .catch(function () {});
+      }
+    }, 1000);
+  }
+
+  function cancelCountdown() {
+    if (_countdownTimer !== null) {
+      clearInterval(_countdownTimer);
+      _countdownTimer = null;
+    }
+    _countdownRunning = false;
+    var display = document.getElementById("countdown-display");
+    if (display) display.style.display = "none";
   }
 
   /* ── Render collective progress (item: "X de Y concluíram") ── */
