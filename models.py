@@ -13,6 +13,8 @@ class Session(db.Model):
     result_round = Column(Integer, nullable=True)
     # Seconds from game start until consensus was reached (frozen at FINAL).
     result_seconds = Column(Integer, nullable=True)
+    # Timestamp when the most recent ROUND_X started (used by Slice 4 LED timer).
+    round_started_at = Column(DateTime, nullable=True)
 
     players = db.relationship("Player", backref="session", lazy=True)
 
