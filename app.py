@@ -6,7 +6,7 @@ from extensions import db, socketio
 import config
 
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__)
     app.config["SECRET_KEY"] = config.SECRET_KEY
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:?check_same_thread=False"
@@ -14,8 +14,12 @@ def create_app():
     app.config["PORT"] = config.PORT
     app.config["TEMPLATES_AUTO_RELOAD"] = True
 
+    if test_config:
+        app.config.update(test_config)
+
+    async_mode = "threading" if app.config.get("TESTING") else "eventlet"
     db.init_app(app)
-    socketio.init_app(app, async_mode="eventlet", cors_allowed_origins="*")
+    socketio.init_app(app, async_mode=async_mode, cors_allowed_origins="*")
 
     with app.app_context():
         from models import create_tables
@@ -29,5 +33,8 @@ def create_app():
     app.register_blueprint(game_bp)
 
     import sockets.events  # noqa: F401 — registers handlers
+
+    import arduino
+    arduino.init()
 
     return app

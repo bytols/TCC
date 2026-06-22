@@ -87,6 +87,9 @@ def join_submit():
         "players": [{"id": p.id, "name": p.name, "avatar_path": p.avatar_path} for p in all_players],
     }, room="game_room")
 
+    import arduino
+    arduino.send_led(player.id, "WHITE")
+
     resp = make_response(redirect(url_for("game.waiting")))
     resp.set_cookie("player_id", str(player.id), httponly=True, samesite="Lax")
     return resp
