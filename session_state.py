@@ -94,6 +94,10 @@ def advance_state() -> str | None:
     if next_state in ("ROUND_1", "ROUND_2", "ROUND_3"):
         session.round_started_at = datetime.utcnow()
         _send_color_to_all("BLUE")
+        from flask import current_app
+        _app = current_app._get_current_object()
+        round_num = int(next_state[-1])
+        socketio.start_background_task(_round_timer_task, _app, round_num)
 
     if next_state == "FINAL":
         _send_color_to_all("GREEN")
@@ -187,6 +191,23 @@ def get_round_votes(round_number: int) -> list[dict]:
         }
         for v, name in rows
     ]
+
+
+def _round_timer_task(app, round_number: int) -> None:
+    import eventlet
+    eventlet.sleep(120)
+    with app.app_context():
+        submitted_ids = set(submitted_player_ids(round_number))
+        for p in Player.query.all():
+            if p.id not in submitted_ids:
+                arduino.send_led(p.id, "PINK")
+
+    eventlet.sleep(120)
+    with app.app_context():
+        submitted_ids = set(submitted_player_ids(round_number))
+        for p in Player.query.all():
+            if p.id not in submitted_ids:
+                arduino.send_led(p.id, "ORANGE")
 
 
 def clear_session() -> None:
