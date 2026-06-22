@@ -7,6 +7,7 @@ from data.movies import MOVIES, MOVIE_LOOKUP
 from match import calculate_match
 import posters
 import config
+import arduino
 
 game_bp = Blueprint("game", __name__)
 
@@ -134,6 +135,7 @@ def round1_submit():
             category=data["category"],
         ))
     db.session.commit()
+    arduino.send_led(player.id, "WHITE")
 
     if session_state.check_round_complete(1):
         session_state.advance_state()
@@ -190,6 +192,7 @@ def round2_submit():
             category=entry.category,
         ))
     db.session.commit()
+    arduino.send_led(player.id, "WHITE")
 
     if session_state.check_round_complete(2):
         session_state.advance_state()
@@ -246,6 +249,7 @@ def round3_submit():
             category=entry.category,
         ))
     db.session.commit()
+    arduino.send_led(player.id, "WHITE")
 
     if session_state.check_round_complete(3):
         session_state.advance_state()
