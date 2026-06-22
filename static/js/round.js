@@ -94,7 +94,6 @@ function buildDeck(catKeys) {
     card.innerHTML =
       '<div class="deck-poster" style="background:' + posterGradient(m.color) + '">' +
         '<span class="deck-initial">' + m.title.charAt(0) + '</span>' +
-        '<div class="deck-check">✓</div>' +
       '</div>';
     deck.appendChild(card);
     return card;
