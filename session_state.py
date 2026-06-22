@@ -3,6 +3,7 @@ from sqlalchemy import func, distinct
 from extensions import db, socketio
 from models import Session, Player, Vote, RoundPool
 from match import calculate_match
+import arduino
 
 VALID_TRANSITIONS = {
     "LOBBY":   "ROUND_1",
@@ -32,6 +33,11 @@ def _players_payload() -> list[dict]:
         {"id": p.id, "name": p.name, "avatar_path": p.avatar_path}
         for p in Player.query.all()
     ]
+
+
+def _send_color_to_all(color: str) -> None:
+    for p in Player.query.all():
+        arduino.send_led(p.id, color)
 
 
 def _emit_state(state: str) -> None:
@@ -74,6 +80,7 @@ def advance_state() -> str | None:
             session.result_round = from_round
             session.result_seconds = _seconds_since_start()
             db.session.commit()
+            _send_color_to_all("GREEN")
             _emit_state("FINAL")
             return "FINAL"
         # No match yet → prepare the next round's pool (if any).
@@ -83,6 +90,13 @@ def advance_state() -> str | None:
     if next_state == "FINAL":
         session.result_round = 3
         session.result_seconds = _seconds_since_start()
+
+    if next_state in ("ROUND_1", "ROUND_2", "ROUND_3"):
+        session.round_started_at = datetime.utcnow()
+        _send_color_to_all("BLUE")
+
+    if next_state == "FINAL":
+        _send_color_to_all("GREEN")
 
     session.state = next_state
     db.session.commit()
@@ -178,6 +192,8 @@ def get_round_votes(round_number: int) -> list[dict]:
 def clear_session() -> None:
     import os
     import glob
+
+    _send_color_to_all("WHITE")
 
     avatar_dir = os.path.join(os.path.dirname(__file__), "static", "img", "avatars")
     for pattern in ("*.png", "*.svg"):
