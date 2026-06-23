@@ -45,10 +45,14 @@ def test_timer_sends_pink_only_to_non_submitted(app, add_player):
     p1_id = add_player("P1")
     p2_id = add_player("P2")
     _add_vote(app, p1_id, 1)  # P1 already submitted round 1
+    s = Session.query.first()
+    s.state = "ROUND_1"
+    s.timer_gen = 1
+    db.session.commit()
 
     with patch("arduino.send_led") as mock_led, \
          patch("eventlet.sleep"):
-        _round_timer_task(app, 1)
+        _round_timer_task(app, 1, gen=1)
 
     pink_calls = [c for c in mock_led.call_args_list if c == call(p2_id, "PINK")]
     no_pink_p1 = all(c != call(p1_id, "PINK") for c in mock_led.call_args_list)
@@ -64,10 +68,14 @@ def test_timer_sends_orange_only_to_non_submitted(app, add_player):
     p1_id = add_player("P1")
     p2_id = add_player("P2")
     _add_vote(app, p1_id, 1)  # P1 submitted before ORANGE fires
+    s = Session.query.first()
+    s.state = "ROUND_1"
+    s.timer_gen = 1
+    db.session.commit()
 
     with patch("arduino.send_led") as mock_led, \
          patch("eventlet.sleep"):
-        _round_timer_task(app, 1)
+        _round_timer_task(app, 1, gen=1)
 
     orange_calls = [c for c in mock_led.call_args_list if c == call(p2_id, "ORANGE")]
     no_orange_p1 = all(c != call(p1_id, "ORANGE") for c in mock_led.call_args_list)
@@ -84,10 +92,14 @@ def test_timer_sends_nothing_when_all_submitted(app, add_player):
     p2_id = add_player("P2")
     _add_vote(app, p1_id, 1)
     _add_vote(app, p2_id, 1)  # both submitted
+    s = Session.query.first()
+    s.state = "ROUND_1"
+    s.timer_gen = 1
+    db.session.commit()
 
     with patch("arduino.send_led") as mock_led, \
          patch("eventlet.sleep"):
-        _round_timer_task(app, 1)
+        _round_timer_task(app, 1, gen=1)
 
     assert mock_led.call_count == 0, "No LED command should be sent when all submitted"
 

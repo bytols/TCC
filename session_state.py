@@ -81,6 +81,7 @@ def advance_state() -> str | None:
             session.result_seconds = _seconds_since_start()
             db.session.commit()
             _send_color_to_all("GREEN")
+            socketio.emit("round_phase", {"color": "GREEN"}, room="game_room")
             _emit_state("FINAL")
             return "FINAL"
         # No match yet → prepare the next round's pool (if any).
@@ -92,15 +93,19 @@ def advance_state() -> str | None:
         session.result_seconds = _seconds_since_start()
 
     if next_state in ("ROUND_1", "ROUND_2", "ROUND_3"):
+        session.timer_gen = (session.timer_gen or 0) + 1
+        current_gen = session.timer_gen
         session.round_started_at = datetime.utcnow()
         _send_color_to_all("BLUE")
+        socketio.emit("round_phase", {"color": "BLUE"}, room="game_room")
         from flask import current_app
         _app = current_app._get_current_object()
         round_num = int(next_state[-1])
-        socketio.start_background_task(_round_timer_task, _app, round_num)
+        socketio.start_background_task(_round_timer_task, _app, round_num, current_gen)
 
     if next_state == "FINAL":
         _send_color_to_all("GREEN")
+        socketio.emit("round_phase", {"color": "GREEN"}, room="game_room")
 
     session.state = next_state
     db.session.commit()
@@ -193,10 +198,21 @@ def get_round_votes(round_number: int) -> list[dict]:
     ]
 
 
-def _round_timer_task(app, round_number: int) -> None:
+def _is_stale(round_number: int, gen: int) -> bool:
+    """True if the round or generation no longer matches — task must abort."""
+    session = get_session()
+    if session is None:
+        return True
+    return session.timer_gen != gen or session.state != f"ROUND_{round_number}"
+
+
+def _round_timer_task(app, round_number: int, gen: int) -> None:
     import eventlet
     eventlet.sleep(120)
     with app.app_context():
+        if _is_stale(round_number, gen):
+            return
+        socketio.emit("round_phase", {"color": "PINK"}, room="game_room")
         submitted_ids = set(submitted_player_ids(round_number))
         for p in Player.query.all():
             if p.id not in submitted_ids:
@@ -204,6 +220,9 @@ def _round_timer_task(app, round_number: int) -> None:
 
     eventlet.sleep(120)
     with app.app_context():
+        if _is_stale(round_number, gen):
+            return
+        socketio.emit("round_phase", {"color": "ORANGE"}, room="game_room")
         submitted_ids = set(submitted_player_ids(round_number))
         for p in Player.query.all():
             if p.id not in submitted_ids:

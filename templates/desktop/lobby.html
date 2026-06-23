@@ -97,11 +97,15 @@
     </div>
   </div>
 
-  {# ════════ FINAL — RESULTADO COLETIVO ════════ #}
+  {# ════════ FINAL — RESULTADO COLETIVO (3 zonas: esquerda / centro / direita) ════════ #}
   {% elif session.state == "FINAL" %}
+  {% set primary = consensus_movies[0] if consensus_movies else none %}
   <div class="desktop-final">
-    <div class="final-info-col">
-      <img src="/static/img/logo.png" alt="RUÍDO" class="final-logo">
+
+    {# ── Zona esquerda: título + subtítulo + TEMPO + avatares ── #}
+    <div class="final-left">
+      <p class="final-section-title">RESULTADO COLETIVO</p>
+      <p class="final-section-sub">Depois de diferentes escolhas, o grupo chegou a um consenso.</p>
 
       {% if result_seconds is not none %}
       <div class="final-time-card">
@@ -123,12 +127,8 @@
       </div>
     </div>
 
-    <div class="final-main-col">
-      <div class="final-header">
-        <p class="final-title">RESULTADO COLETIVO</p>
-        <p class="final-tagline">Depois de diferentes escolhas, o grupo chegou a um consenso.</p>
-      </div>
-
+    {# ── Zona central: poster(s) ── #}
+    <div class="final-center">
       {% if consensus_movies | length == 1 %}
       {% set m = consensus_movies[0] %}
       <div class="final-hero">
@@ -151,9 +151,28 @@
         {% endfor %}
       </div>
       {% endif %}
+    </div>
 
+    {# ── Zona direita: FILME ESCOLHIDO + título + metadados ── #}
+    <div class="final-right">
+      <p class="final-chosen-label">FILME ESCOLHIDO</p>
+      {% if primary %}
+      <p class="final-chosen-title">{{ primary.movie_title }}</p>
+      <div class="final-chosen-meta">
+        {% if primary.year %}{{ primary.year }}{% endif %}
+        {% if primary.year and primary.category_label %} · {% endif %}
+        {% if primary.category_label %}{{ primary.category_label }}{% endif %}
+      </div>
+      {% endif %}
+    </div>
+
+    {# ── Rodapé: tagline + wordmark + ENCERRAR ── #}
+    <div class="final-footer">
+      <img src="/static/img/logo.png" alt="RUÍDO" class="final-footer-logo">
+      <p class="final-footer-tagline">E se existisse uma Jam de Filmes? Um espaço para descobrir, discutir e escolher histórias coletivamente.</p>
       <button class="btn-primary btn-end" onclick="endSession()">ENCERRAR SESSÃO</button>
     </div>
+
   </div>
 
   {# ════════ SHOW_1 / SHOW_2 — RESULTS ════════ #}
@@ -177,8 +196,9 @@
     <div class="results-movies-grid">
       {% for movie in match_data.movies %}
       <div class="result-movie-card {% if movie.is_match %}is-match{% endif %}">
-        <div class="result-movie-poster" style="background: linear-gradient(155deg, rgba(255,51,0,0.15) 0%, rgba(6,5,26,0.95) 100%);">
-          <span class="result-movie-initial">{{ movie.movie_title[0] }}</span>
+        <div class="result-movie-poster {% if movie.poster %}has-poster{% endif %}"
+             style="{% if movie.poster %}background-image:url('/{{ movie.poster }}'){% else %}background: linear-gradient(155deg, rgba(255,51,0,0.15) 0%, rgba(6,5,26,0.95) 100%){% endif %};">
+          {% if not movie.poster %}<span class="result-movie-initial">{{ movie.movie_title[0] }}</span>{% endif %}
         </div>
         <div class="result-movie-info">
           <p class="result-movie-title">{{ movie.movie_title }}</p>

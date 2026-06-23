@@ -8,7 +8,9 @@ const selected = new Set();        // ids dos filmes escolhidos
 const movieById = {};
 let items = [];                    // filmes do deck atual
 let pos = 0;                       // índice central (cíclico)
-let cards = [];                    // elementos .deck-card
+let cards = [];                    // slots DOM visíveis (janela de DECK_WINDOW)
+
+const DECK_WINDOW = 5;             // máx. nós DOM montados simultaneamente
 
 Object.entries(MOVIES_DATA).forEach(([catKey, cat]) => {
   (cat.movies || []).forEach(m => {
@@ -48,11 +50,14 @@ function toggleGenre(catKey, el) {
 
 function showMoviePhase() {
   const cats = Object.keys(MOVIES_DATA).filter(c => selectedGenres.has(c));
-  buildDeck(cats);
   document.getElementById('phase-cat').style.display = 'none';
   document.getElementById('phase-movies').style.display = 'flex';
   document.getElementById('selected-counter').style.display = '';
   document.getElementById('round-instruction-text').textContent = MOVIE_INSTRUCTION;
+  // Monta o deck só depois de tornar a fase visível — navegadores não carregam
+  // background-image de elementos em display:none, então os pôsteres não pintavam
+  // até uma navegação forçar novo layout. Visível primeiro = pôsteres já aparecem.
+  buildDeck(cats);
 }
 
 /* ════════════ Deck cíclico estilo Tinder (itens 4/5) ════════════ */
@@ -64,19 +69,12 @@ function buildDeck(catKeys) {
 
   const deck = document.getElementById('deck');
   deck.innerHTML = '';
-  cards = items.map((m, i) => {
+  // Cria apenas min(N, DECK_WINDOW) slots reutilizáveis — evita montar um nó DOM
+  // por filme do catálogo (~20-50 filmes), que trava o render inicial no mobile.
+  const winSize = Math.min(items.length, DECK_WINDOW);
+  cards = Array.from({length: winSize}, () => {
     const card = document.createElement('div');
     card.className = 'deck-card';
-    card.dataset.i = i;
-    card.dataset.id = m.id;
-    const hasPoster = Boolean(m.poster);
-    const dpStyle = hasPoster
-      ? 'background-image:url("/' + m.poster + '")'
-      : 'background:' + posterGradient(m.color);
-    card.innerHTML =
-      '<div class="deck-poster' + (hasPoster ? ' has-poster' : '') + '" style="' + dpStyle + '">' +
-        (hasPoster ? '' : '<span class="deck-initial">' + m.title.charAt(0) + '</span>') +
-      '</div>';
     deck.appendChild(card);
     return card;
   });
@@ -95,23 +93,43 @@ function cyclicRel(i) {
 }
 
 function layout() {
-  cards.forEach((card, i) => {
-    const r = cyclicRel(i);
+  const n = items.length;
+  const half = Math.floor(cards.length / 2);
+  cards.forEach((card, s) => {
+    const rel = s - half;
+    const itemIdx = ((pos + rel) % n + n) % n;
+    const m = items[itemIdx];
+
+    // Atualiza conteúdo apenas quando o item do slot muda
+    if (card.dataset.id !== m.id) {
+      const hasPoster = Boolean(m.poster);
+      const dpStyle = hasPoster
+        ? "background-image:url('/" + m.poster + "')"
+        : 'background:' + posterGradient(m.color);
+      card.innerHTML =
+        '<div class="deck-poster' + (hasPoster ? ' has-poster' : '') + '" style="' + dpStyle + '">' +
+          (hasPoster ? '' : '<span class="deck-initial">' + m.title.charAt(0) + '</span>') +
+        '</div>';
+      card.dataset.id = m.id;
+      card.dataset.i = String(itemIdx);
+    }
+
+    card.classList.toggle('focused', rel === 0);
+    card.classList.toggle('in-list', selected.has(m.id));
+
     let tx, sc, rot, op, z, pe;
-    if (r === 0)       { tx = '0';     sc = 1;   rot = '0deg';   op = 1;   z = 30; pe = 'auto'; }
-    else if (r === -1) { tx = '-64%';  sc = .8;  rot = '-9deg';  op = .5;  z = 20; pe = 'auto'; }
-    else if (r === 1)  { tx = '64%';   sc = .8;  rot = '9deg';   op = .5;  z = 20; pe = 'auto'; }
-    else if (r === -2) { tx = '-108%'; sc = .66; rot = '-13deg'; op = .15; z = 10; pe = 'none'; }
-    else if (r === 2)  { tx = '108%';  sc = .66; rot = '13deg';  op = .15; z = 10; pe = 'none'; }
-    else               { tx = (r < 0 ? '-135%' : '135%'); sc = .6; rot = '0deg'; op = 0; z = 1; pe = 'none'; }
+    if (rel === 0)       { tx = '0';     sc = 1;   rot = '0deg';   op = 1;   z = 30; pe = 'auto'; }
+    else if (rel === -1) { tx = '-64%';  sc = .8;  rot = '-9deg';  op = .5;  z = 20; pe = 'auto'; }
+    else if (rel === 1)  { tx = '64%';   sc = .8;  rot = '9deg';   op = .5;  z = 20; pe = 'auto'; }
+    else if (rel === -2) { tx = '-108%'; sc = .66; rot = '-13deg'; op = .15; z = 10; pe = 'none'; }
+    else if (rel === 2)  { tx = '108%';  sc = .66; rot = '13deg';  op = .15; z = 10; pe = 'none'; }
+    else                 { tx = (rel < 0 ? '-135%' : '135%'); sc = .6; rot = '0deg'; op = 0; z = 1; pe = 'none'; }
     card.style.setProperty('--tx', tx);
     card.style.setProperty('--sc', sc);
     card.style.setProperty('--rot', rot);
     card.style.setProperty('--op', op);
     card.style.zIndex = z;
     card.style.pointerEvents = pe;
-    card.classList.toggle('focused', r === 0);
-    card.classList.toggle('in-list', selected.has(items[i].id));
   });
   renderMeta();
 }
@@ -165,7 +183,9 @@ function toggleCurrent() {
   if (!m) return;
   if (selected.has(m.id)) selected.delete(m.id);
   else { if (selected.size >= PICKS_REQUIRED) return; selected.add(m.id); }
-  cards[pos].classList.toggle('in-list', selected.has(m.id));
+  // O card central é sempre o slot do meio, independente do índice do item
+  const centerCard = cards[Math.floor(cards.length / 2)];
+  if (centerCard) centerCard.classList.toggle('in-list', selected.has(m.id));
   updateCounter();
   syncAddBtn();
 }

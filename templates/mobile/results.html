@@ -39,10 +39,15 @@
     {% for v in player_votes %}
     {% set movie_entry = match_data.movies | selectattr('movie_id','equalto',v.movie_id) | first | default(none) %}
     <div class="your-pick-item {% if movie_entry and movie_entry.is_match %}is-match{% endif %}">
-      <div class="your-pick-poster">{{ v.movie_title[0] }}</div>
-      <div class="your-pick-info">
-        <p class="your-pick-title">{{ v.movie_title }}</p>
-        <p class="your-pick-cat">{{ v.category | upper }}</p>
+      <div class="your-pick-content" style="display: flex; flex-direction: row; gap: 0.5rem;">
+        <div class="your-pick-poster {% if movie_entry and movie_entry.poster %}has-poster{% endif %}"
+            {% if movie_entry and movie_entry.poster %}style="background-image:url('/{{ movie_entry.poster }}')"{% endif %}>
+          {% if not (movie_entry and movie_entry.poster) %}{{ v.movie_title[0] }}{% endif %}
+        </div>
+        <div class="your-pick-info">
+          <p class="your-pick-title">{{ v.movie_title }}</p>
+          <p class="your-pick-cat">{{ v.category | upper }}</p>
+        </div>
       </div>
       {% if movie_entry and movie_entry.is_match %}
       <span class="match-tag">MATCH</span>

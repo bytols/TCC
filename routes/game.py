@@ -52,6 +52,8 @@ def enrich_match_movies(match_data: dict) -> dict:
         meta = MOVIE_LOOKUP.get(mid, {})
         if meta.get("year"):
             movie["year"] = meta["year"]
+        if meta.get("category_label"):
+            movie["category_label"] = meta["category_label"]
     return match_data
 
 game_bp = Blueprint("game", __name__)

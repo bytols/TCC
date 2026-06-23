@@ -1,14 +1,9 @@
 # Opções do construtor de personagem (avatar composto em SVG).
-# Categorias: rosto (forma), cabelo (estilo), pele (cor), cor_cabelo (cor),
-# acessorio e fundo (cor). Veja avatar.py / static/js/avatar.js.
+# Categorias: cabelo (estilo), pele (cor), cor_cabelo (cor), acessorio e
+# fundo (cor). A cabeça é sempre redonda (formato único). Veja avatar.py /
+# static/js/avatar.js.
 
 CHAR_OPTIONS = {
-    "rosto": [   # forma do rosto
-        {"id": "redondo",    "label": "Redondo"},
-        {"id": "oval",       "label": "Oval"},
-        {"id": "quadrado",   "label": "Quadrado"},
-        {"id": "triangular", "label": "Triangular"},
-    ],
     "cabelo": [  # estilo de cabelo
         {"id": "liso_curto", "label": "Liso curto"},
         {"id": "liso_longo", "label": "Liso longo"},
@@ -56,7 +51,6 @@ CHAR_OPTIONS = {
 }
 
 CHAR_DEFAULTS = {
-    "rosto":      "oval",
     "cabelo":     "liso_curto",
     "pele":       "pele_2",
     "cor_cabelo": "cab_1",

@@ -35,7 +35,7 @@ def join_page():
     if existing:
         return redirect(url_for("game.waiting"))
 
-    return render_template("mobile/join.html", char_options=CHAR_OPTIONS)
+    return render_template("mobile/join.html", char_options=CHAR_OPTIONS, char_defaults=CHAR_DEFAULTS)
 
 
 @join_bp.route("/join", methods=["POST"])
@@ -49,22 +49,18 @@ def join_submit():
         return render_template("mobile/session_full.html"), 403
 
     name = request.form.get("name", "").strip()
+
+    character = {key: request.form.get(key, CHAR_DEFAULTS[key]) for key in CHAR_DEFAULTS}
+
     if not name or len(name) > 50:
         return render_template("mobile/join.html", char_options=CHAR_OPTIONS,
+                               char_defaults=character,
                                error="Nome inválido (máx 50 caracteres)"), 400
 
     if Player.query.filter_by(name=name).first():
         return render_template("mobile/join.html", char_options=CHAR_OPTIONS,
+                               char_defaults=character,
                                error="Este nome já está em uso"), 400
-
-    character = {
-        "rosto":      request.form.get("rosto",      CHAR_DEFAULTS["rosto"]),
-        "cabelo":     request.form.get("cabelo",     CHAR_DEFAULTS["cabelo"]),
-        "pele":       request.form.get("pele",       CHAR_DEFAULTS["pele"]),
-        "cor_cabelo": request.form.get("cor_cabelo", CHAR_DEFAULTS["cor_cabelo"]),
-        "acessorio":  request.form.get("acessorio",  CHAR_DEFAULTS["acessorio"]),
-        "fundo":      request.form.get("fundo",      CHAR_DEFAULTS["fundo"]),
-    }
 
     player = Player(
         name=name,

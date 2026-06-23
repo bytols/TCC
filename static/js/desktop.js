@@ -13,27 +13,24 @@
   socket.on("player_joined", function (d) { renderPlayers(d.players, d.player_count); });
   socket.on("progress", function (d) { renderProgress(d.submitted, d.total, d.submitted_ids); });
 
-  /* ── Cor de fundo dinâmica por tempo decorrido (item 10) ── */
+  /* ── Cor de fundo a partir do evento round_phase do servidor ── */
   const GLOWS = ["glow-blue", "glow-pink", "glow-orange", "glow-final", "glow-green"];
-  function colorClassFor(elapsed, state) {
-    if (state === "FINAL") return "glow-green";   // consenso → verde
-    if (state === "LOBBY") return "glow-final";   // lobby quente
-    if (elapsed < 180) return "glow-blue";        // 0–3 min · exploração
-    if (elapsed < 360) return "glow-pink";        // 3–6 min · aproximação
-    return "glow-orange";                          // 6+ min · negociação
-  }
-  function applyColor(elapsed, state) {
-    if (!app) return;
-    const cls = colorClassFor(elapsed, state);
-    if (app.classList.contains(cls)) return;
+  const COLOR_MAP = { BLUE: "glow-blue", PINK: "glow-pink", ORANGE: "glow-orange", GREEN: "glow-green" };
+  function applyGlow(cls) {
+    if (!app || app.classList.contains(cls)) return;
     GLOWS.forEach(function (c) { app.classList.remove(c); });
-    app.classList.add(cls);   // transição suave via CSS (background-color 2s)
+    app.classList.add(cls);
   }
-  // aplica imediatamente com o tempo embutido no HTML (evita flash)
-  applyColor(parseInt(app && app.dataset.elapsed || "0", 10), STATE);
-  // avança a cor mesmo sem novos eventos (ex.: 3min → rosa) a cada 5s
-  let localElapsed = parseInt(app && app.dataset.elapsed || "0", 10);
-  setInterval(function () { localElapsed += 5; applyColor(localElapsed, STATE); }, 5000);
+  // Cor inicial a partir do estado renderizado (sem depender de elapsed_seconds)
+  (function () {
+    if (STATE === "FINAL") applyGlow("glow-green");
+    else if (STATE === "LOBBY") applyGlow("glow-final");
+    else if (STATE && STATE.startsWith("ROUND_")) applyGlow("glow-blue");
+    else if (STATE === "SHOW_1") applyGlow("glow-blue");
+    else if (STATE === "SHOW_2") applyGlow("glow-pink");
+  }());
+  // Atualiza cor em tempo real a partir do servidor
+  socket.on("round_phase", function (d) { applyGlow(COLOR_MAP[d.color] || "glow-blue"); });
 
   /* ── Render lobby grid + waiting avatars ── */
   function renderPlayers(players, count) {
@@ -146,10 +143,6 @@
         if (d.state !== STATE) { window.location.reload(); return; }
         if (d.players) renderPlayers(d.players, d.player_count);
         if (d.progress) renderProgress(d.progress.submitted, d.progress.total, d.progress.submitted_ids);
-        if (typeof d.elapsed_seconds === "number") {
-          localElapsed = d.elapsed_seconds;     // sincroniza com o servidor
-          applyColor(localElapsed, d.state);
-        }
       })
       .catch(function () {});
   }, 2500);

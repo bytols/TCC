@@ -52,7 +52,7 @@
         <div class="avatar-preview-svg" id="avatar-preview-svg"></div>
       </div>
 
-      {% set tabs = [("rosto","Rosto"),("cabelo","Cabelo"),("pele","Pele"),("cor_cabelo","Cor do cabelo"),("acessorio","Acessórios"),("fundo","Fundo")] %}
+      {% set tabs = [("cabelo","Cabelo"),("pele","Pele"),("cor_cabelo","Cor do cabelo"),("acessorio","Acessórios"),("fundo","Fundo")] %}
       <div class="char-tabs">
         {% for key, label in tabs %}
         <button type="button" class="char-tab {% if loop.first %}active{% endif %}" data-tab="{{ key }}">{{ label }}</button>
@@ -63,9 +63,10 @@
       <div class="char-options {% if loop.first %}active{% endif %}" id="tab-{{ key }}">
         <div class="options-row">
           {% for opt in char_options[key] %}
-          <label class="option-item {% if loop.first %}selected{% endif %}">
+          {% set is_default = opt.id == char_defaults[key] %}
+          <label class="option-item {% if is_default %}selected{% endif %}">
             <input type="radio" name="{{ key }}" value="{{ opt.id }}"
-                   {% if loop.first %}checked{% endif %} onchange="updateAvatar()">
+                   {% if is_default %}checked{% endif %} onchange="updateAvatar()">
             {% if opt.color is defined %}
             <div class="option-swatch" style="background:{{ opt.color }}"></div>
             <span class="option-label">{{ opt.label }}</span>
@@ -141,7 +142,7 @@
   function sel(name) { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null; }
   function updateAvatar() {
     const character = {
-      rosto: sel("rosto"), cabelo: sel("cabelo"), pele: sel("pele"),
+      cabelo: sel("cabelo"), pele: sel("pele"),
       cor_cabelo: sel("cor_cabelo"), acessorio: sel("acessorio"), fundo: sel("fundo"),
     };
     document.getElementById("avatar-preview-svg").innerHTML = window.buildAvatarSVG(character);

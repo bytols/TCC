@@ -15,6 +15,10 @@ class Session(db.Model):
     result_seconds = Column(Integer, nullable=True)
     # Timestamp when the most recent ROUND_X started (used by Slice 4 LED timer).
     round_started_at = Column(DateTime, nullable=True)
+    # Generation counter: incremented each time a ROUND_x begins. Background
+    # timer tasks receive the gen at dispatch time and abort if it no longer
+    # matches, preventing a finished round's timer from overriding a WHITE LED.
+    timer_gen = Column(Integer, nullable=False, default=0)
 
     players = db.relationship("Player", backref="session", lazy=True)
 
