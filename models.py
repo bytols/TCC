@@ -30,6 +30,9 @@ class Player(db.Model):
     character_json = Column(Text, nullable=False, default="{}")
     avatar_path = Column(String(200), nullable=True)
     session_id = Column(Integer, ForeignKey("session.id"), nullable=False)
+    # Último heartbeat recebido do celular. A varredura periódica remove jogadores
+    # cujo last_seen ficou velho demais (desconexão por wifi/fechar navegador).
+    last_seen = Column(DateTime, default=datetime.utcnow)
 
     votes = db.relationship("Vote", backref="player", lazy=True)
 

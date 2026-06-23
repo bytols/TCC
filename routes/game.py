@@ -1,7 +1,7 @@
 import functools
 import json
 import os
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response
 from extensions import db
 from models import Player, Vote, RoundPool
 import session_state
@@ -101,6 +101,27 @@ def pool_grouped(round_number: int) -> dict:
             entry["poster"] = _manifest[item.movie_id]["file"]
         g["movies"].append(entry)
     return groups
+
+
+@game_bp.route("/heartbeat", methods=["POST"])
+def heartbeat():
+    """Sinal periódico do celular: mantém o jogador vivo para a varredura."""
+    player = get_current_player()
+    if player is None:
+        return ("", 204)
+    session_state.touch_player(player.id)
+    return ("", 204)
+
+
+@game_bp.route("/leave", methods=["POST"])
+def leave():
+    """Saída voluntária pelo botão "Sair": descarta a participação e limpa o cookie."""
+    player = get_current_player()
+    if player is not None:
+        session_state.remove_player(player.id)
+    resp = make_response(jsonify({"status": "left"}))
+    resp.delete_cookie("player_id")
+    return resp
 
 
 @game_bp.route("/waiting")

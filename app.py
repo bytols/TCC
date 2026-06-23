@@ -37,4 +37,9 @@ def create_app(test_config=None):
     import arduino
     arduino.init()
 
+    # Varredura periódica que remove jogadores desconectados (heartbeat timeout).
+    if not app.config.get("TESTING"):
+        import session_state
+        session_state.start_heartbeat_sweeper(app)
+
     return app

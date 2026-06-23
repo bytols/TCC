@@ -1,8 +1,9 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy import func, distinct
 from extensions import db, socketio
 from models import Session, Player, Vote, RoundPool
 from match import calculate_match
+import config
 import arduino
 
 VALID_TRANSITIONS = {
@@ -155,6 +156,83 @@ def notify_progress(round_number: int) -> None:
     }, room="game_room")
 
 
+def remove_player(player_id: int) -> str | None:
+    """Remove um jogador (saiu pelo botão ou caiu por timeout).
+
+    Descarta os votos dele, apaga o slot LED (OFF) e atualiza a TV. Durante uma
+    partida ativa, se o número de jogadores cair abaixo de MIN_PLAYERS a sessão é
+    encerrada por completo (reset total). Caso contrário, em rodada, recalcula o
+    progresso — avançando automaticamente se todos os restantes já submeteram.
+    Retorna o estado resultante, "ENDED" se houve reset, ou None se nada feito.
+    """
+    player = Player.query.get(player_id)
+    if player is None:
+        return None
+
+    # Libera o totem LED daquele jogador.
+    arduino.send_led(player_id, "OFF")
+
+    # Descarta a participação do jogador e remove o registro.
+    Vote.query.filter_by(player_id=player_id).delete()
+    db.session.delete(player)
+    db.session.commit()
+
+    session = get_session()
+    if session is None:
+        return None
+
+    remaining = Player.query.count()
+    active = session.state not in ("LOBBY", "FINAL")
+
+    # Partida em andamento com menos de MIN_PLAYERS → encerra tudo (reset total).
+    if active and remaining < config.MIN_PLAYERS:
+        clear_session()
+        return "ENDED"
+
+    # Reflete o novo elenco na TV (contagem + chips).
+    socketio.emit("player_left", {
+        "player_id": player_id,
+        "player_count": remaining,
+        "players": _players_payload(),
+    }, room="game_room")
+
+    # No meio de uma rodada: recalcula o progresso e avança se já fechou.
+    if session.state in ("ROUND_1", "ROUND_2", "ROUND_3"):
+        rn = int(session.state[-1])
+        if remaining >= config.MIN_PLAYERS and check_round_complete(rn):
+            advance_state()
+        else:
+            notify_progress(rn)
+
+    return session.state
+
+
+def touch_player(player_id: int) -> None:
+    """Registra o heartbeat de um jogador (mantém o last_seen atualizado)."""
+    player = Player.query.get(player_id)
+    if player is not None:
+        player.last_seen = datetime.utcnow()
+        db.session.commit()
+
+
+def start_heartbeat_sweeper(app) -> None:
+    """Inicia a varredura periódica que remove jogadores desconectados."""
+    socketio.start_background_task(_heartbeat_sweep_task, app)
+
+
+def _heartbeat_sweep_task(app) -> None:
+    import eventlet
+    while True:
+        eventlet.sleep(config.HEARTBEAT_SWEEP_SECONDS)
+        with app.app_context():
+            if get_session() is None:
+                continue
+            cutoff = datetime.utcnow() - timedelta(seconds=config.HEARTBEAT_TIMEOUT_SECONDS)
+            stale = Player.query.filter(Player.last_seen < cutoff).all()
+            for p in stale:
+                remove_player(p.id)
+
+
 def build_round_pool(from_round: int) -> None:
     next_round = from_round + 1
     RoundPool.query.filter_by(round_number=next_round).delete()
@@ -233,7 +311,8 @@ def clear_session() -> None:
     import os
     import glob
 
-    _send_color_to_all("WHITE")
+    # Encerramento/reset: apaga todos os slots LED (totens ficam vazios → OFF).
+    _send_color_to_all("OFF")
 
     avatar_dir = os.path.join(os.path.dirname(__file__), "static", "img", "avatars")
     for pattern in ("*.png", "*.svg"):

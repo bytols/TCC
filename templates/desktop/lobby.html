@@ -16,6 +16,12 @@
      data-state="{{ session.state }}" data-elapsed="{{ elapsed }}">
   <div class="desktop-glow"></div>
 
+  {# Botão do host: encerra a partida a qualquer momento (reset total). O FINAL já
+     tem seu próprio "ENCERRAR SESSÃO" no rodapé, então aqui ele é omitido. #}
+  {% if session.state != "FINAL" %}
+  <button class="btn-host-end" onclick="endSession()">ENCERRAR PARTIDA</button>
+  {% endif %}
+
   {# ════════ LOBBY (item 4) ════════ #}
   {% if session.state == "LOBBY" %}
   <div class="desktop-lobby">

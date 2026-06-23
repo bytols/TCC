@@ -11,6 +11,7 @@
   socket.on("state_change", function (d) { if (d.state !== STATE) window.location.reload(); });
   socket.on("session_ended", function () { window.location.reload(); });
   socket.on("player_joined", function (d) { renderPlayers(d.players, d.player_count); });
+  socket.on("player_left", function (d) { syncPlayers(d.players, d.player_count); });
   socket.on("progress", function (d) { renderProgress(d.submitted, d.total, d.submitted_ids); });
 
   /* ── Cor de fundo a partir do evento round_phase do servidor ── */
@@ -123,6 +124,23 @@
     if (display) display.style.display = "none";
   }
 
+  /* ── Sincroniza o elenco: adiciona novos e REMOVE quem saiu/caiu ── */
+  function syncPlayers(players, count) {
+    renderPlayers(players, count);
+    const ids = players.map(function (p) { return String(p.id); });
+    [["players-grid", "player-"], ["waiting-players", "wp-"]].forEach(function (pair) {
+      const grid = document.getElementById(pair[0]);
+      if (!grid) return;
+      const prefix = pair[1];
+      Array.prototype.slice.call(grid.children).forEach(function (child) {
+        if (child.id && child.id.indexOf(prefix) === 0
+            && ids.indexOf(child.id.slice(prefix.length)) === -1) {
+          child.remove();
+        }
+      });
+    });
+  }
+
   /* ── Render collective progress (item: "X de Y concluíram") ── */
   function renderProgress(submitted, total, ids) {
     const el = document.getElementById("waiting-progress");
@@ -141,7 +159,7 @@
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (d.state !== STATE) { window.location.reload(); return; }
-        if (d.players) renderPlayers(d.players, d.player_count);
+        if (d.players) syncPlayers(d.players, d.player_count);
         if (d.progress) renderProgress(d.progress.submitted, d.progress.total, d.progress.submitted_ids);
       })
       .catch(function () {});
@@ -158,7 +176,7 @@ function advanceSession() {
     .then(function () { window.location.reload(); });
 }
 function endSession() {
-  if (confirm("Encerrar a sessão e limpar todos os dados?")) {
+  if (confirm("Encerrar a partida? Todos os jogadores serão desconectados e a tela volta ao início.")) {
     fetch("/admin/end", { method: "POST" }).then(function () { window.location.reload(); });
   }
 }

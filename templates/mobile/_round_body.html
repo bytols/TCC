@@ -72,6 +72,8 @@
   </div>
 </div>
 
+{% include "mobile/_player_controls.html" %}
+
 <script id="movies-data" type="application/json">{{ movies | tojson }}</script>
 <script>
   const PICKS_REQUIRED = {{ picks_required }};

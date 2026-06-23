@@ -17,6 +17,13 @@ ROUND2_PICKS = 3
 ROUND3_PICKS = 3
 AUTO_START_SECONDS = int(os.environ.get("AUTO_START_SECONDS", "30"))
 
+# Detecção de saída involuntária (wifi caiu / fechou navegador): o celular envia
+# um "heartbeat" a cada HEARTBEAT_PING_SECONDS; o servidor varre a cada
+# HEARTBEAT_SWEEP_SECONDS e remove quem não dá sinal há HEARTBEAT_TIMEOUT_SECONDS.
+HEARTBEAT_PING_SECONDS = 3
+HEARTBEAT_SWEEP_SECONDS = 3
+HEARTBEAT_TIMEOUT_SECONDS = 10
+
 # Chave da API do TMDB para buscar posters reais (ver posters.py e .env.example).
 # Defina em .env:  TMDB_API_KEY=sua_chave_aqui
 TMDB_API_KEY = os.environ.get("TMDB_API_KEY", "")

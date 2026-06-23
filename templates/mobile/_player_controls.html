@@ -1,0 +1,43 @@
+{# Controles do jogador (telas de jogo): botão "Sair" + modal de confirmação +
+   heartbeat periódico. Incluído por waiting, rounds e results — NÃO pela tela de
+   join (lá ainda não existe jogador). #}
+<button type="button" class="btn-leave" onclick="ruidoShowLeave()">SAIR</button>
+
+<div class="leave-modal" id="leave-modal" aria-hidden="true">
+  <div class="leave-modal-card">
+    <p class="leave-modal-title">Sair da experiência?</p>
+    <p class="leave-modal-text">Você vai deixar a partida e voltar ao início. Sua participação será descartada.</p>
+    <div class="leave-modal-actions">
+      <button type="button" class="btn-leave-cancel" onclick="ruidoHideLeave()">CANCELAR</button>
+      <button type="button" class="btn-leave-confirm" onclick="ruidoConfirmLeave()">SAIR</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.__ruidoControls) return;   // evita ligar duas vezes se incluído duplicado
+  window.__ruidoControls = true;
+
+  var PING_MS = {{ heartbeat_ping_seconds | default(3) }} * 1000;
+
+  // Heartbeat: avisa o servidor que ainda estamos aqui (desconexão por timeout).
+  setInterval(function () {
+    fetch("/heartbeat", { method: "POST" }).catch(function () {});
+  }, PING_MS);
+
+  window.ruidoShowLeave = function () {
+    var m = document.getElementById("leave-modal");
+    if (m) m.classList.add("show");
+  };
+  window.ruidoHideLeave = function () {
+    var m = document.getElementById("leave-modal");
+    if (m) m.classList.remove("show");
+  };
+  window.ruidoConfirmLeave = function () {
+    fetch("/leave", { method: "POST" })
+      .then(function () { window.location.href = "/join"; })
+      .catch(function () { window.location.href = "/join"; });
+  };
+}());
+</script>

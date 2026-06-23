@@ -917,3 +917,102 @@ input { font-family: var(--font); }
     background: rgba(255, 255, 255, 0.12);
   }
 }
+
+/* ══════════════════════════════════════════════════
+   Saída de jogadores — botão "Sair" + modal (mobile)
+   e botão "Encerrar partida" do host (desktop)
+══════════════════════════════════════════════════ */
+
+/* Botão "Sair" flutuante no canto das telas de jogo (mobile) */
+.btn-leave {
+  position: fixed;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 40;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  background: var(--glass-bg-soft);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.btn-leave:hover { color: var(--text); border-color: rgba(255,255,255,0.4); }
+
+/* Modal de confirmação de saída */
+.leave-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(6, 5, 26, 0.72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.leave-modal.show { display: flex; }
+.leave-modal-card {
+  width: 100%;
+  max-width: 320px;
+  padding: 1.6rem 1.4rem;
+  text-align: center;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+}
+.leave-modal-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.6rem; }
+.leave-modal-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.4rem; }
+.leave-modal-actions { display: flex; gap: 0.7rem; }
+.leave-modal-actions button {
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-pill);
+  transition: all 0.2s;
+}
+.btn-leave-cancel {
+  color: var(--text);
+  background: var(--glass-bg-soft);
+  border: 1px solid var(--glass-border);
+}
+.btn-leave-cancel:hover { background: rgba(255,255,255,0.14); }
+.btn-leave-confirm {
+  color: #fff;
+  background: rgba(255, 51, 0, 0.85);
+  border: 1px solid var(--red);
+}
+.btn-leave-confirm:hover { background: var(--red); box-shadow: 0 0 20px rgba(255,51,0,0.4); }
+
+/* Botão "Encerrar partida" do host (desktop), sempre acessível */
+.btn-host-end {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 50;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  background: var(--glass-bg-soft);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.btn-host-end:hover {
+  color: #fff;
+  background: rgba(255, 51, 0, 0.18);
+  border-color: rgba(255, 51, 0, 0.6);
+}
