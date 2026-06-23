@@ -97,33 +97,60 @@
     </div>
   </div>
 
-  {# ════════ SHOW_1 / SHOW_2 / FINAL — RESULTS ════════ #}
-  {% elif session.state in ["SHOW_1", "SHOW_2", "FINAL"] %}
+  {# ════════ FINAL — RESULTADO COLETIVO ════════ #}
+  {% elif session.state == "FINAL" %}
+  <div class="desktop-final">
+    <div class="final-header">
+      <p class="final-title">RESULTADO COLETIVO</p>
+      <p class="final-tagline">Depois de diferentes escolhas, o grupo chegou a um consenso.</p>
+      {% if result_seconds is not none %}
+      <p class="consensus-time">Consenso em {{ result_seconds // 60 }} min {{ result_seconds % 60 }} s</p>
+      {% endif %}
+    </div>
+
+    {% if consensus_movies | length == 1 %}
+    {% set m = consensus_movies[0] %}
+    <div class="final-hero">
+      <div class="final-hero-poster {% if m.poster %}has-poster{% endif %}"
+           {% if m.poster %}style="background-image:url('/{{ m.poster }}')"{% endif %}>
+        {% if not m.poster %}<span class="final-hero-initial">{{ m.movie_title[0] }}</span>{% endif %}
+      </div>
+      <p class="final-hero-title">{{ m.movie_title }}</p>
+    </div>
+    {% else %}
+    <div class="final-posters-row">
+      {% for m in consensus_movies %}
+      <div class="final-poster-item">
+        <div class="final-poster {% if m.poster %}has-poster{% endif %}"
+             {% if m.poster %}style="background-image:url('/{{ m.poster }}')"{% endif %}>
+          {% if not m.poster %}<span class="final-poster-initial">{{ m.movie_title[0] }}</span>{% endif %}
+        </div>
+        <p class="final-poster-title">{{ m.movie_title }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <button class="btn-primary btn-end" onclick="endSession()">ENCERRAR SESSÃO</button>
+    <img src="/static/img/logo.png" alt="RUÍDO" class="final-logo">
+  </div>
+
+  {# ════════ SHOW_1 / SHOW_2 — RESULTS ════════ #}
+  {% elif session.state in ["SHOW_1", "SHOW_2"] %}
   <div class="desktop-results">
     <div class="results-header">
       <div class="results-header-left">
         <p class="results-round-label">
           {% if session.state == "SHOW_1" %}RESULTADO — RODADA 1
-          {% elif session.state == "SHOW_2" %}RESULTADO — RODADA 2
-          {% else %}RESULTADO COLETIVO FINAL{% endif %}
+          {% else %}RESULTADO — RODADA 2{% endif %}
         </p>
         <div class="match-badge">
           <span class="match-pct">{{ match_data.match_pct }}%</span>
           <span class="match-label">DE MATCH</span>
         </div>
         <p class="match-detail">{{ match_data.matched_count }} de {{ match_data.total_unique }} filmes em comum</p>
-        {% if session.state == "FINAL" %}
-        <p class="results-consensus">Depois de diferentes escolhas, o grupo chegou a um consenso.</p>
-        {% if result_seconds is not none %}
-        <p class="consensus-time">Consenso alcançado em {{ result_seconds // 60 }} min {{ result_seconds % 60 }} s</p>
-        {% endif %}
-        {% endif %}
       </div>
-      {% if session.state != "FINAL" %}
       <button class="btn-primary btn-advance" onclick="advanceSession()">PRÓXIMA RODADA</button>
-      {% else %}
-      <button class="btn-primary btn-end" onclick="endSession()">ENCERRAR SESSÃO</button>
-      {% endif %}
     </div>
 
     <div class="results-movies-grid">
