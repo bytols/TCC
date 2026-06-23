@@ -66,6 +66,10 @@ function buildDeck(catKeys) {
   (catKeys && catKeys.length ? catKeys : Object.keys(MOVIES_DATA)).forEach(c => {
     (MOVIES_DATA[c].movies || []).forEach(m => items.push(movieById[m.id]));
   });
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
 
   const deck = document.getElementById('deck');
   deck.innerHTML = '';
