@@ -1,0 +1,1891 @@
+[
+  {
+    "movie_id": "acao__speed",
+    "title": "Speed",
+    "year": 1994,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 1637,
+        "title": "Velocidade Máxima",
+        "release_date": "1994-06-09",
+        "poster_path": "/d30AWcDezR0qM6OgXovulfA4z8N.jpg"
+      },
+      {
+        "tmdb_id": 1034726,
+        "title": "The Making of 'Speed'",
+        "release_date": "1994-06-01",
+        "poster_path": "/h6wVZA7CTQjHIm1DfTHiBClK3an.jpg"
+      },
+      {
+        "tmdb_id": 1437166,
+        "title": "Aliens: Ride at the Speed of Fright",
+        "release_date": "1994-05-27",
+        "poster_path": "/AmvghEtbJiDfGkl5rw9IYlR2jtv.jpg"
+      },
+      {
+        "tmdb_id": 1022327,
+        "title": "Blue Angels: Around the World at the Speed of Sound",
+        "release_date": "1994-01-01",
+        "poster_path": "/vA6WzGbxaqd0xRpD0tJCdusRVh.jpg"
+      },
+      {
+        "tmdb_id": 372760,
+        "title": "Speed Racer: Welcome to the World of Vic Chesnutt",
+        "release_date": "1994-01-19",
+        "poster_path": "/2SBppIZ75NcSdJopFRdVAusVCDt.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__top_gun",
+    "title": "Top Gun: Maverick",
+    "year": 2022,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 361743,
+        "title": "Top Gun: Maverick",
+        "release_date": "2022-05-21",
+        "poster_path": "/kPbuLGVSJHATkW9fX9L3h1wM0Pa.jpg"
+      },
+      {
+        "tmdb_id": 1076135,
+        "title": "Top Gun Maverick : Le phénomène",
+        "release_date": "2022-12-23",
+        "poster_path": "/4t4GS16zOkdewJzeRZZwy3m7Y76.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__gladiator",
+    "title": "Gladiador",
+    "year": 2000,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 98,
+        "title": "Gladiador",
+        "release_date": "2000-05-04",
+        "poster_path": "/4DUClyGA6OqjXv6yC0Imf6THGfp.jpg"
+      },
+      {
+        "tmdb_id": 692304,
+        "title": "O Jogo dos Gladiadores: Um Sangrento Esporte Romano",
+        "release_date": "2000-11-21",
+        "poster_path": "/aktsN3uWtArW4rtcMRtukwlLfn7.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__heat",
+    "title": "Heat",
+    "year": 1995,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 949,
+        "title": "Fogo Contra Fogo",
+        "release_date": "1995-12-15",
+        "poster_path": "/cv1ZuY874Q0uqFkURO8hjI2471z.jpg"
+      },
+      {
+        "tmdb_id": 222848,
+        "title": "Caged Heat 3000",
+        "release_date": "1995-01-01",
+        "poster_path": "/un9pLM0KuqZBxmWKVvRjR6wmhgn.jpg"
+      },
+      {
+        "tmdb_id": 128141,
+        "title": "California Heat",
+        "release_date": "1995-01-01",
+        "poster_path": "/c31vApJvyVzFGPwUQV6thacL5Lt.jpg"
+      },
+      {
+        "tmdb_id": 706330,
+        "title": "ECW Heat Wave 1995",
+        "release_date": "1995-07-15",
+        "poster_path": "/4miPIzrKBaSznoTBv1bS0sZwoMG.jpg"
+      },
+      {
+        "tmdb_id": 823115,
+        "title": "In the Heat of the Night: By Duty Bound",
+        "release_date": "1995-02-17",
+        "poster_path": "/m3IKVl4zRTNGA4FbyMvA8tXDBXc.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__point_break",
+    "title": "Ponto de Ruptura",
+    "year": 1991,
+    "category": "AÇÃO",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "acao__the_raid",
+    "title": "The Raid",
+    "year": 2011,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 485601,
+        "title": "The Most Courageous Raid of WWII",
+        "release_date": "2011-11-01",
+        "poster_path": "/uqS7bNtMmx6SYZX3HARnoTk9Lzb.jpg"
+      },
+      {
+        "tmdb_id": 507267,
+        "title": "The Jockstrap Raiders",
+        "release_date": "2011-07-01",
+        "poster_path": "/55RiJahO7IRMqGV84FaGEAg5SBO.jpg"
+      },
+      {
+        "tmdb_id": 137261,
+        "title": "劇場版 仮面ライダーオーズ WONDERFUL 将軍と２１のコアメダル",
+        "release_date": "2011-08-06",
+        "poster_path": "/77SkoCBagAO1unTpBwTSKAzNbJQ.jpg"
+      },
+      {
+        "tmdb_id": 585715,
+        "title": "ネット版 仮面ライダーオーズ ALLSTARS 21の主役とコアメダル",
+        "release_date": "2011-12-09",
+        "poster_path": "/yuXGBxQeCqdDUySZ9h0K984HBzh.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__bad_boys",
+    "title": "Bad Boys",
+    "year": 1995,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 9737,
+        "title": "Os Bad Boys",
+        "release_date": "1995-04-07",
+        "poster_path": "/8fkDLt6Fbr2yyBqt3MEwiumnsar.jpg"
+      },
+      {
+        "tmdb_id": 288031,
+        "title": "Bad Boys Ball",
+        "release_date": "1995-03-02",
+        "poster_path": "/tgrvmYXKG0wJnSilOoXfun3rP37.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__faceoff",
+    "title": "Face/Off",
+    "year": 1997,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 754,
+        "title": "A Outra Face",
+        "release_date": "1997-06-27",
+        "poster_path": "/sygN65yWJeK9SwI4deLZMRZjgns.jpg"
+      },
+      {
+        "tmdb_id": 59091,
+        "title": "Mighty Ducks the Movie: The First Face-Off",
+        "release_date": "1997-04-08",
+        "poster_path": "/m1MDt22FV7BAuIa8XJsRb3OALbR.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__lethal_weapon",
+    "title": "Máquina Mortífera",
+    "year": 1987,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 941,
+        "title": "Máquina Mortífera",
+        "release_date": "1987-03-06",
+        "poster_path": "/jsn0xqelydberc2UoHE8JzdDPTP.jpg"
+      },
+      {
+        "tmdb_id": 258157,
+        "title": "Programmed to Kill",
+        "release_date": "1987-04-05",
+        "poster_path": "/wjqgwl9PktkzQPTPNKdHafsoVTg.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__the_rock",
+    "title": "The Rock",
+    "year": 1996,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 9802,
+        "title": "A Rocha",
+        "release_date": "1996-06-07",
+        "poster_path": "/zmqxzXp0o2rGOFAtxmK0wwkR1Sc.jpg"
+      },
+      {
+        "tmdb_id": 133714,
+        "title": "Within the Rock",
+        "release_date": "1996-06-08",
+        "poster_path": "/aiDYyOX5tpD8P9Lk3VJC6uPAaRb.jpg"
+      },
+      {
+        "tmdb_id": 18128,
+        "title": "Chris Rock: Bring the Pain",
+        "release_date": "1996-06-01",
+        "poster_path": "/iKBOkpJY53iCc5Ur3DjxVnlbd26.jpg"
+      },
+      {
+        "tmdb_id": 18944,
+        "title": "The Rolling Stones Rock and Roll Circus",
+        "release_date": "1996-10-12",
+        "poster_path": "/4vm06pTpw2yfjaMV1j2weXkTJYL.jpg"
+      },
+      {
+        "tmdb_id": 208391,
+        "title": "The Rockford Files: Godfather Knows Best",
+        "release_date": "1996-03-18",
+        "poster_path": "/7ftbMmlmertJxulscGk98e2bUXb.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__commando",
+    "title": "Comando",
+    "year": 1985,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 10999,
+        "title": "Comando para Matar",
+        "release_date": "1985-10-03",
+        "poster_path": "/c02d619U138A3eBt3ZhMPrlwiaM.jpg"
+      },
+      {
+        "tmdb_id": 150839,
+        "title": "Kommando Leopard",
+        "release_date": "1985-10-24",
+        "poster_path": "/qgnaIpnYZXbetgMtOVUIlWRWAcT.jpg"
+      },
+      {
+        "tmdb_id": 209574,
+        "title": "American Commandos",
+        "release_date": "1985-11-11",
+        "poster_path": "/8OXh9Tk0rTdOxsVkhvbMvBNp8T.jpg"
+      },
+      {
+        "tmdb_id": 54855,
+        "title": "Los Angeles Streetfighter",
+        "release_date": "1985-03-23",
+        "poster_path": "/3k1hKBsExunkCQawC5q3y1EmStL.jpg"
+      },
+      {
+        "tmdb_id": 104884,
+        "title": "Killzone",
+        "release_date": "1985-05-01",
+        "poster_path": "/sUVMMawc0IHEIxDLOs24DXmIW3Z.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "acao__hard_boiled",
+    "title": "Hard Boiled",
+    "year": 1992,
+    "category": "AÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 27073,
+        "title": "À Flor da Pele",
+        "release_date": "1992-07-23",
+        "poster_path": "/svc0cbFeJQU5nLMkuecp6FyQ2cs.jpg"
+      },
+      {
+        "tmdb_id": 11782,
+        "title": "Fervura Máxima",
+        "release_date": "1992-04-16",
+        "poster_path": "/x0nFnqBLihdkZuixS8LTS451qgP.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "anim__lion_king",
+    "title": "O Rei Leão",
+    "year": 1994,
+    "category": "ANIMAÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 8587,
+        "title": "O Rei Leão",
+        "release_date": "1994-06-15",
+        "poster_path": "/8aIvm8OaJISOpVTt7rMIh7X35G5.jpg"
+      },
+      {
+        "tmdb_id": 256285,
+        "title": "Leo, o Rei Leão",
+        "release_date": "1994-07-20",
+        "poster_path": "/kjZH1gd5gv17EEC5XrRw3Mvfbc3.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "anim__toy_story",
+    "title": "Toy Story",
+    "year": 1995,
+    "category": "ANIMAÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 862,
+        "title": "Toy Story: Um Mundo de Aventuras",
+        "release_date": "1995-11-22",
+        "poster_path": "/6AafgfifXkFS4g2xGJZIwsPQK6P.jpg"
+      },
+      {
+        "tmdb_id": 711704,
+        "title": "Making 'Toy Story'",
+        "release_date": "1995-12-02",
+        "poster_path": "/s2vPOYtuOY3DMYTduRx0cOzDcWm.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "anim__wall_e",
+    "title": "WALL·E",
+    "year": 2008,
+    "category": "ANIMAÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 10681,
+        "title": "WALL-E",
+        "release_date": "2008-06-26",
+        "poster_path": "/qNiwJPVCO4cgiM8LVtxwPV2HxHS.jpg"
+      },
+      {
+        "tmdb_id": 877268,
+        "title": "WALL·E's Treasures & Trinkets",
+        "release_date": "2008-11-18",
+        "poster_path": "/pJfm3EggGLZToce08Obf7HQHXrP.jpg"
+      },
+      {
+        "tmdb_id": 13413,
+        "title": "BURN-E",
+        "release_date": "2008-11-17",
+        "poster_path": "/1wOReJq1vArLBSejND2Jbw0KeKh.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "anim__encanto",
+    "title": "Encanto",
+    "year": 2021,
+    "category": "ANIMAÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 568124,
+        "title": "Encanto",
+        "release_date": "2021-10-13",
+        "poster_path": "/uWwgb89vSbNNtSPCpIKdbxqi5if.jpg"
+      },
+      {
+        "tmdb_id": 1252045,
+        "title": "Doce Encanto",
+        "release_date": "2021-11-12",
+        "poster_path": "/islc6sQCcxN1JlpI373BQsqGBPJ.jpg"
+      },
+      {
+        "tmdb_id": 1671505,
+        "title": "El Encanto de las Ballenas",
+        "release_date": "2021-08-17",
+        "poster_path": "/ryS4PFZMTsAtpvAI2ku9QzImBE0.jpg"
+      },
+      {
+        "tmdb_id": 846775,
+        "title": "Além da Aparência Especial: Ted Bundy",
+        "release_date": "2021-04-16",
+        "poster_path": "/ht2KBJ1FvSsuMHUTG6dk2WNrcRm.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "anim__zootopia",
+    "title": "Zootopia",
+    "year": 2016,
+    "category": "ANIMAÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 269149,
+        "title": "Zootopia: Essa Cidade é o Bicho",
+        "release_date": "2016-02-11",
+        "poster_path": "/27Ko4be7CeFmq2hVN7lp7TWG1sd.jpg"
+      },
+      {
+        "tmdb_id": 391711,
+        "title": "Imagining Zootopia",
+        "release_date": "2016-04-05",
+        "poster_path": "/dwLfMBuOZL7YUCQZJYTzYIFzZuu.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "anim__frozen",
+    "title": "Frozen",
+    "year": 2013,
+    "category": "ANIMAÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 109445,
+        "title": "Frozen: Uma Aventura Congelante",
+        "release_date": "2013-11-20",
+        "poster_path": "/hOZKUJGN0m717LRSQDxhgABqWrf.jpg"
+      },
+      {
+        "tmdb_id": 199373,
+        "title": "Sangue no Gelo",
+        "release_date": "2013-07-11",
+        "poster_path": "/r4vU0m1u0qA13w80SCz18XPQIhW.jpg"
+      },
+      {
+        "tmdb_id": 904358,
+        "title": "Frozen Fun",
+        "release_date": "2013-01-01",
+        "poster_path": "/838qaYHHnWTH4CrOANGsS1Ax10H.jpg"
+      },
+      {
+        "tmdb_id": 382201,
+        "title": "Shackleton's Frozen Hell",
+        "release_date": "2013-07-10",
+        "poster_path": "/8LlvhVFg59xbeV1UVBXps8qQkXJ.jpg"
+      },
+      {
+        "tmdb_id": 157924,
+        "title": "Pompeii: The Mystery of the People Frozen in Time",
+        "release_date": "2013-03-27",
+        "poster_path": "/bMJSIq3Nl3mPE87ScQXzwHvT3Hg.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "anim__shrek",
+    "title": "Shrek",
+    "year": 2001,
+    "category": "ANIMAÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 808,
+        "title": "Shrek",
+        "release_date": "2001-05-18",
+        "poster_path": "/wxeqfC221YMptRRdzxlijAh7q8l.jpg"
+      },
+      {
+        "tmdb_id": 26840,
+        "title": "Shrek no Baile de Karaokê do Pântano",
+        "release_date": "2001-11-02",
+        "poster_path": "/lJg4alrYfp7CDNVID4iGefT9CIn.jpg"
+      },
+      {
+        "tmdb_id": 575506,
+        "title": "Creating a Fairy Tale World: The Making of Shrek",
+        "release_date": "2001-04-22",
+        "poster_path": "/65nYHT6wbfbrkUcAr5lxcPOdUCt.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "anim__kung_fu_panda",
+    "title": "Kung Fu Panda",
+    "year": 2008,
+    "category": "ANIMAÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 9502,
+        "title": "Kung Fu Panda",
+        "release_date": "2008-06-04",
+        "poster_path": "/1YMs3zCt5kICK28RvVgDL1UUtkA.jpg"
+      },
+      {
+        "tmdb_id": 15854,
+        "title": "Kung Fu Panda: Os Segredos dos Cinco Furiosos",
+        "release_date": "2008-11-08",
+        "poster_path": "/aBkRhDwBNecGpEuSxGRG8f6gViv.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "com__anchorman",
+    "title": "Anchorman",
+    "year": 2004,
+    "category": "COMÉDIA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 8699,
+        "title": "O Âncora: A Lenda de Ron Burgundy",
+        "release_date": "2004-06-28",
+        "poster_path": "/3zTVl6MDGm3urWU80X8Qf7RHPsE.jpg"
+      },
+      {
+        "tmdb_id": 9965,
+        "title": "Acorde, Ron Burgundy: O Filme Perdido",
+        "release_date": "2004-12-28",
+        "poster_path": "/6M4YGhWZWRYQgwkPhfwgvrq52xk.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "com__game_night",
+    "title": "Noite de Jogos",
+    "year": 2018,
+    "category": "COMÉDIA",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "com__chef",
+    "title": "Chef",
+    "year": 2014,
+    "category": "COMÉDIA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 212778,
+        "title": "Chef",
+        "release_date": "2014-05-08",
+        "poster_path": "/1yLaXY38bywjmhakKVj5mzdGuzA.jpg"
+      },
+      {
+        "tmdb_id": 556672,
+        "title": "FARANG: The Story of Chef Andy Ricker of Pok Pok Thai Empire",
+        "release_date": "2014-07-07",
+        "poster_path": "/8BIGizWsLIf0fMOFj3Wcz2jPWbW.jpg"
+      },
+      {
+        "tmdb_id": 227159,
+        "title": "Quero Matar Meu Chefe 2",
+        "release_date": "2014-11-12",
+        "poster_path": "/yXRwjL92nD5VN83kAmZKMmjMOJK.jpg"
+      },
+      {
+        "tmdb_id": 270342,
+        "title": "On a failli être amies",
+        "release_date": "2014-06-25",
+        "poster_path": "/wjJBcwMv4uZXC1ig0jtRuJO3EBO.jpg"
+      },
+      {
+        "tmdb_id": 258310,
+        "title": "Patron Mutlu Son İstiyor",
+        "release_date": "2014-01-01",
+        "poster_path": "/vKcwlXxnSRGPF5vsXQH4of1uuMh.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "com__office_space",
+    "title": "Trabalho Interno",
+    "year": 1999,
+    "category": "COMÉDIA",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "com__worlds_end",
+    "title": "O Fim do Mundo",
+    "year": 2013,
+    "category": "COMÉDIA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 172721,
+        "title": "O Fim do Mundo",
+        "release_date": "2013-02-22",
+        "poster_path": "/jZsk45d9zARmvyW4pXvIhx7izRA.jpg"
+      },
+      {
+        "tmdb_id": 356924,
+        "title": "O Papa do Fim do Mundo",
+        "release_date": "2013-08-31",
+        "poster_path": "/5wGHM0fIp8F6CiFGL5orQatmg4E.jpg"
+      },
+      {
+        "tmdb_id": 107985,
+        "title": "Heróis de Ressaca",
+        "release_date": "2013-07-18",
+        "poster_path": "/kSyw1d7qFmitI7aQnva67YWh8s4.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "doc__icarus",
+    "title": "Icarus",
+    "year": 2017,
+    "category": "DOCUMENTÁRIO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 432976,
+        "title": "Ícaro",
+        "release_date": "2017-06-03",
+        "poster_path": "/ikisdXpiMVSALvFjFn1bTvCHIMQ.jpg"
+      },
+      {
+        "tmdb_id": 1278506,
+        "title": "Icarus",
+        "release_date": "2017-09-10",
+        "poster_path": "/nxGFAYx73tfmFQgxDugpIn86H4G.jpg"
+      },
+      {
+        "tmdb_id": 569502,
+        "title": "Ícaro",
+        "release_date": "2017-12-11",
+        "poster_path": "/fb4DTSrIP9BZtiCr2dMj7PuBbAz.jpg"
+      },
+      {
+        "tmdb_id": 523043,
+        "title": "三里塚のイカロス",
+        "release_date": "2017-12-21",
+        "poster_path": "/vml8e8k6HOPaQXEUr81GvbNeL1a.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "doc__i_am_negro",
+    "title": "Não Sou Seu Negro",
+    "year": 2016,
+    "category": "DOCUMENTÁRIO",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "doc__apollo_11",
+    "title": "Apollo 11",
+    "year": 2019,
+    "category": "DOCUMENTÁRIO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 549559,
+        "title": "Apollo 11",
+        "release_date": "2019-03-01",
+        "poster_path": "/woLMRroHyoTGoXyxdEeBJEYBFtu.jpg"
+      },
+      {
+        "tmdb_id": 617915,
+        "title": "Apollo 11 : Retour vers la lune",
+        "release_date": "2019-07-22",
+        "poster_path": "/4PXlQBPBsAF8dpi75i2Ir25AazH.jpg"
+      },
+      {
+        "tmdb_id": 1517159,
+        "title": "Apollo 11: First Steps Edition",
+        "release_date": "2019-03-01",
+        "poster_path": "/ows2MV7hLXyd2tcVV3Xjuwb90Lx.jpg"
+      },
+      {
+        "tmdb_id": 699149,
+        "title": "Apollo, la face cachée de la lune",
+        "release_date": "2019-01-14",
+        "poster_path": "/63Buo6uadopBBBnE7f15wCw6Wzl.jpg"
+      },
+      {
+        "tmdb_id": 617216,
+        "title": "Apollo: The Forgotten Films",
+        "release_date": "2019-07-20",
+        "poster_path": "/ea1F7HmYXyTxsZqnHnZ0v8dJ5p5.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "doc__last_dance",
+    "title": "The Last Dance",
+    "year": 2020,
+    "category": "DOCUMENTÁRIO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 820295,
+        "title": "Síðasti dansinn",
+        "release_date": "2020-09-27",
+        "poster_path": "/djj7q4IrXEEIHd7weGXAp3yAdVI.jpg"
+      },
+      {
+        "tmdb_id": 776695,
+        "title": "Mbah Kancil",
+        "release_date": "2020-11-25",
+        "poster_path": "/tsjDkb5DIElkKOJ4e271ed5lNWv.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "doc__amy",
+    "title": "Amy",
+    "year": 2015,
+    "category": "DOCUMENTÁRIO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 331781,
+        "title": "Amy",
+        "release_date": "2015-07-02",
+        "poster_path": "/3xmlXRoVNd3fqrH7aD6q1DDzQq8.jpg"
+      },
+      {
+        "tmdb_id": 377080,
+        "title": "Amy",
+        "release_date": "2015-06-18",
+        "poster_path": "/qBUM1eatfS6ldhdGlDw8K5yi5hX.jpg"
+      },
+      {
+        "tmdb_id": 490842,
+        "title": "Amy",
+        "release_date": "2015-06-10",
+        "poster_path": "/7IQ6YAjSw2Ksz18d89YOfNiViBy.jpg"
+      },
+      {
+        "tmdb_id": 355178,
+        "title": "Amy Schumer: Live at the Apollo",
+        "release_date": "2015-10-17",
+        "poster_path": "/bZji0NPuue5QkO9K5ypvb4CoRnj.jpg"
+      },
+      {
+        "tmdb_id": 482794,
+        "title": "Amy Winehouse: In Her Own Words",
+        "release_date": "2015-06-22",
+        "poster_path": "/ws0XX8gsJ1LvfPMRmGAWCTEdM87.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "doc__grizzly_man",
+    "title": "Grizzly Man",
+    "year": 2005,
+    "category": "DOCUMENTÁRIO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 501,
+        "title": "O Homem-Urso",
+        "release_date": "2005-08-12",
+        "poster_path": "/2kcUiz74mJN1KhzE0eMYE313TD5.jpg"
+      },
+      {
+        "tmdb_id": 288430,
+        "title": "In the Edges: The 'Grizzly Man' Session",
+        "release_date": "2005-12-26",
+        "poster_path": "/gZrD5B5CmzVWit8ylvMBXSNuX2L.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "doc__the_cove",
+    "title": "The Cove",
+    "year": 2009,
+    "category": "DOCUMENTÁRIO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 23128,
+        "title": "A Enseada",
+        "release_date": "2009-07-31",
+        "poster_path": "/miodcVtQv2YxpKjjHJWcV0EDfSP.jpg"
+      },
+      {
+        "tmdb_id": 113555,
+        "title": "Tanjong Rhu",
+        "release_date": "2009-02-07",
+        "poster_path": "/9eRbmXUJ8GWUqWtx2vWhrRn4tkb.jpg"
+      },
+      {
+        "tmdb_id": 28952,
+        "title": "Demon Divas and the Lanes of Damnation",
+        "release_date": "2009-04-03",
+        "poster_path": "/lcCkmdoiGSDMwvGgmSjFtML4plm.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "dra__forrest_gump",
+    "title": "Forrest Gump",
+    "year": 1994,
+    "category": "DRAMA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 13,
+        "title": "Forrest Gump: O Contador de Histórias",
+        "release_date": "1994-06-23",
+        "poster_path": "/d74WpIsH8379TIL4wUxDneRCYv2.jpg"
+      },
+      {
+        "tmdb_id": 237353,
+        "title": "Through the Eyes of Forrest Gump",
+        "release_date": "1994-07-03",
+        "poster_path": "/dfjLE1HjdR9XhEpN04elCGUOJfA.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "dra__room",
+    "title": "Room",
+    "year": 2015,
+    "category": "DRAMA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 264644,
+        "title": "O Quarto de Jack",
+        "release_date": "2015-10-16",
+        "poster_path": "/tARXudrc5K1z8x8OsE9ko5TopMK.jpg"
+      },
+      {
+        "tmdb_id": 355998,
+        "title": "In the Room",
+        "release_date": "2015-09-15",
+        "poster_path": "/mF2bkvoZIa1efM4UbweUt0srx0k.jpg"
+      },
+      {
+        "tmdb_id": 323272,
+        "title": "Quarto de Guerra",
+        "release_date": "2015-08-28",
+        "poster_path": "/kyssvvCXc13c9VC7QTWjRo12FyE.jpg"
+      },
+      {
+        "tmdb_id": 315855,
+        "title": "O Quarto Proibido",
+        "release_date": "2015-10-07",
+        "poster_path": "/apISTiqipiBxL47lQKYV4CJrBO2.jpg"
+      },
+      {
+        "tmdb_id": 353726,
+        "title": "The Waiting Room",
+        "release_date": "2015-09-15",
+        "poster_path": "/dXnN6xD84W2O4cJR1tbgp71tyWM.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "dra__1917",
+    "title": "1917",
+    "year": 2019,
+    "category": "DRAMA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 530915,
+        "title": "1917",
+        "release_date": "2019-12-25",
+        "poster_path": "/m6VVgmwNdOWvLo8nlheLPQU5wr7.jpg"
+      },
+      {
+        "tmdb_id": 647545,
+        "title": "1917, le train de l'enfer",
+        "release_date": "2019-11-08",
+        "poster_path": "/2UFEljGGJdTjRk48x0gpLeA41dp.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "dra__revenant",
+    "title": "O Regresso",
+    "year": 2015,
+    "category": "DRAMA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 281957,
+        "title": "O Regresso",
+        "release_date": "2015-12-25",
+        "poster_path": "/x1jViuXsm5ZmrR6uFmxU6AVdXzs.jpg"
+      },
+      {
+        "tmdb_id": 157544,
+        "title": "Exorcistas do Vaticano",
+        "release_date": "2015-07-23",
+        "poster_path": "/1HNs8GkfjIWhyQgfck4eB1eekT3.jpg"
+      },
+      {
+        "tmdb_id": 290637,
+        "title": "Regresso do Mal",
+        "release_date": "2015-09-16",
+        "poster_path": "/Ah2e9jcm2ySJq6pFvIgIX4KcVvi.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fan__big_fish",
+    "title": "Big Fish",
+    "year": 2003,
+    "category": "FANTASIA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 587,
+        "title": "Peixe Grande e Suas Histórias Maravilhosas",
+        "release_date": "2003-12-10",
+        "poster_path": "/2IVwZB2necwjAmnw14Wxi7isYq4.jpg"
+      },
+      {
+        "tmdb_id": 37052,
+        "title": "The Show Must Go Off!: Reel Big Fish - Live at the House of Blues",
+        "release_date": "2003-12-07",
+        "poster_path": "/pYAzZKP2yc10Tk2ihmjXLMbErgN.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fan__enchanted",
+    "title": "Encantada",
+    "year": 2007,
+    "category": "FANTASIA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 4523,
+        "title": "Encantada",
+        "release_date": "2007-11-20",
+        "poster_path": "/dv3I9Zhn6Y1CGDyyrNEX9KFFdXR.jpg"
+      },
+      {
+        "tmdb_id": 13564,
+        "title": "De Volta à Casa da Colina",
+        "release_date": "2007-10-03",
+        "poster_path": "/l572nc1w54hYUxkV2oaqb6Duhbq.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fan__aladdin",
+    "title": "Aladdin",
+    "year": 2019,
+    "category": "FANTASIA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 420817,
+        "title": "Aladdin",
+        "release_date": "2019-05-22",
+        "poster_path": "/1d8HShFOmSWDwvqtvPEZqzlZbYl.jpg"
+      },
+      {
+        "tmdb_id": 602411,
+        "title": "Aventuras de Aladdin",
+        "release_date": "2019-05-14",
+        "poster_path": "/w900HA8MiAEDY3IQl6mz5JY916F.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fan__legend",
+    "title": "Legend",
+    "year": 1985,
+    "category": "FANTASIA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 11976,
+        "title": "A Lenda",
+        "release_date": "1985-08-28",
+        "poster_path": "/dsPVbw8763gl8qX0Z6w9jt9xe82.jpg"
+      },
+      {
+        "tmdb_id": 15982,
+        "title": "A Lenda de Billie Jean",
+        "release_date": "1985-07-19",
+        "poster_path": "/iK8IKYB6r4sJkh4JtI4yrgUxf9q.jpg"
+      },
+      {
+        "tmdb_id": 32147,
+        "title": "Starchaser: The Legend of Orin",
+        "release_date": "1985-05-17",
+        "poster_path": "/zC5OU1G1eeIN1xTnXPWibolYrf6.jpg"
+      },
+      {
+        "tmdb_id": 19736,
+        "title": "Baby: O Segredo da Lenda Perdida",
+        "release_date": "1985-03-29",
+        "poster_path": "/gXWE5gWkjMrBf3hIYpBWCR8oFyq.jpg"
+      },
+      {
+        "tmdb_id": 485003,
+        "title": "The Legend of Sleepy Hollow",
+        "release_date": "1985-09-25",
+        "poster_path": "/p0ppGslCWAVjjxuXCJIMCmnHKso.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fan__willow",
+    "title": "Willow",
+    "year": 1988,
+    "category": "FANTASIA",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 847,
+        "title": "Willow - Na Terra da Magia",
+        "release_date": "1988-05-20",
+        "poster_path": "/R2RRuyZX30KXbrx7So3SaYMFoK.jpg"
+      },
+      {
+        "tmdb_id": 697921,
+        "title": "Willow: The Making of an Adventure",
+        "release_date": "1988-04-26",
+        "poster_path": "/AktdAcMAXkFqEIcfKTLapjxzzXk.jpg"
+      },
+      {
+        "tmdb_id": 50708,
+        "title": "Wind in the Willows",
+        "release_date": "1988-12-12",
+        "poster_path": "/cbyKD4muUXixILFtQdBVu7BtWXH.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fan__ella_enchanted",
+    "title": "Ela é o Máximo",
+    "year": 2004,
+    "category": "FANTASIA",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "fic__blade_runner_2049",
+    "title": "Blade Runner 2049",
+    "year": 2017,
+    "category": "FICÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 335984,
+        "title": "Blade Runner 2049",
+        "release_date": "2017-10-04",
+        "poster_path": "/49pANIZXRAdHUiWjjBv4vxPeqRC.jpg"
+      },
+      {
+        "tmdb_id": 473072,
+        "title": "Blade Runner 2036: Despontar do Nexus",
+        "release_date": "2017-08-30",
+        "poster_path": "/qPci3811kFmPPEevGrnjeKWokD4.jpg"
+      },
+      {
+        "tmdb_id": 475759,
+        "title": "Blade Runner 2048: Sem Escapatória",
+        "release_date": "2017-09-14",
+        "poster_path": "/l8JKbUCIe4y1LujxMMjbxG6ueH.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fic__matrix",
+    "title": "Matrix",
+    "year": 1999,
+    "category": "FICÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 603,
+        "title": "Matrix",
+        "release_date": "1999-03-31",
+        "poster_path": "/lDqMDI3xpbB9UQRyeXfei0MXhqb.jpg"
+      },
+      {
+        "tmdb_id": 684431,
+        "title": "Making \"The Matrix\"",
+        "release_date": "1999-09-21",
+        "poster_path": "/m2yIfRJYwpCgHON1Ig1pNKMWTxp.jpg"
+      },
+      {
+        "tmdb_id": 259464,
+        "title": "V-World Matrix",
+        "release_date": "1999-01-01",
+        "poster_path": "/4SU8oBoLRos8ZQQhuVMjTEJh3xU.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fic__moon",
+    "title": "Moon",
+    "year": 2009,
+    "category": "FICÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 17431,
+        "title": "Lunar",
+        "release_date": "2009-06-12",
+        "poster_path": "/zQtp0WiTYD9fXf2B1SSue1DZ3Ai.jpg"
+      },
+      {
+        "tmdb_id": 18239,
+        "title": "A Saga Crepúsculo: Lua Nova",
+        "release_date": "2009-11-18",
+        "poster_path": "/z39dbVwa1iIihdUDHGiRy4tc2Ov.jpg"
+      },
+      {
+        "tmdb_id": 39564,
+        "title": "Lua Negra",
+        "release_date": "2009-10-10",
+        "poster_path": "/8GDVQOxuMovSLJo4QvYl6ADli6w.jpg"
+      },
+      {
+        "tmdb_id": 51249,
+        "title": "O Garoto do Alabama",
+        "release_date": "2009-10-25",
+        "poster_path": "/1dmCxuLCAJ1pQ4bVjdQTlbyj0jL.jpg"
+      },
+      {
+        "tmdb_id": 22046,
+        "title": "James May on the Moon",
+        "release_date": "2009-06-21",
+        "poster_path": "/qY8XYQxeADdT1WRPYK23URg30oD.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fic__ex_machina",
+    "title": "Ex Machina",
+    "year": 2014,
+    "category": "FICÇÃO",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "fic__inception",
+    "title": "A Origem",
+    "year": 2010,
+    "category": "FICÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 27205,
+        "title": "A Origem",
+        "release_date": "2010-07-15",
+        "poster_path": "/9e3Dz7aCANy5aRUQF745IlNloJ1.jpg"
+      },
+      {
+        "tmdb_id": 812169,
+        "title": "Marajó: A Origem das Águas",
+        "release_date": "2010-10-10",
+        "poster_path": "/l8sK3H7QS78DQD5U7TXhERKHf50.jpg"
+      },
+      {
+        "tmdb_id": 50056,
+        "title": "Origem Secreta: A História da DC Comics",
+        "release_date": "2010-11-09",
+        "poster_path": "/bi4k7EE8JFuTHKWhiWEgdIlp40Z.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fic__dune",
+    "title": "Duna",
+    "year": 2021,
+    "category": "FICÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 438631,
+        "title": "Duna",
+        "release_date": "2021-09-15",
+        "poster_path": "/uzERcfV2rSHNhW5eViQiO9hNiA7.jpg"
+      },
+      {
+        "tmdb_id": 1464568,
+        "title": "Duna",
+        "release_date": "2021-05-25",
+        "poster_path": "/iKdPQUYQ6cElMGzGZTnc3mXEd6H.jpg"
+      },
+      {
+        "tmdb_id": 881460,
+        "title": "Planeta Duna",
+        "release_date": "2021-10-29",
+        "poster_path": "/7MRtUoNmVvwE5NNOFo5YdRTPIx3.jpg"
+      },
+      {
+        "tmdb_id": 974528,
+        "title": "Anatomia d’una banyera",
+        "release_date": "2021-02-24",
+        "poster_path": "/nQZsNthiLFTcQ3Y8KjHsu5eUt0y.jpg"
+      },
+      {
+        "tmdb_id": 899737,
+        "title": "Mines de Figareo. Memoria d’una llucha (1978-1980)",
+        "release_date": "2021-11-20",
+        "poster_path": "/82C1g7MrnogawCoCQQnPwohkPIB.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fic__tenet",
+    "title": "Tenet",
+    "year": 2020,
+    "category": "FICÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 577922,
+        "title": "Tenet",
+        "release_date": "2020-08-22",
+        "poster_path": "/Ae0pbv4E6YfqfN3UjKWIfQSzP9v.jpg"
+      },
+      {
+        "tmdb_id": 1417088,
+        "title": "Looking at the World in a New Way: The Making of ‘Tenet’",
+        "release_date": "2020-12-15",
+        "poster_path": "/4e6LF8r1OHioRgE3CkBbpYOCV2v.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fic__upgrade",
+    "title": "Upgrade",
+    "year": 2018,
+    "category": "FICÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 500664,
+        "title": "Upgrade: Atualização",
+        "release_date": "2018-05-31",
+        "poster_path": "/swoOF70ML410UJswoQcWWp0waxb.jpg"
+      },
+      {
+        "tmdb_id": 346910,
+        "title": "O Predador",
+        "release_date": "2018-09-05",
+        "poster_path": "/8NQd3uDbOsEvpvDRGusZnUbRDOO.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fic__looper",
+    "title": "Looper",
+    "year": 2012,
+    "category": "FICÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 59967,
+        "title": "Looper: Assassinos do Futuro",
+        "release_date": "2012-09-26",
+        "poster_path": "/qi3aMCoFbnfpbd0XBLznLUn99xQ.jpg"
+      },
+      {
+        "tmdb_id": 1065291,
+        "title": "The Outsider: A Looper's Story",
+        "release_date": "2012-01-01",
+        "poster_path": "/bfxsh0J55IBvsGpzI1Fgp8EANLG.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "fic__coherence",
+    "title": "Coherence",
+    "year": 2013,
+    "category": "FICÇÃO",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "fic__primer",
+    "title": "Primer",
+    "year": 2004,
+    "category": "FICÇÃO",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 14337,
+        "title": "Primer",
+        "release_date": "2004-10-08",
+        "poster_path": "/xEoq2WmDzpzxhkHEsmOYOg6BPg6.jpg"
+      },
+      {
+        "tmdb_id": 1824,
+        "title": "Como Se Fosse a Primeira Vez",
+        "release_date": "2004-02-13",
+        "poster_path": "/h0st50VJ755VG1kzSc2FgwtDHdk.jpg"
+      },
+      {
+        "tmdb_id": 196258,
+        "title": "A Legacy of Filmmakers: The Early Years of American Zoetrope",
+        "release_date": "2004-09-14",
+        "poster_path": "/8QrkSwIAUte8IaNruwKUZkbHMRt.jpg"
+      },
+      {
+        "tmdb_id": 45294,
+        "title": "The History Of Iron Maiden - Part 1: The Early Days",
+        "release_date": "2004-11-08",
+        "poster_path": "/eYMh49CrNiSPEAjJr2MxZePVRMT.jpg"
+      },
+      {
+        "tmdb_id": 1696407,
+        "title": "1914-1918 Prima Guerra Mondiale: La grande guerra",
+        "release_date": "2004-01-01",
+        "poster_path": "/gMiT1d9ivoB0F3bt94AXiPAWY2H.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "her__black_panther",
+    "title": "Pantera Negra",
+    "year": 2018,
+    "category": "HERÓIS",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 284054,
+        "title": "Pantera Negra",
+        "release_date": "2018-02-13",
+        "poster_path": "/ubXNpxL2ASSzY0f8Hxv08pOsV2L.jpg"
+      },
+      {
+        "tmdb_id": 528222,
+        "title": "LEGO Super-Heróis da Marvel: Pantera Negra - Problemas em Wakanda",
+        "release_date": "2018-06-04",
+        "poster_path": "/auiRFbbnMhnclaIMNGcQg0Uba8Y.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "her__iron_man",
+    "title": "Homem de Ferro",
+    "year": 2008,
+    "category": "HERÓIS",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 1726,
+        "title": "Homem de Ferro",
+        "release_date": "2008-04-30",
+        "poster_path": "/mqN7RxojEiPoh3FTSTwOtwg7KAu.jpg"
+      },
+      {
+        "tmdb_id": 512127,
+        "title": "O Invencível Homem de Ferro",
+        "release_date": "2008-09-30",
+        "poster_path": "/7sk9MyHMuipgIo5m6v6biCNXPHv.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "her__shazam",
+    "title": "Shazam!",
+    "year": 2019,
+    "category": "HERÓIS",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 287947,
+        "title": "Shazam!",
+        "release_date": "2019-03-29",
+        "poster_path": "/rwkriXzzP9FoiIF5nTdxBsUcds4.jpg"
+      },
+      {
+        "tmdb_id": 748258,
+        "title": "DC Spotlight: Shazam!",
+        "release_date": "2019-08-09",
+        "poster_path": "/yyoQYKwHAEbQ5PWncyIg4ELC76x.jpg"
+      },
+      {
+        "tmdb_id": 1534414,
+        "title": "The Magical World of Shazam!",
+        "release_date": "2019-04-19",
+        "poster_path": "/t5gRnyCWvM6BG2H3ThIrI8uLvGU.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "her__aquaman",
+    "title": "Aquaman",
+    "year": 2018,
+    "category": "HERÓIS",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 297802,
+        "title": "Aquaman",
+        "release_date": "2018-12-07",
+        "poster_path": "/wbo0CYG6SOFxFkoe9BiqvivLggN.jpg"
+      },
+      {
+        "tmdb_id": 513736,
+        "title": "LEGO DC Comics Super Heróis - Aquaman: A Fúria de Atlântida",
+        "release_date": "2018-12-21",
+        "poster_path": "/l1j8HormdXdbZZ2BJWJb9HG0LwQ.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "her__logan",
+    "title": "Logan",
+    "year": 2017,
+    "category": "HERÓIS",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 263115,
+        "title": "Logan",
+        "release_date": "2017-02-28",
+        "poster_path": "/f0CtZbae9cXj8bkWdCHzUHx5lsR.jpg"
+      },
+      {
+        "tmdb_id": 399170,
+        "title": "Logan Lucky: Roubo em Família",
+        "release_date": "2017-08-17",
+        "poster_path": "/jFF47VdTL8DydZaytF7mHftAitk.jpg"
+      },
+      {
+        "tmdb_id": 1458039,
+        "title": "Making 'Logan'",
+        "release_date": "2017-05-23",
+        "poster_path": "/6cuNK8aq5VlDTeOKXzSkPWixNha.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "her__thor_1",
+    "title": "Thor",
+    "year": 2011,
+    "category": "HERÓIS",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 10195,
+        "title": "Thor",
+        "release_date": "2011-04-21",
+        "poster_path": "/aEV9QmgBqjRTdjsvdCgdK89tavQ.jpg"
+      },
+      {
+        "tmdb_id": 63736,
+        "title": "Almighty Thor",
+        "release_date": "2011-05-07",
+        "poster_path": "/tU61BDSUdYIG33BO65vbCCqZYr7.jpg"
+      },
+      {
+        "tmdb_id": 63686,
+        "title": "Thor: O Filho de Asgard",
+        "release_date": "2011-05-16",
+        "poster_path": "/hX7HXW3ylC24ytgXxVToLggwnfm.jpg"
+      },
+      {
+        "tmdb_id": 106631,
+        "title": "Thor: A Lenda de Valhalla",
+        "release_date": "2011-10-14",
+        "poster_path": "/wiGjq96N1oGpFLCnBLO7Tu65BcM.jpg"
+      },
+      {
+        "tmdb_id": 448360,
+        "title": "Thor: From Asgard to Earth",
+        "release_date": "2011-09-13",
+        "poster_path": "/gSg1FmnASwtzyvQFC9AfCJPbGuV.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "rom__titanic",
+    "title": "Titanic",
+    "year": 1997,
+    "category": "ROMANCE",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 597,
+        "title": "Titanic",
+        "release_date": "1997-12-18",
+        "poster_path": "/As0zX43h3w6kD2NS4uVHu9HKdEh.jpg"
+      },
+      {
+        "tmdb_id": 185082,
+        "title": "Titanic: Untold Stories",
+        "release_date": "1997-01-01",
+        "poster_path": "/hkgB5OvwjggPNekDfT9dllQonLA.jpg"
+      },
+      {
+        "tmdb_id": 1638622,
+        "title": "The \"Unsinkable\" Titanic",
+        "release_date": "1997-01-01",
+        "poster_path": "/cR0uCSXhZdn8RvIa9rrB1Hnswxn.jpg"
+      },
+      {
+        "tmdb_id": 1152991,
+        "title": "Titanic: The Exhibition",
+        "release_date": "1997-11-10",
+        "poster_path": "/ppVok22nAChVUKdZBejgwX6RnIG.jpg"
+      },
+      {
+        "tmdb_id": 157775,
+        "title": "Titanic: Anatomy of a Disaster",
+        "release_date": "1997-01-07",
+        "poster_path": "/eQqBduq5MDqJ0FoJYQuVqKg37he.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "rom__casablanca",
+    "title": "Casablanca",
+    "year": 1942,
+    "category": "ROMANCE",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "rom__her",
+    "title": "Ela",
+    "year": 2013,
+    "category": "ROMANCE",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 152601,
+        "title": "Ela",
+        "release_date": "2013-12-18",
+        "poster_path": "/yyDGhBY8RYXyXYADeFq1BDxpLkl.jpg"
+      },
+      {
+        "tmdb_id": 1696556,
+        "title": "Ela Por Ela",
+        "release_date": "2013-04-13",
+        "poster_path": "/vqWtX4e3B7Ye5C54R2Wfsy5TUI1.jpg"
+      },
+      {
+        "tmdb_id": 157690,
+        "title": "Ela Vai",
+        "release_date": "2013-05-16",
+        "poster_path": "/14oIKYrkG9MNBuPs25WTSqs7GPe.jpg"
+      },
+      {
+        "tmdb_id": 174319,
+        "title": "Elaine Stritch: Shoot Me",
+        "release_date": "2013-04-09",
+        "poster_path": "/ohq3wDbueg4cZu6Kn5fLOrEZdKJ.jpg"
+      },
+      {
+        "tmdb_id": 1479817,
+        "title": "Luciferin viimeinen elämä",
+        "release_date": "2013-11-08",
+        "poster_path": "/dAgviH63Lc6vEM9j1eUPPwFp84A.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "rom__la_la_land",
+    "title": "La La Land",
+    "year": 2016,
+    "category": "ROMANCE",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 313369,
+        "title": "La La Land: Cantando Estações",
+        "release_date": "2016-12-01",
+        "poster_path": "/AvMietG6xuobpSSdmVnKuTjv4bL.jpg"
+      },
+      {
+        "tmdb_id": 381083,
+        "title": "Gary Numan: Android In La La Land",
+        "release_date": "2016-03-14",
+        "poster_path": "/1ZCglhextcg9Yc3PeFhIqW1hYPE.jpg"
+      },
+      {
+        "tmdb_id": 421897,
+        "title": "La Terre Abandonnée",
+        "release_date": "2016-10-16",
+        "poster_path": "/bb4ViucWmC8FaO6cOsTh4KSJKXY.jpg"
+      },
+      {
+        "tmdb_id": 269573,
+        "title": "En la sangre",
+        "release_date": "2016-07-01",
+        "poster_path": "/AkRSnKjjakxZ1BYbnGTVxpl3Bef.jpg"
+      },
+      {
+        "tmdb_id": 376091,
+        "title": "La última tierra",
+        "release_date": "2016-06-02",
+        "poster_path": "/pnLI4GYMR643eowVCZbCZEkQTv3.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "rom__walk_to_remember",
+    "title": "Uma Razão para Viver",
+    "year": 2002,
+    "category": "ROMANCE",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "sit__fast_times",
+    "title": "Loucuras de Verão",
+    "year": 1982,
+    "category": "SITCOM",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "sit__animal_house",
+    "title": "A Festa Animal",
+    "year": 1978,
+    "category": "SITCOM",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "sus__zodiac",
+    "title": "Zodíaco",
+    "year": 2007,
+    "category": "SUSPENSE",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 1949,
+        "title": "Zodíaco",
+        "release_date": "2007-03-02",
+        "poster_path": "/jFmlV5vUzOt1PgJ82efOhNsWcWX.jpg"
+      },
+      {
+        "tmdb_id": 110523,
+        "title": "Curse of the Zodiac",
+        "release_date": "2007-05-15",
+        "poster_path": "/fx0djmTL5eKTdbsEgNk70zHmC5f.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "sus__prisoners",
+    "title": "Prisioneiros",
+    "year": 2013,
+    "category": "SUSPENSE",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "sus__memento",
+    "title": "Amnésia",
+    "year": 2000,
+    "category": "SUSPENSE",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 77,
+        "title": "Amnésia",
+        "release_date": "2000-10-11",
+        "poster_path": "/7leBWM27Q0TUnvmhw6WnFNgGn4G.jpg"
+      },
+      {
+        "tmdb_id": 1402821,
+        "title": "Мис Амнезија",
+        "release_date": "2000-01-01",
+        "poster_path": "/hhhcNmUxZ5tb9R5aA8iDNTfQVaE.jpg"
+      },
+      {
+        "tmdb_id": 2318,
+        "title": "Pilgrim",
+        "release_date": "2000-03-31",
+        "poster_path": "/mvAPLEELgciLjUeUgKFHzBcyFZj.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "sus__blood_simple",
+    "title": "Blood Simple",
+    "year": 1984,
+    "category": "SUSPENSE",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "sus__chinatown",
+    "title": "Chinatown",
+    "year": 1974,
+    "category": "SUSPENSE",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 829,
+        "title": "Chinatown",
+        "release_date": "1974-06-20",
+        "poster_path": "/kZRSP3FmOcq0xnBulqpUQngJUXY.jpg"
+      },
+      {
+        "tmdb_id": 232663,
+        "title": "小英雄大鬧唐人街",
+        "release_date": "1974-04-04",
+        "poster_path": "/b9lbBb7rykJe24IRmo0Kx5ALC3h.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "ter__us",
+    "title": "Nós",
+    "year": 2019,
+    "category": "TERROR",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 458723,
+        "title": "Nós",
+        "release_date": "2019-03-14",
+        "poster_path": "/5ncjQfUDr0oRKnfpdAXobJFbnao.jpg"
+      },
+      {
+        "tmdb_id": 719030,
+        "title": "Nós",
+        "release_date": "2019-08-24",
+        "poster_path": "/cspS3tIltAhJBo5Fjan3DTNCsRX.jpg"
+      },
+      {
+        "tmdb_id": 770754,
+        "title": "Nós",
+        "release_date": "2019-06-04",
+        "poster_path": "/oxiw0LPhJr3mqw5ampSyCAaT316.jpg"
+      },
+      {
+        "tmdb_id": 760866,
+        "title": "Nos lions",
+        "release_date": "2019-06-16",
+        "poster_path": "/y4CMTA7ft5GkBIqNllx5Y0BN9Tr.jpg"
+      },
+      {
+        "tmdb_id": 664033,
+        "title": "Nos combats",
+        "release_date": "2019-05-01",
+        "poster_path": "/kBVzPzwl2kt45SbCeVrTQPgrWqR.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "ter__the_witch",
+    "title": "A Bruxa",
+    "year": 2015,
+    "category": "TERROR",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 334088,
+        "title": "A Maldição da Bruxa da Árvore",
+        "release_date": "2015-05-18",
+        "poster_path": "/9Gja4TpJkL1rds1Jzczf6Jl2sVF.jpg"
+      },
+      {
+        "tmdb_id": 347413,
+        "title": "Little Witch Academia: A Parada Encantada",
+        "release_date": "2015-07-03",
+        "poster_path": "/g7gCZzJm45frEK8bWMJ8Skxn93c.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "ter__midsommar",
+    "title": "Midsommar",
+    "year": 2019,
+    "category": "TERROR",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 530385,
+        "title": "Midsommar: O Mal Não Espera a Noite",
+        "release_date": "2019-07-03",
+        "poster_path": "/hR4dXPlWq5Nekwjqbp3gFGeiiZS.jpg"
+      },
+      {
+        "tmdb_id": 1284571,
+        "title": "Let the Festivities Begin: Manifesting Midsommar",
+        "release_date": "2019-10-08",
+        "poster_path": "/pKT8XwEWVa4j5xTJKRQu5LvOmlE.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "ter__sinister",
+    "title": "Sinistro",
+    "year": 2012,
+    "category": "TERROR",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "ter__insidious",
+    "title": "Insidious",
+    "year": 2010,
+    "category": "TERROR",
+    "reason": "year diverges",
+    "candidates": []
+  },
+  {
+    "movie_id": "ter__scream",
+    "title": "Pânico",
+    "year": 1996,
+    "category": "TERROR",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 4232,
+        "title": "Pânico",
+        "release_date": "1996-12-20",
+        "poster_path": "/cJj2gYzkPFSqYGGOhfLgeANlXkB.jpg"
+      },
+      {
+        "tmdb_id": 11228,
+        "title": "Daylight",
+        "release_date": "1996-12-06",
+        "poster_path": "/zScSPfX5V7rBalI6QH71zC2wv75.jpg"
+      },
+      {
+        "tmdb_id": 168712,
+        "title": "Panic in the Skies!",
+        "release_date": "1996-10-13",
+        "poster_path": "/jzVC2F2oc57dxbiTz7V4iuO3mHu.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "ter__the_thing",
+    "title": "O Enigma",
+    "year": 1982,
+    "category": "TERROR",
+    "reason": "multiple candidates with same year",
+    "candidates": [
+      {
+        "tmdb_id": 1091,
+        "title": "O Enigma de Outro Mundo",
+        "release_date": "1982-06-25",
+        "poster_path": "/bazlgJAKWCBF7OllC3JtyJ2DV1n.jpg"
+      },
+      {
+        "tmdb_id": 24740,
+        "title": "O Enigma do Mal",
+        "release_date": "1982-09-30",
+        "poster_path": "/ngNkrCyyb3duHOpwwGy4ARgLhzo.jpg"
+      }
+    ]
+  },
+  {
+    "movie_id": "ter__bird_box",
+    "title": "Caixa de Pássaros",
+    "year": 2018,
+    "category": "TERROR",
+    "reason": "year diverges",
+    "candidates": []
+  }
+]

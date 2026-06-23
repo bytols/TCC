@@ -1,0 +1,814 @@
+{
+  "acao__die_hard": {
+    "tmdb_id": 562,
+    "file": "static/img/posters/acao__die_hard.jpg"
+  },
+  "acao__mad_max": {
+    "tmdb_id": 76341,
+    "file": "static/img/posters/acao__mad_max.jpg"
+  },
+  "acao__john_wick": {
+    "tmdb_id": 245891,
+    "file": "static/img/posters/acao__john_wick.jpg"
+  },
+  "acao__mission_fallout": {
+    "tmdb_id": 353081,
+    "file": "static/img/posters/acao__mission_fallout.jpg"
+  },
+  "acao__kill_bill": {
+    "tmdb_id": 24,
+    "file": "static/img/posters/acao__kill_bill.jpg"
+  },
+  "acao__t2": {
+    "tmdb_id": 280,
+    "file": "static/img/posters/acao__t2.jpg"
+  },
+  "acao__con_air": {
+    "tmdb_id": 1701,
+    "file": "static/img/posters/acao__con_air.jpg"
+  },
+  "acao__robocop": {
+    "tmdb_id": 5548,
+    "file": "static/img/posters/acao__robocop.jpg"
+  },
+  "acao__total_recall": {
+    "tmdb_id": 861,
+    "file": "static/img/posters/acao__total_recall.jpg"
+  },
+  "acao__predator": {
+    "tmdb_id": 106,
+    "file": "static/img/posters/acao__predator.jpg"
+  },
+  "acao__first_blood": {
+    "tmdb_id": 1368,
+    "file": "static/img/posters/acao__first_blood.jpg"
+  },
+  "acao__air_force_one": {
+    "tmdb_id": 9772,
+    "file": "static/img/posters/acao__air_force_one.jpg"
+  },
+  "anim__spirited_away": {
+    "tmdb_id": 129,
+    "file": "static/img/posters/anim__spirited_away.jpg"
+  },
+  "anim__finding_nemo": {
+    "tmdb_id": 12,
+    "file": "static/img/posters/anim__finding_nemo.jpg"
+  },
+  "anim__up": {
+    "tmdb_id": 14160,
+    "file": "static/img/posters/anim__up.jpg"
+  },
+  "anim__inside_out": {
+    "tmdb_id": 150540,
+    "file": "static/img/posters/anim__inside_out.jpg"
+  },
+  "anim__coco": {
+    "tmdb_id": 354912,
+    "file": "static/img/posters/anim__coco.jpg"
+  },
+  "anim__moana": {
+    "tmdb_id": 277834,
+    "file": "static/img/posters/anim__moana.jpg"
+  },
+  "anim__ratatouille": {
+    "tmdb_id": 2062,
+    "file": "static/img/posters/anim__ratatouille.jpg"
+  },
+  "anim__incredibles": {
+    "tmdb_id": 9806,
+    "file": "static/img/posters/anim__incredibles.jpg"
+  },
+  "anim__brave": {
+    "tmdb_id": 62177,
+    "file": "static/img/posters/anim__brave.jpg"
+  },
+  "anim__tangled": {
+    "tmdb_id": 38757,
+    "file": "static/img/posters/anim__tangled.jpg"
+  },
+  "anim__spiderverse": {
+    "tmdb_id": 324857,
+    "file": "static/img/posters/anim__spiderverse.jpg"
+  },
+  "anim__howl": {
+    "tmdb_id": 4935,
+    "file": "static/img/posters/anim__howl.jpg"
+  },
+  "anim__totoro": {
+    "tmdb_id": 8392,
+    "file": "static/img/posters/anim__totoro.jpg"
+  },
+  "anim__mononoke": {
+    "tmdb_id": 128,
+    "file": "static/img/posters/anim__mononoke.jpg"
+  },
+  "anim__coraline": {
+    "tmdb_id": 14836,
+    "file": "static/img/posters/anim__coraline.jpg"
+  },
+  "anim__megamind": {
+    "tmdb_id": 38055,
+    "file": "static/img/posters/anim__megamind.jpg"
+  },
+  "anim__kubo": {
+    "tmdb_id": 313297,
+    "file": "static/img/posters/anim__kubo.jpg"
+  },
+  "com__superbad": {
+    "tmdb_id": 8363,
+    "file": "static/img/posters/com__superbad.jpg"
+  },
+  "com__budapest": {
+    "tmdb_id": 120467,
+    "file": "static/img/posters/com__budapest.jpg"
+  },
+  "com__bridesmaids": {
+    "tmdb_id": 55721,
+    "file": "static/img/posters/com__bridesmaids.jpg"
+  },
+  "com__40yo_virgin": {
+    "tmdb_id": 6957,
+    "file": "static/img/posters/com__40yo_virgin.jpg"
+  },
+  "com__little_miss_sunshine": {
+    "tmdb_id": 773,
+    "file": "static/img/posters/com__little_miss_sunshine.jpg"
+  },
+  "com__big_lebowski": {
+    "tmdb_id": 115,
+    "file": "static/img/posters/com__big_lebowski.jpg"
+  },
+  "com__groundhog_day": {
+    "tmdb_id": 137,
+    "file": "static/img/posters/com__groundhog_day.jpg"
+  },
+  "com__napoleon": {
+    "tmdb_id": 8193,
+    "file": "static/img/posters/com__napoleon.jpg"
+  },
+  "com__ferris_bueller": {
+    "tmdb_id": 9377,
+    "file": "static/img/posters/com__ferris_bueller.jpg"
+  },
+  "com__holy_grail": {
+    "tmdb_id": 762,
+    "file": "static/img/posters/com__holy_grail.jpg"
+  },
+  "com__dr_strangelove": {
+    "tmdb_id": 935,
+    "file": "static/img/posters/com__dr_strangelove.jpg"
+  },
+  "com__airplane": {
+    "tmdb_id": 813,
+    "file": "static/img/posters/com__airplane.jpg"
+  },
+  "com__home_alone": {
+    "tmdb_id": 771,
+    "file": "static/img/posters/com__home_alone.jpg"
+  },
+  "com__mrs_doubtfire": {
+    "tmdb_id": 788,
+    "file": "static/img/posters/com__mrs_doubtfire.jpg"
+  },
+  "com__shaun_of_dead": {
+    "tmdb_id": 747,
+    "file": "static/img/posters/com__shaun_of_dead.jpg"
+  },
+  "com__four_weddings": {
+    "tmdb_id": 712,
+    "file": "static/img/posters/com__four_weddings.jpg"
+  },
+  "com__knives_out": {
+    "tmdb_id": 546554,
+    "file": "static/img/posters/com__knives_out.jpg"
+  },
+  "doc__mister_rogers": {
+    "tmdb_id": 490003,
+    "file": "static/img/posters/doc__mister_rogers.jpg"
+  },
+  "doc__free_solo": {
+    "tmdb_id": 515042,
+    "file": "static/img/posters/doc__free_solo.jpg"
+  },
+  "doc__jiro": {
+    "tmdb_id": 80767,
+    "file": "static/img/posters/doc__jiro.jpg"
+  },
+  "doc__man_on_wire": {
+    "tmdb_id": 14048,
+    "file": "static/img/posters/doc__man_on_wire.jpg"
+  },
+  "doc__sugar_man": {
+    "tmdb_id": 84334,
+    "file": "static/img/posters/doc__sugar_man.jpg"
+  },
+  "doc__supersize_me": {
+    "tmdb_id": 9372,
+    "file": "static/img/posters/doc__supersize_me.jpg"
+  },
+  "doc__inconvenient_truth": {
+    "tmdb_id": 1781,
+    "file": "static/img/posters/doc__inconvenient_truth.jpg"
+  },
+  "doc__blackfish": {
+    "tmdb_id": 158999,
+    "file": "static/img/posters/doc__blackfish.jpg"
+  },
+  "doc__act_of_killing": {
+    "tmdb_id": 123678,
+    "file": "static/img/posters/doc__act_of_killing.jpg"
+  },
+  "doc__citizenfour": {
+    "tmdb_id": 293310,
+    "file": "static/img/posters/doc__citizenfour.jpg"
+  },
+  "doc__exit_gift_shop": {
+    "tmdb_id": 39452,
+    "file": "static/img/posters/doc__exit_gift_shop.jpg"
+  },
+  "doc__hoop_dreams": {
+    "tmdb_id": 14275,
+    "file": "static/img/posters/doc__hoop_dreams.jpg"
+  },
+  "doc__fahrenheit_9_11": {
+    "tmdb_id": 1777,
+    "file": "static/img/posters/doc__fahrenheit_9_11.jpg"
+  },
+  "doc__13th": {
+    "tmdb_id": 407806,
+    "file": "static/img/posters/doc__13th.jpg"
+  },
+  "doc__rbg": {
+    "tmdb_id": 493099,
+    "file": "static/img/posters/doc__rbg.jpg"
+  },
+  "doc__bowling": {
+    "tmdb_id": 1430,
+    "file": "static/img/posters/doc__bowling.jpg"
+  },
+  "doc__penguins": {
+    "tmdb_id": 1667,
+    "file": "static/img/posters/doc__penguins.jpg"
+  },
+  "dra__shawshank": {
+    "tmdb_id": 278,
+    "file": "static/img/posters/dra__shawshank.jpg"
+  },
+  "dra__godfather": {
+    "tmdb_id": 238,
+    "file": "static/img/posters/dra__godfather.jpg"
+  },
+  "dra__schindlers_list": {
+    "tmdb_id": 424,
+    "file": "static/img/posters/dra__schindlers_list.jpg"
+  },
+  "dra__good_will_hunting": {
+    "tmdb_id": 489,
+    "file": "static/img/posters/dra__good_will_hunting.jpg"
+  },
+  "dra__beautiful_mind": {
+    "tmdb_id": 453,
+    "file": "static/img/posters/dra__beautiful_mind.jpg"
+  },
+  "dra__pursuit_happiness": {
+    "tmdb_id": 1402,
+    "file": "static/img/posters/dra__pursuit_happiness.jpg"
+  },
+  "dra__whiplash": {
+    "tmdb_id": 244786,
+    "file": "static/img/posters/dra__whiplash.jpg"
+  },
+  "dra__12_years_slave": {
+    "tmdb_id": 76203,
+    "file": "static/img/posters/dra__12_years_slave.jpg"
+  },
+  "dra__moonlight": {
+    "tmdb_id": 376867,
+    "file": "static/img/posters/dra__moonlight.jpg"
+  },
+  "dra__marriage_story": {
+    "tmdb_id": 492188,
+    "file": "static/img/posters/dra__marriage_story.jpg"
+  },
+  "dra__call_me_by_name": {
+    "tmdb_id": 398818,
+    "file": "static/img/posters/dra__call_me_by_name.jpg"
+  },
+  "dra__brokeback": {
+    "tmdb_id": 142,
+    "file": "static/img/posters/dra__brokeback.jpg"
+  },
+  "dra__american_beauty": {
+    "tmdb_id": 14,
+    "file": "static/img/posters/dra__american_beauty.jpg"
+  },
+  "dra__fight_club": {
+    "tmdb_id": 550,
+    "file": "static/img/posters/dra__fight_club.jpg"
+  },
+  "dra__requiem": {
+    "tmdb_id": 641,
+    "file": "static/img/posters/dra__requiem.jpg"
+  },
+  "dra__boyhood": {
+    "tmdb_id": 85350,
+    "file": "static/img/posters/dra__boyhood.jpg"
+  },
+  "dra__social_network": {
+    "tmdb_id": 37799,
+    "file": "static/img/posters/dra__social_network.jpg"
+  },
+  "dra__silver_linings": {
+    "tmdb_id": 82693,
+    "file": "static/img/posters/dra__silver_linings.jpg"
+  },
+  "dra__manchester": {
+    "tmdb_id": 334541,
+    "file": "static/img/posters/dra__manchester.jpg"
+  },
+  "dra__parasite": {
+    "tmdb_id": 496243,
+    "file": "static/img/posters/dra__parasite.jpg"
+  },
+  "fan__lotr_fellowship": {
+    "tmdb_id": 120,
+    "file": "static/img/posters/fan__lotr_fellowship.jpg"
+  },
+  "fan__harry_potter_1": {
+    "tmdb_id": 671,
+    "file": "static/img/posters/fan__harry_potter_1.jpg"
+  },
+  "fan__pans_labyrinth": {
+    "tmdb_id": 1417,
+    "file": "static/img/posters/fan__pans_labyrinth.jpg"
+  },
+  "fan__princess_bride": {
+    "tmdb_id": 2493,
+    "file": "static/img/posters/fan__princess_bride.jpg"
+  },
+  "fan__labyrinth": {
+    "tmdb_id": 13597,
+    "file": "static/img/posters/fan__labyrinth.jpg"
+  },
+  "fan__stardust": {
+    "tmdb_id": 2270,
+    "file": "static/img/posters/fan__stardust.jpg"
+  },
+  "fan__neverending_story": {
+    "tmdb_id": 34584,
+    "file": "static/img/posters/fan__neverending_story.jpg"
+  },
+  "fan__alice_wonderland": {
+    "tmdb_id": 12155,
+    "file": "static/img/posters/fan__alice_wonderland.jpg"
+  },
+  "fan__narnia": {
+    "tmdb_id": 411,
+    "file": "static/img/posters/fan__narnia.jpg"
+  },
+  "fan__edward_scissorhands": {
+    "tmdb_id": 162,
+    "file": "static/img/posters/fan__edward_scissorhands.jpg"
+  },
+  "fan__beetlejuice": {
+    "tmdb_id": 4011,
+    "file": "static/img/posters/fan__beetlejuice.jpg"
+  },
+  "fan__shape_of_water": {
+    "tmdb_id": 399055,
+    "file": "static/img/posters/fan__shape_of_water.jpg"
+  },
+  "fan__maleficent": {
+    "tmdb_id": 102651,
+    "file": "static/img/posters/fan__maleficent.jpg"
+  },
+  "fan__cinderella": {
+    "tmdb_id": 150689,
+    "file": "static/img/posters/fan__cinderella.jpg"
+  },
+  "fan__beauty_beast": {
+    "tmdb_id": 321612,
+    "file": "static/img/posters/fan__beauty_beast.jpg"
+  },
+  "fan__golden_compass": {
+    "tmdb_id": 2268,
+    "file": "static/img/posters/fan__golden_compass.jpg"
+  },
+  "fan__dark_crystal": {
+    "tmdb_id": 11639,
+    "file": "static/img/posters/fan__dark_crystal.jpg"
+  },
+  "fan__lotr_two_towers": {
+    "tmdb_id": 121,
+    "file": "static/img/posters/fan__lotr_two_towers.jpg"
+  },
+  "fan__lotr_return": {
+    "tmdb_id": 122,
+    "file": "static/img/posters/fan__lotr_return.jpg"
+  },
+  "fic__interstellar": {
+    "tmdb_id": 157336,
+    "file": "static/img/posters/fic__interstellar.jpg"
+  },
+  "fic__arrival": {
+    "tmdb_id": 329865,
+    "file": "static/img/posters/fic__arrival.jpg"
+  },
+  "fic__2001_space": {
+    "tmdb_id": 62,
+    "file": "static/img/posters/fic__2001_space.jpg"
+  },
+  "fic__alien": {
+    "tmdb_id": 348,
+    "file": "static/img/posters/fic__alien.jpg"
+  },
+  "fic__martian": {
+    "tmdb_id": 286217,
+    "file": "static/img/posters/fic__martian.jpg"
+  },
+  "fic__gravity": {
+    "tmdb_id": 49047,
+    "file": "static/img/posters/fic__gravity.jpg"
+  },
+  "fic__contact": {
+    "tmdb_id": 686,
+    "file": "static/img/posters/fic__contact.jpg"
+  },
+  "fic__district_9": {
+    "tmdb_id": 17654,
+    "file": "static/img/posters/fic__district_9.jpg"
+  },
+  "fic__annihilation": {
+    "tmdb_id": 300668,
+    "file": "static/img/posters/fic__annihilation.jpg"
+  },
+  "fic__star_wars": {
+    "tmdb_id": 11,
+    "file": "static/img/posters/fic__star_wars.jpg"
+  },
+  "fic__minority_report": {
+    "tmdb_id": 180,
+    "file": "static/img/posters/fic__minority_report.jpg"
+  },
+  "fic__fifth_element": {
+    "tmdb_id": 18,
+    "file": "static/img/posters/fic__fifth_element.jpg"
+  },
+  "fic__ready_player_one": {
+    "tmdb_id": 333339,
+    "file": "static/img/posters/fic__ready_player_one.jpg"
+  },
+  "fic__source_code": {
+    "tmdb_id": 45612,
+    "file": "static/img/posters/fic__source_code.jpg"
+  },
+  "her__avengers_endgame": {
+    "tmdb_id": 299534,
+    "file": "static/img/posters/her__avengers_endgame.jpg"
+  },
+  "her__spiderman_nwh": {
+    "tmdb_id": 634649,
+    "file": "static/img/posters/her__spiderman_nwh.jpg"
+  },
+  "her__dark_knight": {
+    "tmdb_id": 155,
+    "file": "static/img/posters/her__dark_knight.jpg"
+  },
+  "her__thor_ragnarok": {
+    "tmdb_id": 284053,
+    "file": "static/img/posters/her__thor_ragnarok.jpg"
+  },
+  "her__civil_war": {
+    "tmdb_id": 271110,
+    "file": "static/img/posters/her__civil_war.jpg"
+  },
+  "her__wonder_woman": {
+    "tmdb_id": 297762,
+    "file": "static/img/posters/her__wonder_woman.jpg"
+  },
+  "her__guardians": {
+    "tmdb_id": 118340,
+    "file": "static/img/posters/her__guardians.jpg"
+  },
+  "her__doctor_strange": {
+    "tmdb_id": 284052,
+    "file": "static/img/posters/her__doctor_strange.jpg"
+  },
+  "her__ant_man": {
+    "tmdb_id": 102899,
+    "file": "static/img/posters/her__ant_man.jpg"
+  },
+  "her__black_widow": {
+    "tmdb_id": 497698,
+    "file": "static/img/posters/her__black_widow.jpg"
+  },
+  "her__suicide_squad": {
+    "tmdb_id": 436969,
+    "file": "static/img/posters/her__suicide_squad.jpg"
+  },
+  "her__deadpool": {
+    "tmdb_id": 293660,
+    "file": "static/img/posters/her__deadpool.jpg"
+  },
+  "her__xmen_dofp": {
+    "tmdb_id": 127585,
+    "file": "static/img/posters/her__xmen_dofp.jpg"
+  },
+  "her__batman_begins": {
+    "tmdb_id": 272,
+    "file": "static/img/posters/her__batman_begins.jpg"
+  },
+  "her__captain_marvel": {
+    "tmdb_id": 299537,
+    "file": "static/img/posters/her__captain_marvel.jpg"
+  },
+  "her__avengers_iw": {
+    "tmdb_id": 299536,
+    "file": "static/img/posters/her__avengers_iw.jpg"
+  },
+  "her__spiderman_homecoming": {
+    "tmdb_id": 315635,
+    "file": "static/img/posters/her__spiderman_homecoming.jpg"
+  },
+  "her__ant_wasp": {
+    "tmdb_id": 363088,
+    "file": "static/img/posters/her__ant_wasp.jpg"
+  },
+  "her__superman": {
+    "tmdb_id": 1924,
+    "file": "static/img/posters/her__superman.jpg"
+  },
+  "rom__notebook": {
+    "tmdb_id": 1824,
+    "file": "static/img/posters/rom__notebook.jpg"
+  },
+  "rom__before_sunrise": {
+    "tmdb_id": 76,
+    "file": "static/img/posters/rom__before_sunrise.jpg"
+  },
+  "rom__pride_prejudice": {
+    "tmdb_id": 4348,
+    "file": "static/img/posters/rom__pride_prejudice.jpg"
+  },
+  "rom__500_days": {
+    "tmdb_id": 19913,
+    "file": "static/img/posters/rom__500_days.jpg"
+  },
+  "rom__crazy_rich": {
+    "tmdb_id": 455207,
+    "file": "static/img/posters/rom__crazy_rich.jpg"
+  },
+  "rom__to_all_boys": {
+    "tmdb_id": 466282,
+    "file": "static/img/posters/rom__to_all_boys.jpg"
+  },
+  "rom__roman_holiday": {
+    "tmdb_id": 804,
+    "file": "static/img/posters/rom__roman_holiday.jpg"
+  },
+  "rom__amelie": {
+    "tmdb_id": 194,
+    "file": "static/img/posters/rom__amelie.jpg"
+  },
+  "rom__in_the_mood": {
+    "tmdb_id": 843,
+    "file": "static/img/posters/rom__in_the_mood.jpg"
+  },
+  "rom__blue_valentine": {
+    "tmdb_id": 46705,
+    "file": "static/img/posters/rom__blue_valentine.jpg"
+  },
+  "rom__star_is_born": {
+    "tmdb_id": 332562,
+    "file": "static/img/posters/rom__star_is_born.jpg"
+  },
+  "rom__about_time": {
+    "tmdb_id": 122906,
+    "file": "static/img/posters/rom__about_time.jpg"
+  },
+  "rom__atonement": {
+    "tmdb_id": 4347,
+    "file": "static/img/posters/rom__atonement.jpg"
+  },
+  "rom__love_actually": {
+    "tmdb_id": 508,
+    "file": "static/img/posters/rom__love_actually.jpg"
+  },
+  "rom__fault_stars": {
+    "tmdb_id": 222935,
+    "file": "static/img/posters/rom__fault_stars.jpg"
+  },
+  "rom__breakfast_tiffanys": {
+    "tmdb_id": 164,
+    "file": "static/img/posters/rom__breakfast_tiffanys.jpg"
+  },
+  "rom__the_holiday": {
+    "tmdb_id": 1581,
+    "file": "static/img/posters/rom__the_holiday.jpg"
+  },
+  "sit__simpsons_movie": {
+    "tmdb_id": 35,
+    "file": "static/img/posters/sit__simpsons_movie.jpg"
+  },
+  "sit__south_park": {
+    "tmdb_id": 9473,
+    "file": "static/img/posters/sit__south_park.jpg"
+  },
+  "sit__waynes_world": {
+    "tmdb_id": 8872,
+    "file": "static/img/posters/sit__waynes_world.jpg"
+  },
+  "sit__american_pie": {
+    "tmdb_id": 2105,
+    "file": "static/img/posters/sit__american_pie.jpg"
+  },
+  "sit__dumb_dumber": {
+    "tmdb_id": 8467,
+    "file": "static/img/posters/sit__dumb_dumber.jpg"
+  },
+  "sit__something_mary": {
+    "tmdb_id": 544,
+    "file": "static/img/posters/sit__something_mary.jpg"
+  },
+  "sit__truman_show": {
+    "tmdb_id": 37165,
+    "file": "static/img/posters/sit__truman_show.jpg"
+  },
+  "sit__bruce_almighty": {
+    "tmdb_id": 310,
+    "file": "static/img/posters/sit__bruce_almighty.jpg"
+  },
+  "sit__police_academy": {
+    "tmdb_id": 9336,
+    "file": "static/img/posters/sit__police_academy.jpg"
+  },
+  "sit__vacation": {
+    "tmdb_id": 11153,
+    "file": "static/img/posters/sit__vacation.jpg"
+  },
+  "sit__sex_city": {
+    "tmdb_id": 4564,
+    "file": "static/img/posters/sit__sex_city.jpg"
+  },
+  "sit__jackass": {
+    "tmdb_id": 9012,
+    "file": "static/img/posters/sit__jackass.jpg"
+  },
+  "sit__talladega_nights": {
+    "tmdb_id": 9718,
+    "file": "static/img/posters/sit__talladega_nights.jpg"
+  },
+  "sit__school_of_rock": {
+    "tmdb_id": 1584,
+    "file": "static/img/posters/sit__school_of_rock.jpg"
+  },
+  "sus__gone_girl": {
+    "tmdb_id": 210577,
+    "file": "static/img/posters/sus__gone_girl.jpg"
+  },
+  "sus__silence_lambs": {
+    "tmdb_id": 274,
+    "file": "static/img/posters/sus__silence_lambs.jpg"
+  },
+  "sus__se7en": {
+    "tmdb_id": 807,
+    "file": "static/img/posters/sus__se7en.jpg"
+  },
+  "sus__girl_dragon_tattoo": {
+    "tmdb_id": 65754,
+    "file": "static/img/posters/sus__girl_dragon_tattoo.jpg"
+  },
+  "sus__shutter_island": {
+    "tmdb_id": 11324,
+    "file": "static/img/posters/sus__shutter_island.jpg"
+  },
+  "sus__rear_window": {
+    "tmdb_id": 567,
+    "file": "static/img/posters/sus__rear_window.jpg"
+  },
+  "sus__psycho": {
+    "tmdb_id": 539,
+    "file": "static/img/posters/sus__psycho.jpg"
+  },
+  "sus__north_by_northwest": {
+    "tmdb_id": 213,
+    "file": "static/img/posters/sus__north_by_northwest.jpg"
+  },
+  "sus__vertigo": {
+    "tmdb_id": 426,
+    "file": "static/img/posters/sus__vertigo.jpg"
+  },
+  "sus__sixth_sense": {
+    "tmdb_id": 745,
+    "file": "static/img/posters/sus__sixth_sense.jpg"
+  },
+  "sus__uncut_gems": {
+    "tmdb_id": 473033,
+    "file": "static/img/posters/sus__uncut_gems.jpg"
+  },
+  "sus__no_country": {
+    "tmdb_id": 6977,
+    "file": "static/img/posters/sus__no_country.jpg"
+  },
+  "sus__fargo": {
+    "tmdb_id": 275,
+    "file": "static/img/posters/sus__fargo.jpg"
+  },
+  "sus__mulholland_drive": {
+    "tmdb_id": 1018,
+    "file": "static/img/posters/sus__mulholland_drive.jpg"
+  },
+  "sus__blue_velvet": {
+    "tmdb_id": 793,
+    "file": "static/img/posters/sus__blue_velvet.jpg"
+  },
+  "sus__gone_baby_gone": {
+    "tmdb_id": 220733,
+    "file": "static/img/posters/sus__gone_baby_gone.jpg"
+  },
+  "sus__mystic_river": {
+    "tmdb_id": 322,
+    "file": "static/img/posters/sus__mystic_river.jpg"
+  },
+  "sus__la_confidential": {
+    "tmdb_id": 2118,
+    "file": "static/img/posters/sus__la_confidential.jpg"
+  },
+  "sus__cape_fear": {
+    "tmdb_id": 1598,
+    "file": "static/img/posters/sus__cape_fear.jpg"
+  },
+  "sus__oldboy": {
+    "tmdb_id": 670,
+    "file": "static/img/posters/sus__oldboy.jpg"
+  },
+  "ter__it_2017": {
+    "tmdb_id": 346364,
+    "file": "static/img/posters/ter__it_2017.jpg"
+  },
+  "ter__conjuring": {
+    "tmdb_id": 138843,
+    "file": "static/img/posters/ter__conjuring.jpg"
+  },
+  "ter__hereditary": {
+    "tmdb_id": 493922,
+    "file": "static/img/posters/ter__hereditary.jpg"
+  },
+  "ter__quiet_place": {
+    "tmdb_id": 447332,
+    "file": "static/img/posters/ter__quiet_place.jpg"
+  },
+  "ter__get_out": {
+    "tmdb_id": 419430,
+    "file": "static/img/posters/ter__get_out.jpg"
+  },
+  "ter__annabelle": {
+    "tmdb_id": 250546,
+    "file": "static/img/posters/ter__annabelle.jpg"
+  },
+  "ter__poltergeist": {
+    "tmdb_id": 609,
+    "file": "static/img/posters/ter__poltergeist.jpg"
+  },
+  "ter__shining": {
+    "tmdb_id": 694,
+    "file": "static/img/posters/ter__shining.jpg"
+  },
+  "ter__halloween": {
+    "tmdb_id": 948,
+    "file": "static/img/posters/ter__halloween.jpg"
+  },
+  "ter__nightmare_elm_st": {
+    "tmdb_id": 377,
+    "file": "static/img/posters/ter__nightmare_elm_st.jpg"
+  },
+  "ter__friday_13th": {
+    "tmdb_id": 4488,
+    "file": "static/img/posters/ter__friday_13th.jpg"
+  },
+  "ter__saw": {
+    "tmdb_id": 176,
+    "file": "static/img/posters/ter__saw.jpg"
+  },
+  "ter__exorcist": {
+    "tmdb_id": 9552,
+    "file": "static/img/posters/ter__exorcist.jpg"
+  },
+  "ter__rosemarys_baby": {
+    "tmdb_id": 805,
+    "file": "static/img/posters/ter__rosemarys_baby.jpg"
+  },
+  "ter__28_days_later": {
+    "tmdb_id": 170,
+    "file": "static/img/posters/ter__28_days_later.jpg"
+  },
+  "ter__train_busan": {
+    "tmdb_id": 396535,
+    "file": "static/img/posters/ter__train_busan.jpg"
+  },
+  "ter__babadook": {
+    "tmdb_id": 242224,
+    "file": "static/img/posters/ter__babadook.jpg"
+  }
+}
