@@ -62,7 +62,7 @@ void fadeToColor(int idx,
 
 // Mapeia o nome da cor (linguagem visual do design system) para RGB + modo pulso.
 bool nameToRGB(const String &name, int &r, int &g, int &b, bool &pulse) {
-  if      (name == "WHITE")  { r = 255; g = 255; b = 255; pulse = false; return true; }
+  if      (name == "WHITE")  { r = 180; g = 190; b = 220; pulse = false; return true; }  // branco frio calibrado — menos variação entre lotes
   else if (name == "BLUE")   { r = 0;   g = 102; b = 255; pulse = true;  return true; }  // glow-blue
   else if (name == "PINK")   { r = 182; g = 0;   b = 111; pulse = true;  return true; }  // #B6006F
   else if (name == "ORANGE") { r = 255; g = 51;  b = 0;   pulse = true;  return true; }  // glow-orange
