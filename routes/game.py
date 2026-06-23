@@ -1,13 +1,58 @@
 import functools
+import json
+import os
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from extensions import db
 from models import Player, Vote, RoundPool
 import session_state
 from data.movies import MOVIES, MOVIE_LOOKUP
 from match import calculate_match
-import posters
 import config
 import arduino
+
+_MANIFEST_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "posters.json")
+
+
+def _load_manifest() -> dict:
+    try:
+        with open(_MANIFEST_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+_manifest: dict = _load_manifest()
+
+
+def _filtered_movies(movies: dict) -> dict:
+    """Return MOVIES filtered to only ids in _manifest, with 'poster' injected."""
+    result = {}
+    for cat_key, cat in movies.items():
+        filtered = [
+            {**m, "poster": _manifest[m["id"]]["file"]}
+            for m in cat.get("movies", [])
+            if m["id"] in _manifest
+        ]
+        if filtered:
+            result[cat_key] = {**cat, "movies": filtered}
+    return result
+
+
+def enrich_match_movies(match_data: dict) -> dict:
+    """Add the local poster path and catalog year to each movie in a match result.
+
+    The results/final screens render real posters; `calculate_match` stays pure
+    (vote-only) so the manifest lookup lives here, next to the manifest itself.
+    Missing posters simply leave `poster` unset — the gradient placeholder covers it.
+    """
+    for movie in match_data.get("movies", []):
+        mid = movie["movie_id"]
+        if mid in _manifest:
+            movie["poster"] = _manifest[mid]["file"]
+        meta = MOVIE_LOOKUP.get(mid, {})
+        if meta.get("year"):
+            movie["year"] = meta["year"]
+    return match_data
 
 game_bp = Blueprint("game", __name__)
 
@@ -33,16 +78,6 @@ def already_voted(player_id: int, round_number: int) -> bool:
     return Vote.query.filter_by(player_id=player_id, round_number=round_number).first() is not None
 
 
-@game_bp.route("/api/poster/<movie_id>")
-def api_poster(movie_id):
-    """Poster real do filme via TMDB (lazy, cacheado). Placeholder se não houver."""
-    meta = MOVIE_LOOKUP.get(movie_id)
-    if not meta:
-        return jsonify({"poster": None, "configured": posters.is_configured()})
-    url = posters.get_poster_url(movie_id, meta["title"], meta.get("year"))
-    return jsonify({"poster": url, "configured": posters.is_configured()})
-
-
 def pool_grouped(round_number: int) -> dict:
     """Build a MOVIES-shaped dict from a round's pool so rounds 2/3 can reuse the
     same genre-grouped carousel component as round 1 (enriched with year/color)."""
@@ -55,11 +90,14 @@ def pool_grouped(round_number: int) -> dict:
             "color": meta.get("category_color", "#888888"),
             "movies": [],
         })
-        g["movies"].append({
+        entry: dict = {
             "id": item.movie_id,
             "title": item.movie_title,
             "year": meta.get("year", ""),
-        })
+        }
+        if item.movie_id in _manifest:
+            entry["poster"] = _manifest[item.movie_id]["file"]
+        g["movies"].append(entry)
     return groups
 
 
@@ -102,7 +140,8 @@ def round1():
     if already_voted(player.id, 1):
         return redirect(url_for("game.waiting"))
 
-    return render_template("mobile/round1.html", player=player, movies=MOVIES,
+    return render_template("mobile/round1.html", player=player,
+                           movies=_filtered_movies(MOVIES),
                            picks_required=config.ROUND1_PICKS)
 
 
@@ -119,7 +158,8 @@ def round1_submit():
 
     movie_ids = request.form.getlist("movie_ids")
     if len(movie_ids) != config.ROUND1_PICKS:
-        return render_template("mobile/round1.html", player=player, movies=MOVIES,
+        return render_template("mobile/round1.html", player=player,
+                               movies=_filtered_movies(MOVIES),
                                picks_required=config.ROUND1_PICKS,
                                error=f"Selecione exatamente {config.ROUND1_PICKS} filmes"), 400
 
@@ -279,7 +319,7 @@ def results():
         return redirect(url_for("game.waiting"))
 
     votes = session_state.get_round_votes(round_num)
-    match_data = calculate_match(votes)
+    match_data = enrich_match_movies(calculate_match(votes))
 
     player_votes = [v for v in votes if v["player_id"] == player.id]
 

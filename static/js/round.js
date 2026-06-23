@@ -39,28 +39,6 @@ function synopsisFor(m) {
 }
 function posterGradient(color) { return `linear-gradient(155deg, ${color}66 0%, rgba(6,5,26,0.96) 100%)`; }
 
-/* ── Posters reais (TMDB, lazy + cache) com fallback no placeholder ── */
-const posterCache = {};   // id -> url | "" (sem poster) | undefined (pendente)
-let modalId = null;
-function applyPoster(id, url) {
-  if (!url) return;
-  const dp = document.querySelector('.deck-card[data-id="' + id + '"] .deck-poster');
-  if (dp) { dp.style.backgroundImage = 'url("' + url + '")'; dp.classList.add('has-poster'); }
-  if (modalId === id) {
-    const mp = document.getElementById('modal-poster');
-    mp.style.backgroundImage = 'url("' + url + '")'; mp.classList.add('has-poster'); mp.textContent = '';
-    document.getElementById('modal-bg').style.backgroundImage = 'url("' + url + '")';
-  }
-}
-function ensurePoster(id) {
-  if (id in posterCache) { applyPoster(id, posterCache[id]); return; }
-  posterCache[id] = undefined;  // pendente
-  fetch('/api/poster/' + encodeURIComponent(id))
-    .then(r => r.json())
-    .then(d => { posterCache[id] = d.poster || ''; applyPoster(id, d.poster); })
-    .catch(() => { posterCache[id] = ''; });
-}
-
 /* ════════════ Round 1: grid de gêneros (item 3) ════════════ */
 function toggleGenre(catKey, el) {
   if (selectedGenres.has(catKey)) { selectedGenres.delete(catKey); el.classList.remove('selected'); }
@@ -91,9 +69,13 @@ function buildDeck(catKeys) {
     card.className = 'deck-card';
     card.dataset.i = i;
     card.dataset.id = m.id;
+    const hasPoster = Boolean(m.poster);
+    const dpStyle = hasPoster
+      ? 'background-image:url("/' + m.poster + '")'
+      : 'background:' + posterGradient(m.color);
     card.innerHTML =
-      '<div class="deck-poster" style="background:' + posterGradient(m.color) + '">' +
-        '<span class="deck-initial">' + m.title.charAt(0) + '</span>' +
+      '<div class="deck-poster' + (hasPoster ? ' has-poster' : '') + '" style="' + dpStyle + '">' +
+        (hasPoster ? '' : '<span class="deck-initial">' + m.title.charAt(0) + '</span>') +
       '</div>';
     deck.appendChild(card);
     return card;
@@ -131,9 +113,6 @@ function layout() {
     card.classList.toggle('focused', r === 0);
     card.classList.toggle('in-list', selected.has(items[i].id));
   });
-  // carrega posters do central e vizinhos (cíclico)
-  const n = items.length;
-  [0, -1, 1].forEach(d => { const i = ((pos + d) % n + n) % n; if (items[i]) ensurePoster(items[i].id); });
   renderMeta();
 }
 
@@ -218,22 +197,26 @@ function submitChoices() {
 function openModal(id) {
   const m = movieById[id];
   if (!m) return;
-  modalId = id;
   const bg = document.getElementById('modal-bg');
-  bg.style.background = posterGradient(m.color); bg.style.backgroundImage = '';
   const poster = document.getElementById('modal-poster');
-  poster.style.background = posterGradient(m.color); poster.style.backgroundImage = '';
-  poster.classList.remove('has-poster');
-  poster.textContent = m.title.charAt(0);
+  if (m.poster) {
+    const url = 'url("/' + m.poster + '")';
+    bg.style.background = ''; bg.style.backgroundImage = url;
+    poster.style.background = ''; poster.style.backgroundImage = url;
+    poster.classList.add('has-poster'); poster.textContent = '';
+  } else {
+    bg.style.background = posterGradient(m.color); bg.style.backgroundImage = '';
+    poster.style.background = posterGradient(m.color); poster.style.backgroundImage = '';
+    poster.classList.remove('has-poster'); poster.textContent = m.title.charAt(0);
+  }
   document.getElementById('modal-title').textContent = m.title;
   document.getElementById('modal-year').textContent = m.year || '—';
   document.getElementById('modal-genre').textContent = m.catLabel;
   document.getElementById('modal-rating').textContent = '★ ' + ratingFor(m.id);
   document.getElementById('modal-synopsis').textContent = synopsisFor(m);
   document.getElementById('movie-modal').classList.add('open');
-  ensurePoster(id);   // aplica poster real se disponível
 }
-function closeModal() { document.getElementById('movie-modal').classList.remove('open'); modalId = null; }
+function closeModal() { document.getElementById('movie-modal').classList.remove('open'); }
 document.getElementById('movie-modal').addEventListener('click', (e) => {
   if (e.target.id === 'movie-modal' || e.target.classList.contains('movie-modal-overlay')) closeModal();
 });

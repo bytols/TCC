@@ -4,6 +4,7 @@ from models import Player, Vote, RoundPool
 import session_state
 import qr as qr_module
 from match import calculate_match
+from routes.game import enrich_match_movies
 import config
 
 desktop_bp = Blueprint("desktop", __name__)
@@ -29,8 +30,10 @@ def desktop():
         context["consensus"] = (state == "FINAL")
         context["result_seconds"] = session.result_seconds
         votes = session_state.get_round_votes(round_num)
-        match_data = calculate_match(votes)
+        match_data = enrich_match_movies(calculate_match(votes))
         context["match_data"] = match_data
+        if state == "FINAL":
+            context["consensus_movies"] = [m for m in match_data["movies"] if m["is_match"]]
         context["round_num"] = round_num
 
     elif state in ("ROUND_1", "ROUND_2", "ROUND_3"):
