@@ -100,39 +100,60 @@
   {# ════════ FINAL — RESULTADO COLETIVO ════════ #}
   {% elif session.state == "FINAL" %}
   <div class="desktop-final">
-    <div class="final-header">
-      <p class="final-title">RESULTADO COLETIVO</p>
-      <p class="final-tagline">Depois de diferentes escolhas, o grupo chegou a um consenso.</p>
+    <div class="final-info-col">
+      <img src="/static/img/logo.png" alt="RUÍDO" class="final-logo">
+
       {% if result_seconds is not none %}
-      <p class="consensus-time">Consenso em {{ result_seconds // 60 }} min {{ result_seconds % 60 }} s</p>
+      <div class="final-time-card">
+        <p class="final-time-label">TEMPO</p>
+        <p class="final-time-value">{{ '%02d:%02d' % (result_seconds // 60, result_seconds % 60) }}</p>
+      </div>
       {% endif %}
-    </div>
 
-    {% if consensus_movies | length == 1 %}
-    {% set m = consensus_movies[0] %}
-    <div class="final-hero">
-      <div class="final-hero-poster {% if m.poster %}has-poster{% endif %}"
-           {% if m.poster %}style="background-image:url('/{{ m.poster }}')"{% endif %}>
-        {% if not m.poster %}<span class="final-hero-initial">{{ m.movie_title[0] }}</span>{% endif %}
-      </div>
-      <p class="final-hero-title">{{ m.movie_title }}</p>
-    </div>
-    {% else %}
-    <div class="final-posters-row">
-      {% for m in consensus_movies %}
-      <div class="final-poster-item">
-        <div class="final-poster {% if m.poster %}has-poster{% endif %}"
-             {% if m.poster %}style="background-image:url('/{{ m.poster }}')"{% endif %}>
-          {% if not m.poster %}<span class="final-poster-initial">{{ m.movie_title[0] }}</span>{% endif %}
+      <div class="final-avatars-row">
+        {% for p in players %}
+        <div class="final-avatar-item">
+          {% if p.avatar_path %}
+          <img src="{{ p.avatar_path }}" alt="{{ p.name }}" class="final-avatar-img">
+          {% else %}
+          <div class="final-avatar-placeholder">{{ p.name[0].upper() }}</div>
+          {% endif %}
         </div>
-        <p class="final-poster-title">{{ m.movie_title }}</p>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
-    {% endif %}
 
-    <button class="btn-primary btn-end" onclick="endSession()">ENCERRAR SESSÃO</button>
-    <img src="/static/img/logo.png" alt="RUÍDO" class="final-logo">
+    <div class="final-main-col">
+      <div class="final-header">
+        <p class="final-title">RESULTADO COLETIVO</p>
+        <p class="final-tagline">Depois de diferentes escolhas, o grupo chegou a um consenso.</p>
+      </div>
+
+      {% if consensus_movies | length == 1 %}
+      {% set m = consensus_movies[0] %}
+      <div class="final-hero">
+        <div class="final-hero-poster {% if m.poster %}has-poster{% endif %}"
+             {% if m.poster %}style="background-image:url('/{{ m.poster }}')"{% endif %}>
+          {% if not m.poster %}<span class="final-hero-initial">{{ m.movie_title[0] }}</span>{% endif %}
+        </div>
+        <p class="final-hero-title">{{ m.movie_title }}</p>
+      </div>
+      {% else %}
+      <div class="final-posters-row">
+        {% for m in consensus_movies %}
+        <div class="final-poster-item">
+          <div class="final-poster {% if m.poster %}has-poster{% endif %}"
+               {% if m.poster %}style="background-image:url('/{{ m.poster }}')"{% endif %}>
+            {% if not m.poster %}<span class="final-poster-initial">{{ m.movie_title[0] }}</span>{% endif %}
+          </div>
+          <p class="final-poster-title">{{ m.movie_title }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <button class="btn-primary btn-end" onclick="endSession()">ENCERRAR SESSÃO</button>
+    </div>
   </div>
 
   {# ════════ SHOW_1 / SHOW_2 — RESULTS ════════ #}
