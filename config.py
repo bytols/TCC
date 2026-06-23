@@ -7,7 +7,7 @@ try:
 except ImportError:
     pass
 
-PORT = 5000
+PORT = 5001
 MIN_PLAYERS = 2
 MAX_PLAYERS = 4
 SECRET_KEY = "movie-night-secret-2024"

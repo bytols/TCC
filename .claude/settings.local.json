@@ -39,7 +39,9 @@
       "Bash(curl -s http://localhost:5000/api/lobby_state)",
       "Bash(echo \"estado: $\\(curl -s http://localhost:5000/api/lobby_state)",
       "Bash(cd *)",
-      "Bash(git -C /home/erick_leo/tcc_mary remote -v)"
+      "Bash(git -C /home/erick_leo/tcc_mary remote -v)",
+      "Bash(ls /dev/cu.usbmodem* /dev/cu.usbserial* 2>/dev/null)",
+      "Read(//dev/**)"
     ]
   }
 }
