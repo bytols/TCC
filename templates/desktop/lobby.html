@@ -1,18 +1,19 @@
 {% extends "base_desktop.html" %}
 {% block title %}RUÍDO{% endblock %}
 
-{% set glow_class = {
-  "LOBBY": "glow-final", "ROUND_1": "glow-blue", "SHOW_1": "glow-blue",
-  "ROUND_2": "glow-pink", "SHOW_2": "glow-pink",
-  "ROUND_3": "glow-orange", "FINAL": "glow-final"
-} %}
+{# Cor inicial server-side (o desktop.js depois ajusta em tempo real por round_phase). #}
+{% set _s = session.state %}
+{% if _s.startswith("ROUND_") %}{% set initial_glow = "glow-blue" %}
+{% elif _s.startswith("SHOW_") %}{% set initial_glow = "glow-pink" %}
+{% elif _s == "FINAL" %}{% set initial_glow = "glow-final" %}
+{% else %}{% set initial_glow = "glow-final" %}{% endif %}
 
 {% block head_js %}
 <script>window.AUTO_START_SECONDS = {{ auto_start_seconds }};</script>
 {% endblock %}
 
 {% block content %}
-<div id="desktop-app" class="{{ glow_class.get(session.state, 'glow-final') }}"
+<div id="desktop-app" class="{{ initial_glow }}"
      data-state="{{ session.state }}" data-elapsed="{{ elapsed }}">
   <div class="desktop-glow"></div>
 
@@ -71,8 +72,8 @@
     </div>
   </div>
 
-  {# ════════ ROUND 1/2/3 — TV LOADING (item 8) ════════ #}
-  {% elif session.state in ["ROUND_1", "ROUND_2", "ROUND_3"] %}
+  {# ════════ ROUND n — TV LOADING (item 8) ════════ #}
+  {% elif session.state.startswith("ROUND_") %}
   {% set subtitles = {
     "ROUND_1": "O grupo ainda está descobrindo seus interesses.",
     "ROUND_2": "Os primeiros pontos de encontro estão surgindo.",
@@ -82,7 +83,7 @@
     <div class="waiting-content">
       <p class="waiting-title">AGUARDANDO PARTICIPANTES...</p>
       <div class="waiting-phone-tv"><div class="phone-icon phone-icon--lg"></div></div>
-      <p class="waiting-subtitle">{{ subtitles[session.state] }}</p>
+      <p class="waiting-subtitle">{{ subtitles.get(session.state, "O grupo segue negociando rumo ao consenso.") }}</p>
       <p class="waiting-progress" id="waiting-progress">{{ submitted_count }} de {{ player_count }} participantes concluíram</p>
       <div class="waiting-dots-tv"><span></span><span></span><span></span></div>
       <div class="waiting-players" id="waiting-players">
@@ -181,15 +182,12 @@
 
   </div>
 
-  {# ════════ SHOW_1 / SHOW_2 — RESULTS ════════ #}
-  {% elif session.state in ["SHOW_1", "SHOW_2"] %}
+  {# ════════ SHOW_n — RESULTS ════════ #}
+  {% elif session.state.startswith("SHOW_") %}
   <div class="desktop-results">
     <div class="results-header">
       <div class="results-header-left">
-        <p class="results-round-label">
-          {% if session.state == "SHOW_1" %}RESULTADO — RODADA 1
-          {% else %}RESULTADO — RODADA 2{% endif %}
-        </p>
+        <p class="results-round-label">RESULTADO — RODADA {{ round_num }}</p>
         <div class="match-badge">
           <span class="match-pct">{{ match_data.match_pct }}%</span>
           <span class="match-label">DE MATCH</span>

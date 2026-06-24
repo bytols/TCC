@@ -49,25 +49,27 @@ def test_early_match_sends_green_to_all_players(app):
     assert (p2.id, "GREEN") in calls
 
 
-def test_normal_round3_to_final_sends_green(app):
-    """Normal ROUND_3 → FINAL (no match) also sends GREEN to all players."""
+def test_round3_without_consensus_continues_no_green(app):
+    """Sem CONSENSO UNÂNIME, a rodada 3 NÃO encerra mais: o jogo continua
+    (SHOW_3 → ROUND_4...) e nenhum GREEN é emitido. Regra nova: o jogo só
+    termina quando 100% dos jogadores ativos concordam num mesmo filme."""
     s = Session.query.first()
     s.state = "ROUND_3"
     db.session.flush()
     p1 = _add_player(s.id, "Alice")
     p2 = _add_player(s.id, "Bob")
     _add_vote(p1.id, 3, "movie_a")
-    _add_vote(p2.id, 3, "movie_b")
+    _add_vote(p2.id, 3, "movie_b")  # divergência → sem unanimidade
     db.session.commit()
 
     import session_state
     with patch("arduino.send_led") as mock_send:
         result = session_state.advance_state()
 
-    assert result == "FINAL"
-    calls = {call.args for call in mock_send.call_args_list}
-    assert (p1.id, "GREEN") in calls
-    assert (p2.id, "GREEN") in calls
+    assert result != "FINAL"
+    assert result.startswith("SHOW_")
+    colors = {call.args[1] for call in mock_send.call_args_list}
+    assert "GREEN" not in colors
 
 
 def test_clear_session_sends_white_to_all_players(app):

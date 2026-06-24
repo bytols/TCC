@@ -20,9 +20,13 @@ AUTO_START_SECONDS = int(os.environ.get("AUTO_START_SECONDS", "30"))
 # Detecção de saída involuntária (wifi caiu / fechou navegador): o celular envia
 # um "heartbeat" a cada HEARTBEAT_PING_SECONDS; o servidor varre a cada
 # HEARTBEAT_SWEEP_SECONDS e remove quem não dá sinal há HEARTBEAT_TIMEOUT_SECONDS.
+# O timeout é folgado de propósito: durante as fases em que o jogador olha para a
+# TV, o navegador móvel pode suspender os timers (tela bloqueada) e atrasar pings.
+# Um timeout curto removeria jogadores ativos por engano — e, com 2 jogadores,
+# isso derrubaria a partida inteira (reset abaixo de MIN_PLAYERS).
 HEARTBEAT_PING_SECONDS = 3
 HEARTBEAT_SWEEP_SECONDS = 3
-HEARTBEAT_TIMEOUT_SECONDS = 10
+HEARTBEAT_TIMEOUT_SECONDS = 30
 
 # Chave da API do TMDB para buscar posters reais (ver posters.py e .env.example).
 # Defina em .env:  TMDB_API_KEY=sua_chave_aqui

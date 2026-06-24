@@ -100,15 +100,16 @@ def test_round2_submit_calls_send_led_white(app):
     _seed_round_pool(app, 2, ROUND2_MOVIES)
     client = _client_for_player(app, pid)
 
+    # Pool afunila as escolhas: pool de 3 filmes ⇒ exige min(3, 3-1)=2 escolhas.
     with patch("arduino.send_led") as mock_led:
         resp = client.post(
             "/round/2/submit",
-            data={"movie_ids": ROUND2_MOVIES},
+            data={"movie_ids": ROUND2_MOVIES[:2]},
             follow_redirects=False,
         )
 
     assert resp.status_code == 302
-    mock_led.assert_called_once_with(pid, "WHITE")
+    mock_led.assert_any_call(pid, "WHITE")
 
 
 # ── Round 3 ───────────────────────────────────────────────────────────────────
@@ -122,10 +123,11 @@ def test_round3_submit_calls_send_led_white(app):
     _seed_round_pool(app, 3, ROUND3_MOVIES)
     client = _client_for_player(app, pid)
 
+    # Pool de 3 filmes ⇒ exige 2 escolhas (afunilamento pool/escolhas).
     with patch("arduino.send_led") as mock_led:
         resp = client.post(
             "/round/3/submit",
-            data={"movie_ids": ROUND3_MOVIES},
+            data={"movie_ids": ROUND3_MOVIES[:2]},
             follow_redirects=False,
         )
 

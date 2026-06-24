@@ -26,9 +26,10 @@
   (function () {
     if (STATE === "FINAL") applyGlow("glow-green");
     else if (STATE === "LOBBY") applyGlow("glow-final");
-    else if (STATE && STATE.startsWith("ROUND_")) applyGlow("glow-blue");
-    else if (STATE === "SHOW_1") applyGlow("glow-blue");
-    else if (STATE === "SHOW_2") applyGlow("glow-pink");
+    else if (STATE && STATE.indexOf("ROUND_") === 0) applyGlow("glow-blue");
+    else if (STATE && STATE.indexOf("SHOW_") === 0) {
+      applyGlow(parseInt(STATE.split("_")[1], 10) <= 1 ? "glow-blue" : "glow-pink");
+    }
   }());
   // Atualiza cor em tempo real a partir do servidor
   socket.on("round_phase", function (d) { applyGlow(COLOR_MAP[d.color] || "glow-blue"); });

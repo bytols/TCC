@@ -165,12 +165,15 @@ def test_desktop_final_consensus_movies_descending_order(app, monkeypatch):
         p1 = _add_player(s.id, "Alice")
         p2 = _add_player(s.id, "Bob")
         p3 = _add_player(s.id, "Carol")
-        # Mad Max: 3 votos; Die Hard: 2 votos — ambos is_match
+        # Regra nova (unanimidade): consensus_movies só inclui filmes votados por
+        # TODOS os 3 ativos. Mad Max e Die Hard escolhidos pelos 3 → ambos match
+        # (count==3); empatados, mantêm a ordem de inserção (Mad Max primeiro).
         _add_vote(p1.id, 1, "acao__mad_max", "Mad Max")
         _add_vote(p2.id, 1, "acao__mad_max", "Mad Max")
         _add_vote(p3.id, 1, "acao__mad_max", "Mad Max")
         _add_vote(p1.id, 1, "acao__die_hard", "Die Hard")
         _add_vote(p2.id, 1, "acao__die_hard", "Die Hard")
+        _add_vote(p3.id, 1, "acao__die_hard", "Die Hard")
         db.session.commit()
 
     client = app.test_client()

@@ -1,4 +1,4 @@
-#!/home/erick_leo/tcc_mary/venv/bin/python
+#!/Users/maryelle.santos/Desktop/tcc/venv/bin/python3.13
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -80,6 +80,19 @@ def already_voted(player_id: int, round_number: int) -> bool:
     return Vote.query.filter_by(player_id=player_id, round_number=round_number).first() is not None
 
 
+def round_picks(round_number: int) -> int:
+    """Quantidade de filmes a escolher na rodada.
+
+    Rodada 1 explora o catálogo cheio (ROUND1_PICKS). Da rodada 2 em diante o
+    pool afunila, e as escolhas afunilam JUNTO: sempre menos do que o tamanho do
+    pool, para garantir que o pool continue encolhendo até o consenso. Mínimo 1.
+    """
+    if round_number <= 1:
+        return config.ROUND1_PICKS
+    pool_size = RoundPool.query.filter_by(round_number=round_number).count()
+    return max(1, min(config.ROUND2_PICKS, pool_size - 1))
+
+
 def pool_grouped(round_number: int) -> dict:
     """Build a MOVIES-shaped dict from a round's pool so rounds 2/3 can reuse the
     same genre-grouped carousel component as round 1 (enriched with year/color)."""
@@ -131,193 +144,96 @@ def waiting():
     player = get_current_player()
     state = session.state
 
-    redirect_map = {
-        "ROUND_1": "game.round1",
-        "SHOW_1":  "game.results",
-        "ROUND_2": "game.round2",
-        "SHOW_2":  "game.results",
-        "ROUND_3": "game.round3",
-        "FINAL":   "game.results",
-    }
-
-    if state in redirect_map:
-        if state.startswith("ROUND_"):
-            round_num = int(state[-1])
-            if not already_voted(player.id, round_num):
-                return redirect(url_for(redirect_map[state]))
-        elif state.startswith("SHOW_") or state == "FINAL":
-            return redirect(url_for(redirect_map[state]))
+    if state.startswith("ROUND_"):
+        round_num = int(state.split("_")[1])
+        if not already_voted(player.id, round_num):
+            return redirect(url_for("game.round_view", n=round_num))
+    elif state.startswith("SHOW_") or state == "FINAL":
+        return redirect(url_for("game.results"))
 
     return render_template("mobile/waiting.html", player=player, state=state,
                            auto_start_seconds=config.AUTO_START_SECONDS)
 
 
-@game_bp.route("/round/1")
+def _render_round(player, n, *, error=None, status=200):
+    """Renderiza a tela da rodada n. Rodada 1 = catálogo cheio + grade de
+    gêneros; rodadas ≥2 = deck direto sobre o pool afunilado."""
+    if n <= 1:
+        movies = _filtered_movies(MOVIES)
+        show_genres = True
+    else:
+        movies = pool_grouped(n)
+        show_genres = False
+    html = render_template("mobile/round.html", player=player, movies=movies,
+                           picks_required=round_picks(n), round_num=n,
+                           show_genres=show_genres, error=error)
+    return (html, status) if status != 200 else html
+
+
+@game_bp.route("/round/<int:n>")
 @require_player
-def round1():
+def round_view(n):
     session = session_state.get_session()
-    if session is None or session.state != "ROUND_1":
+    if session is None or session.state != f"ROUND_{n}":
         return redirect(url_for("game.waiting"))
 
     player = get_current_player()
-    if already_voted(player.id, 1):
+    if already_voted(player.id, n):
         return redirect(url_for("game.waiting"))
 
-    return render_template("mobile/round1.html", player=player,
-                           movies=_filtered_movies(MOVIES),
-                           picks_required=config.ROUND1_PICKS)
+    return _render_round(player, n)
 
 
-@game_bp.route("/round/1/submit", methods=["POST"])
+@game_bp.route("/round/<int:n>/submit", methods=["POST"])
 @require_player
-def round1_submit():
+def round_submit(n):
     session = session_state.get_session()
-    if session is None or session.state != "ROUND_1":
+    if session is None or session.state != f"ROUND_{n}":
         return redirect(url_for("game.waiting"))
 
     player = get_current_player()
-    if already_voted(player.id, 1):
+    if already_voted(player.id, n):
         return redirect(url_for("game.waiting"))
 
-    movie_ids = request.form.getlist("movie_ids")
-    if len(movie_ids) != config.ROUND1_PICKS:
-        return render_template("mobile/round1.html", player=player,
-                               movies=_filtered_movies(MOVIES),
-                               picks_required=config.ROUND1_PICKS,
-                               error=f"Selecione exatamente {config.ROUND1_PICKS} filmes"), 400
+    picks = round_picks(n)
+
+    # Rodada 1 vota sobre o catálogo; rodadas ≥2 votam sobre o pool da anterior.
+    if n <= 1:
+        candidates = request.form.getlist("movie_ids")
+        movie_ids = [mid for mid in candidates if mid in MOVIE_LOOKUP]
+        meta_for = lambda mid: MOVIE_LOOKUP.get(mid)
+        title_of = lambda m: m["title"]
+        cat_of = lambda m: m["category"]
+    else:
+        pool = RoundPool.query.filter_by(round_number=n).all()
+        pool_by_id = {p.movie_id: p for p in pool}
+        movie_ids = [mid for mid in request.form.getlist("movie_ids") if mid in pool_by_id]
+        meta_for = lambda mid: pool_by_id.get(mid)
+        title_of = lambda m: m.movie_title
+        cat_of = lambda m: m.category
+
+    if len(movie_ids) != picks:
+        return _render_round(player, n,
+                             error=f"Selecione exatamente {picks} filmes", status=400)
 
     for movie_id in movie_ids:
-        data = MOVIE_LOOKUP.get(movie_id)
-        if not data:
+        meta = meta_for(movie_id)
+        if not meta:
             continue
         db.session.add(Vote(
             player_id=player.id,
-            round_number=1,
+            round_number=n,
             movie_id=movie_id,
-            movie_title=data["title"],
-            category=data["category"],
+            movie_title=title_of(meta),
+            category=cat_of(meta),
         ))
     db.session.commit()
     arduino.send_led(player.id, "WHITE")
 
-    if session_state.check_round_complete(1):
+    if session_state.check_round_complete(n):
         session_state.advance_state()
     else:
-        session_state.notify_progress(1)
-
-    return redirect(url_for("game.waiting"))
-
-
-@game_bp.route("/round/2")
-@require_player
-def round2():
-    session = session_state.get_session()
-    if session is None or session.state != "ROUND_2":
-        return redirect(url_for("game.waiting"))
-
-    player = get_current_player()
-    if already_voted(player.id, 2):
-        return redirect(url_for("game.waiting"))
-
-    return render_template("mobile/round2.html", player=player,
-                           movies=pool_grouped(2), picks_required=config.ROUND2_PICKS)
-
-
-@game_bp.route("/round/2/submit", methods=["POST"])
-@require_player
-def round2_submit():
-    session = session_state.get_session()
-    if session is None or session.state != "ROUND_2":
-        return redirect(url_for("game.waiting"))
-
-    player = get_current_player()
-    if already_voted(player.id, 2):
-        return redirect(url_for("game.waiting"))
-
-    pool = RoundPool.query.filter_by(round_number=2).all()
-    pool_ids = {p.movie_id for p in pool}
-
-    movie_ids = [mid for mid in request.form.getlist("movie_ids") if mid in pool_ids]
-    if len(movie_ids) != config.ROUND2_PICKS:
-        return render_template("mobile/round2.html", player=player, pool=pool,
-                               picks_required=config.ROUND2_PICKS,
-                               error=f"Selecione exatamente {config.ROUND2_PICKS} filmes"), 400
-
-    for movie_id in movie_ids:
-        entry = next((p for p in pool if p.movie_id == movie_id), None)
-        if not entry:
-            continue
-        db.session.add(Vote(
-            player_id=player.id,
-            round_number=2,
-            movie_id=movie_id,
-            movie_title=entry.movie_title,
-            category=entry.category,
-        ))
-    db.session.commit()
-    arduino.send_led(player.id, "WHITE")
-
-    if session_state.check_round_complete(2):
-        session_state.advance_state()
-    else:
-        session_state.notify_progress(2)
-
-    return redirect(url_for("game.waiting"))
-
-
-@game_bp.route("/round/3")
-@require_player
-def round3():
-    session = session_state.get_session()
-    if session is None or session.state != "ROUND_3":
-        return redirect(url_for("game.waiting"))
-
-    player = get_current_player()
-    if already_voted(player.id, 3):
-        return redirect(url_for("game.waiting"))
-
-    return render_template("mobile/round3.html", player=player,
-                           movies=pool_grouped(3), picks_required=config.ROUND3_PICKS)
-
-
-@game_bp.route("/round/3/submit", methods=["POST"])
-@require_player
-def round3_submit():
-    session = session_state.get_session()
-    if session is None or session.state != "ROUND_3":
-        return redirect(url_for("game.waiting"))
-
-    player = get_current_player()
-    if already_voted(player.id, 3):
-        return redirect(url_for("game.waiting"))
-
-    pool = RoundPool.query.filter_by(round_number=3).all()
-    pool_ids = {p.movie_id for p in pool}
-
-    movie_ids = [mid for mid in request.form.getlist("movie_ids") if mid in pool_ids]
-    if len(movie_ids) != config.ROUND3_PICKS:
-        return render_template("mobile/round3.html", player=player, pool=pool,
-                               picks_required=config.ROUND3_PICKS,
-                               error=f"Selecione exatamente {config.ROUND3_PICKS} filmes"), 400
-
-    for movie_id in movie_ids:
-        entry = next((p for p in pool if p.movie_id == movie_id), None)
-        if not entry:
-            continue
-        db.session.add(Vote(
-            player_id=player.id,
-            round_number=3,
-            movie_id=movie_id,
-            movie_title=entry.movie_title,
-            category=entry.category,
-        ))
-    db.session.commit()
-    arduino.send_led(player.id, "WHITE")
-
-    if session_state.check_round_complete(3):
-        session_state.advance_state()
-    else:
-        session_state.notify_progress(3)
+        session_state.notify_progress(n)
 
     return redirect(url_for("game.waiting"))
 
@@ -332,17 +248,15 @@ def results():
     state = session.state
     player = get_current_player()
 
-    if state == "SHOW_1":
-        round_num = 1
-    elif state == "SHOW_2":
-        round_num = 2
+    if state.startswith("SHOW_"):
+        round_num = int(state.split("_")[1])
     elif state == "FINAL":
-        round_num = session.result_round or 3
+        round_num = session.result_round or 1
     else:
         return redirect(url_for("game.waiting"))
 
     votes = session_state.get_round_votes(round_num)
-    match_data = enrich_match_movies(calculate_match(votes))
+    match_data = enrich_match_movies(calculate_match(votes, Player.query.count()))
 
     player_votes = [v for v in votes if v["player_id"] == player.id]
 

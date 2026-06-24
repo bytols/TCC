@@ -29,13 +29,14 @@
   const socket = io();
   socket.emit("join_room");
 
-  const REDIRECT = {
-    "ROUND_1": "/round/1", "ROUND_2": "/round/2", "ROUND_3": "/round/3",
-    "SHOW_1": "/results", "SHOW_2": "/results", "FINAL": "/results",
-  };
+  function destFor(s) {
+    if (s.indexOf("ROUND_") === 0) return "/round/" + s.split("_")[1];
+    if (s.indexOf("SHOW_") === 0 || s === "FINAL") return "/results";
+    return null;
+  }
 
   socket.on("state_change", function (data) {
-    const dest = REDIRECT[data.state];
+    const dest = destFor(data.state);
     if (dest && dest !== location.pathname) window.location.href = dest;
   });
   socket.on("session_ended", function () { window.location.href = "/join"; });

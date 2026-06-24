@@ -22,9 +22,20 @@
   var PING_MS = {{ heartbeat_ping_seconds | default(3) }} * 1000;
 
   // Heartbeat: avisa o servidor que ainda estamos aqui (desconexão por timeout).
-  setInterval(function () {
-    fetch("/heartbeat", { method: "POST" }).catch(function () {});
-  }, PING_MS);
+  function ruidoPing() {
+    fetch("/heartbeat", { method: "POST", keepalive: true }).catch(function () {});
+  }
+  ruidoPing();                      // ping imediato ao carregar (sem esperar o 1º ciclo)
+  setInterval(ruidoPing, PING_MS);  // pings periódicos
+
+  // Navegadores móveis SUSPENDEM timers quando a tela bloqueia ou a aba sai de
+  // foco (ex.: jogador olhando para a TV). Ao voltar, reanuncia presença na hora
+  // para não ser removido por engano pela varredura de inatividade.
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") ruidoPing();
+  });
+  window.addEventListener("focus", ruidoPing);
+  window.addEventListener("pageshow", ruidoPing);
 
   window.ruidoShowLeave = function () {
     var m = document.getElementById("leave-modal");

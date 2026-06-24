@@ -3,12 +3,15 @@
 <script>
   const _sock = io();
   _sock.emit("join_room");
-  const _RED = {
-    "ROUND_1": "/round/1", "ROUND_2": "/round/2", "ROUND_3": "/round/3",
-    "SHOW_1": "/results", "SHOW_2": "/results", "FINAL": "/results", "LOBBY": "/join"
-  };
+  // Destino derivado do estado (rodadas indefinidas: ROUND_n → /round/n).
+  function _destFor(s) {
+    if (s === "LOBBY") return "/join";
+    if (s.indexOf("ROUND_") === 0) return "/round/" + s.split("_")[1];
+    if (s.indexOf("SHOW_") === 0 || s === "FINAL") return "/results";
+    return null;
+  }
   _sock.on("state_change", function (d) {
-    const dest = _RED[d.state];
+    const dest = _destFor(d.state);
     if (dest && location.pathname !== dest) location.href = dest;
   });
   _sock.on("session_ended", function () { location.href = "/join"; });

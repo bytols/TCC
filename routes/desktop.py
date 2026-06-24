@@ -25,23 +25,23 @@ def desktop():
     }
 
     state = session.state
-    if state in ("SHOW_1", "SHOW_2", "FINAL"):
-        round_num = {"SHOW_1": 1, "SHOW_2": 2}.get(state, session.result_round or 3)
+    if state.startswith("SHOW_") or state == "FINAL":
+        round_num = (session.result_round or 1) if state == "FINAL" else int(state.split("_")[1])
         context["consensus"] = (state == "FINAL")
         context["result_seconds"] = session.result_seconds
         votes = session_state.get_round_votes(round_num)
-        match_data = enrich_match_movies(calculate_match(votes))
+        match_data = enrich_match_movies(calculate_match(votes, len(players)))
         context["match_data"] = match_data
         if state == "FINAL":
             context["consensus_movies"] = [m for m in match_data["movies"] if m["is_match"]]
         context["round_num"] = round_num
 
-    elif state in ("ROUND_1", "ROUND_2", "ROUND_3"):
-        round_num = {"ROUND_1": 1, "ROUND_2": 2, "ROUND_3": 3}[state]
+    elif state.startswith("ROUND_"):
+        round_num = int(state.split("_")[1])
         context["round_num"] = round_num
         context["submitted_count"] = session_state.count_submitted(round_num)
         context["submitted_ids"] = session_state.submitted_player_ids(round_num)
-        if state in ("ROUND_2", "ROUND_3"):
+        if round_num >= 2:
             context["pool"] = RoundPool.query.filter_by(round_number=round_num).all()
 
     return render_template("desktop/lobby.html", **context)
@@ -88,8 +88,8 @@ def api_lobby_state():
             for p in players
         ]
     }
-    if session.state in ("ROUND_1", "ROUND_2", "ROUND_3"):
-        rn = int(session.state[-1])
+    if session.state.startswith("ROUND_"):
+        rn = int(session.state.split("_")[1])
         data["progress"] = {
             "round": rn,
             "submitted": session_state.count_submitted(rn),

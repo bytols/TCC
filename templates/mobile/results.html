@@ -73,14 +73,16 @@
 <script>
   const socket = io();
   socket.emit("join_room");
-  // SHOW_2/FINAL apontam para /results (a própria página): a guarda de path
+  // SHOW_n/FINAL apontam para /results (a própria página): a guarda de path
   // evita o reload infinito. Só navega quando o destino é OUTRA tela.
-  const REDIRECT = {
-    "ROUND_2": "/round/2", "ROUND_3": "/round/3",
-    "SHOW_2": "/results", "FINAL": "/results", "LOBBY": "/join",
-  };
+  function destFor(s) {
+    if (s === "LOBBY") return "/join";
+    if (s.indexOf("ROUND_") === 0) return "/round/" + s.split("_")[1];
+    if (s.indexOf("SHOW_") === 0 || s === "FINAL") return "/results";
+    return null;
+  }
   socket.on("state_change", function(data) {
-    const dest = REDIRECT[data.state];
+    const dest = destFor(data.state);
     if (dest && dest !== location.pathname) window.location.href = dest;  // sem self-reload
   });
   socket.on("session_ended", function() { window.location.href = "/join"; });

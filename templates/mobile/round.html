@@ -1,0 +1,20 @@
+{% extends "base_mobile.html" %}
+{% block title %}RUÍDO — Rodada {{ round_num }}{% endblock %}
+
+{% block content %}
+{# Rodada genérica (1..N). Rodada 1 = grade de gêneros + catálogo cheio;
+   rodadas ≥2 = deck direto sobre o pool afunilado da rodada anterior. #}
+{% set glow = "glow-blue" if round_num == 1 else ("glow-pink" if round_num == 2 else "glow-orange") %}
+{% set action = "/round/" ~ round_num ~ "/submit" %}
+{% if show_genres %}
+  {% set submit_label = "PRÓXIMO" %}
+  {% set instruction = "Escolha os gêneros que te atraem" %}
+{% else %}
+  {% set submit_label = "CONFIRMAR ESCOLHAS" %}
+  {% set instruction = "Escolha " ~ picks_required ~ " filmes entre os títulos da rodada anterior" %}
+{% endif %}
+{% if error %}<div class="form-error" style="margin:0.75rem">{{ error }}</div>{% endif %}
+{% include "mobile/_round_body.html" %}
+{% endblock %}
+
+{% block extra_js %}{% include "mobile/_round_scripts.html" %}{% endblock %}

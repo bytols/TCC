@@ -6,14 +6,19 @@ from match import calculate_match
 import config
 import arduino
 
-VALID_TRANSITIONS = {
-    "LOBBY":   "ROUND_1",
-    "ROUND_1": "SHOW_1",
-    "SHOW_1":  "ROUND_2",
-    "ROUND_2": "SHOW_2",
-    "SHOW_2":  "ROUND_3",
-    "ROUND_3": "FINAL",
-}
+def _next_state(cur: str) -> str | None:
+    """Próximo estado linear, agora com rodadas INDEFINIDAS.
+
+    LOBBY → ROUND_1; ROUND_n → SHOW_n; SHOW_n → ROUND_(n+1). FINAL é terminal e
+    só é alcançado quando há consenso (tratado em advance_state), nunca aqui.
+    """
+    if cur == "LOBBY":
+        return "ROUND_1"
+    if cur.startswith("ROUND_"):
+        return f"SHOW_{int(cur.split('_')[1])}"
+    if cur.startswith("SHOW_"):
+        return f"ROUND_{int(cur.split('_')[1]) + 1}"
+    return None
 
 
 def get_session() -> Session | None:
@@ -50,9 +55,18 @@ def _emit_state(state: str) -> None:
     }, room="game_room")
 
 
-def has_match(round_number: int) -> bool:
-    """True if any movie in the round was chosen by >= 2 players."""
-    return calculate_match(get_round_votes(round_number))["matched_count"] > 0
+def active_count() -> int:
+    """Número de jogadores atualmente ativos (quem saiu/caiu já foi removido)."""
+    return Player.query.count()
+
+
+def has_consensus(round_number: int) -> bool:
+    """True se houver CONSENSO UNÂNIME: algum filme escolhido por 100% dos
+    jogadores ativos da rodada (count == nº de ativos)."""
+    n = active_count()
+    if n < config.MIN_PLAYERS:
+        return False
+    return calculate_match(get_round_votes(round_number), n)["matched_count"] > 0
 
 
 def advance_state() -> str | None:
@@ -60,7 +74,7 @@ def advance_state() -> str | None:
     if session is None:
         return None
     cur = session.state
-    next_state = VALID_TRANSITIONS.get(cur)
+    next_state = _next_state(cur)
     if next_state is None:
         return cur
 
@@ -73,27 +87,31 @@ def advance_state() -> str | None:
             return 0
         return max(0, int((datetime.utcnow() - session.started_at).total_seconds()))
 
-    # A round just finished — if there's a match, end immediately (consensus).
-    if cur in ("ROUND_1", "ROUND_2", "ROUND_3"):
-        from_round = int(cur[-1])
-        if has_match(from_round):
-            session.state = "FINAL"
-            session.result_round = from_round
-            session.result_seconds = _seconds_since_start()
-            db.session.commit()
-            _send_color_to_all("GREEN")
-            socketio.emit("round_phase", {"color": "GREEN"}, room="game_room")
-            _emit_state("FINAL")
-            return "FINAL"
-        # No match yet → prepare the next round's pool (if any).
-        if from_round < 3:
-            build_round_pool(from_round)
-
-    if next_state == "FINAL":
-        session.result_round = 3
+    def _go_final(from_round: int) -> str:
+        session.state = "FINAL"
+        session.result_round = from_round
         session.result_seconds = _seconds_since_start()
+        db.session.commit()
+        _send_color_to_all("GREEN")
+        socketio.emit("round_phase", {"color": "GREEN"}, room="game_room")
+        _emit_state("FINAL")
+        return "FINAL"
 
-    if next_state in ("ROUND_1", "ROUND_2", "ROUND_3"):
+    # A round just finished — só encerra com CONSENSO UNÂNIME (100% dos ativos).
+    if cur.startswith("ROUND_"):
+        from_round = int(cur.split("_")[1])
+        if has_consensus(from_round):
+            return _go_final(from_round)
+        # Sem consenso → afunila o pool da PRÓXIMA rodada.
+        build_round_pool(from_round)
+        # Trava de segurança: se o pool afunilou a ≤1 filme, todos seriam
+        # forçados ao mesmo título — considera consenso e encerra.
+        next_pool_size = RoundPool.query.filter_by(round_number=from_round + 1).count()
+        if next_pool_size <= 1:
+            return _go_final(from_round)
+
+    # Entrando numa rodada (ROUND_n): reinicia o gerador/timer de cores (BLUE→…).
+    if next_state.startswith("ROUND_"):
         session.timer_gen = (session.timer_gen or 0) + 1
         current_gen = session.timer_gen
         session.round_started_at = datetime.utcnow()
@@ -101,12 +119,8 @@ def advance_state() -> str | None:
         socketio.emit("round_phase", {"color": "BLUE"}, room="game_room")
         from flask import current_app
         _app = current_app._get_current_object()
-        round_num = int(next_state[-1])
+        round_num = int(next_state.split("_")[1])
         socketio.start_background_task(_round_timer_task, _app, round_num, current_gen)
-
-    if next_state == "FINAL":
-        _send_color_to_all("GREEN")
-        socketio.emit("round_phase", {"color": "GREEN"}, room="game_room")
 
     session.state = next_state
     db.session.commit()
@@ -197,8 +211,8 @@ def remove_player(player_id: int) -> str | None:
     }, room="game_room")
 
     # No meio de uma rodada: recalcula o progresso e avança se já fechou.
-    if session.state in ("ROUND_1", "ROUND_2", "ROUND_3"):
-        rn = int(session.state[-1])
+    if session.state.startswith("ROUND_"):
+        rn = int(session.state.split("_")[1])
         if remaining >= config.MIN_PLAYERS and check_round_complete(rn):
             advance_state()
         else:
