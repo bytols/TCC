@@ -17,10 +17,17 @@
      data-state="{{ session.state }}" data-elapsed="{{ elapsed }}">
   <div class="desktop-glow"></div>
 
-  {# Botão do host: encerra a partida a qualquer momento (reset total). O FINAL já
-     tem seu próprio "ENCERRAR SESSÃO" no rodapé, então aqui ele é omitido. #}
+  {# Ações do host: barra fixa no topo-direito. ENCERRAR PARTIDA mantém SEMPRE a
+     mesma posição (à direita); em SHOW_n, PRÓXIMA RODADA aparece ao lado dela —
+     assim os dois botões nunca se sobrepõem e o botão único não fica deslocado.
+     O FINAL já tem seu próprio "ENCERRAR SESSÃO" no rodapé, então aqui é omitido. #}
   {% if session.state != "FINAL" %}
-  <button class="btn-host-end" onclick="endSession()">ENCERRAR PARTIDA</button>
+  <div class="host-actions">
+    {% if session.state.startswith("SHOW_") %}
+    <button class="btn-primary btn-advance" onclick="advanceSession()">PRÓXIMA RODADA</button>
+    {% endif %}
+    <button class="btn-host-end" onclick="endSession()">ENCERRAR PARTIDA</button>
+  </div>
   {% endif %}
 
   {# ════════ LOBBY (item 4) ════════ #}
@@ -160,10 +167,25 @@
       {% endif %}
     </div>
 
-    {# ── Zona direita: FILME ESCOLHIDO + título + metadados ── #}
-    <div class="final-right">
-      <p class="final-chosen-label">FILME ESCOLHIDO</p>
-      {% if primary %}
+    {# ── Zona direita: FILME(S) ESCOLHIDO(S) + título + metadados ──
+       Com 1 só filme: título grande. Com consenso em vários: lista todos
+       com a fonte um pouco menor (classe .final-right-multi). #}
+    <div class="final-right{% if consensus_movies | length > 1 %} final-right-multi{% endif %}">
+      <p class="final-chosen-label">{% if consensus_movies | length > 1 %}FILMES ESCOLHIDOS{% else %}FILME ESCOLHIDO{% endif %}</p>
+      {% if consensus_movies | length > 1 %}
+      <div class="final-chosen-list">
+        {% for m in consensus_movies %}
+        <div class="final-chosen-entry">
+          <p class="final-chosen-title">{{ m.movie_title }}</p>
+          <div class="final-chosen-meta">
+            {% if m.year %}{{ m.year }}{% endif %}
+            {% if m.year and m.category_label %} · {% endif %}
+            {% if m.category_label %}{{ m.category_label }}{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% elif primary %}
       <p class="final-chosen-title">{{ primary.movie_title }}</p>
       <div class="final-chosen-meta">
         {% if primary.year %}{{ primary.year }}{% endif %}
@@ -194,7 +216,8 @@
         </div>
         <p class="match-detail">{{ match_data.matched_count }} de {{ match_data.total_unique }} filmes em comum</p>
       </div>
-      <button class="btn-primary btn-advance" onclick="advanceSession()">PRÓXIMA RODADA</button>
+      {# PRÓXIMA RODADA agora vive na barra fixa .host-actions (topo-direito),
+         ao lado de ENCERRAR PARTIDA — evita a sobreposição entre os dois. #}
     </div>
 
     <div class="results-movies-grid">

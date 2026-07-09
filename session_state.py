@@ -300,7 +300,7 @@ def _is_stale(round_number: int, gen: int) -> bool:
 
 def _round_timer_task(app, round_number: int, gen: int) -> None:
     import eventlet
-    eventlet.sleep(120)
+    eventlet.sleep(60)
     with app.app_context():
         if _is_stale(round_number, gen):
             return
@@ -310,7 +310,7 @@ def _round_timer_task(app, round_number: int, gen: int) -> None:
             if p.id not in submitted_ids:
                 arduino.send_led(p.id, "PINK")
 
-    eventlet.sleep(120)
+    eventlet.sleep(60)
     with app.app_context():
         if _is_stale(round_number, gen):
             return

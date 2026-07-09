@@ -859,6 +859,18 @@ input { font-family: var(--font); }
   text-transform: lowercase;
 }
 
+/* Consenso em vários filmes: lista todos, com a fonte um pouco menor. */
+.final-right-multi { gap: 1.2rem; }
+.final-chosen-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  overflow-y: auto;
+}
+.final-chosen-entry { display: flex; flex-direction: column; gap: 0.5rem; }
+.final-right-multi .final-chosen-title { font-size: 1.6rem; }
+.final-right-multi .final-chosen-meta { font-size: 0.8rem; padding: 0.35rem 0.9rem; }
+
 /* ── Rodapé: tagline + wordmark + ENCERRAR ── */
 .final-footer {
   grid-column: 1 / -1;
@@ -993,12 +1005,22 @@ input { font-family: var(--font); }
 }
 .btn-leave-confirm:hover { background: var(--red); box-shadow: 0 0 20px rgba(255,51,0,0.4); }
 
-/* Botão "Encerrar partida" do host (desktop), sempre acessível */
-.btn-host-end {
+/* Barra de ações do host (desktop): fixa no topo-direito. Ancorada à direita,
+   então ENCERRAR PARTIDA (último filho) ocupa SEMPRE a mesma posição, com ou
+   sem PRÓXIMA RODADA ao lado — sem sobreposição e sem deslocamento. */
+.host-actions {
   position: fixed;
   top: 1.2rem;
   right: 1.2rem;
   z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.host-actions .btn-advance { margin: 0; }
+
+/* Botão "Encerrar partida" do host (desktop), sempre acessível */
+.btn-host-end {
   padding: 0.55rem 1.2rem;
   font-size: 0.72rem;
   font-weight: 700;
